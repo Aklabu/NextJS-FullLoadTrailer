@@ -1,0 +1,23 @@
+@media (max-width: 900px) {
+  .tracking-route-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .tracking-milestones-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .tracking-equipment-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .tracking-milestones-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .tracking-equipment-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .tracking-support-inner {
+    flex-direction: column !important;
+  }
+}
