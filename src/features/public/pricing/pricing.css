@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+  .pricing-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .zero-risk-inner {
+    flex-direction: column !important;
+  }
+}
