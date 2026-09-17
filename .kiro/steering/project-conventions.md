@@ -25,6 +25,7 @@ Use single-line comments only. No JSDoc blocks, no decorative separators.
 - Yellow accent (sparingly): #FFCB56
 - Peach accent (sparingly): #FFA259
 - Slate/teal (selective contrast): #224248
+- Navbar & Footer background: #0F3040
 - Text: neutral-900 on white, white on dark backgrounds
 
 ## Stack
