@@ -1,0 +1,11 @@
+@media (max-width: 800px) {
+  .how-phase-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .how-role-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .how-tier-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
