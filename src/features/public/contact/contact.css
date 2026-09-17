@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+  .contact-methods-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-form-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-form-2col {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-faq-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
