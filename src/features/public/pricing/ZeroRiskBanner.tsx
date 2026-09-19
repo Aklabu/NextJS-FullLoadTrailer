@@ -45,7 +45,7 @@ export default function ZeroRiskBanner() {
             Explore Full Matrix ↓
           </a>
           <Link
-            href="/signup"
+            href="/auth/signup"
             style={{
               background: '#d97b3f',
               color: '#fff',

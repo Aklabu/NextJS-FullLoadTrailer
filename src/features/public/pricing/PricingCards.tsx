@@ -89,7 +89,7 @@ export default function PricingCards() {
           </ul>
 
           <Link
-            href="/signup"
+            href="/auth/signup"
             style={{
               display: 'block', width: '100%', textAlign: 'center',
               background: '#fff7ed', color: '#c2622b',
@@ -188,7 +188,7 @@ export default function PricingCards() {
           </ul>
 
           <Link
-            href="/signup?tier=2"
+            href="/auth/signup?tier=2"
             style={{
               display: 'block', width: '100%', textAlign: 'center',
               background: '#d97b3f', color: '#fff',

@@ -71,7 +71,7 @@ export default function HeroSection() {
 
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="inline-flex items-center gap-2 rounded-lg bg-[#d97b3f] px-[22px] py-[13px] text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
               >
                 Get Started / Sign Up

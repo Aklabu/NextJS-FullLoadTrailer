@@ -34,7 +34,7 @@ export default function CtaSection() {
         {/* CTAs */}
         <div className="flex flex-wrap gap-3">
           <Link
-            href="/signup?role=shipper"
+            href="/auth/signup?role=shipper"
             className="inline-flex items-center gap-2 rounded-lg bg-[#d97b3f] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -45,7 +45,7 @@ export default function CtaSection() {
           </Link>
 
           <Link
-            href="/signup?role=carrier"
+            href="/auth/signup?role=carrier"
             className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 transition-colors hover:bg-white/20 border border-white/15"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -75,7 +75,7 @@ export default function CtaSection() {
             }}
           >
             <Link
-              href="/signup?role=shipper"
+              href="/auth/signup?role=shipper"
               style={{
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 padding: '14px 28px',
@@ -91,7 +91,7 @@ export default function CtaSection() {
               🏠 Sign Up as Shipper / Broker
             </Link>
             <Link
-              href="/signup?role=carrier"
+              href="/auth/signup?role=carrier"
               style={{
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 padding: '14px 28px',

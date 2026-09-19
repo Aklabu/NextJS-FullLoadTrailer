@@ -30,6 +30,9 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         style={{
           width: '100%',
           textAlign: 'left',
+          borderTop: 'none',
+          borderRight: 'none',
+          borderBottom: 'none',
           borderLeft: '3px solid #d97b3f',
           background: '#ffffff',
           borderRadius: 10,
@@ -43,10 +46,6 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           fontSize: 15,
           fontWeight: 600,
           color: '#2b2420',
-          borderTop: 'none',
-          borderRight: 'none',
-          borderBottom: 'none',
-          borderLeft: '3px solid #d97b3f',
           outline: 'none',
         }}
       >

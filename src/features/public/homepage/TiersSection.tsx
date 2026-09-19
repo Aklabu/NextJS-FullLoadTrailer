@@ -76,7 +76,7 @@ export default function TiersSection() {
             </ul>
 
             <Link
-              href="/signup"
+              href="/auth/signup"
               className="block w-full rounded-xl border border-[#e0d5c8] bg-[#f3ede4]/60 py-3 text-center text-sm font-semibold text-neutral-600 transition-colors hover:bg-[#ece2d6]"
             >
               Start for free

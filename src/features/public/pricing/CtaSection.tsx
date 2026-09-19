@@ -52,7 +52,7 @@ export default function PricingCta() {
           style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap', marginBottom: 32 }}
         >
           <Link
-            href="/signup"
+            href="/auth/signup"
             style={{
               background: '#fff',
               color: '#1a1a1a',
@@ -68,7 +68,7 @@ export default function PricingCta() {
             Start Free (Tier 1) →
           </Link>
           <Link
-            href="/signup?tier=2"
+            href="/auth/signup?tier=2"
             style={{
               background: '#d97b3f',
               color: '#fff',

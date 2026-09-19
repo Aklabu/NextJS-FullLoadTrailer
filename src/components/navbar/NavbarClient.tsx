@@ -245,7 +245,7 @@ function MobileMenu({
               Login
             </Link>
             <Link
-              href="/signup"
+              href="/auth/signup"
               onClick={onClose}
               className="block rounded-md px-3 py-2 text-sm font-medium text-center rounded-lg transition-opacity hover:opacity-90"
                 style={{ background: '#FFCB56', color: '#1A1953' }}
@@ -300,7 +300,7 @@ export default function NavbarClient({ user, notificationCount = 0 }: NavbarClie
                 Login
               </Link>
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="inline-flex items-center px-4 py-1.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
                 style={{ background: '#FFCB56', color: '#1A1953' }}
               >
