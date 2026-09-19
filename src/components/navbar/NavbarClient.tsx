@@ -237,7 +237,7 @@ function MobileMenu({
         ) : (
           <>
             <Link
-              href="/login"
+              href="/auth/login"
               onClick={onClose}
               className="block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-white/10"
               style={{ color: 'rgba(255,255,255,0.8)' }}
@@ -293,7 +293,7 @@ export default function NavbarClient({ user, notificationCount = 0 }: NavbarClie
           ) : (
             <>
               <Link
-                href="/login"
+                href="/auth/login"
                 className="hidden sm:inline-flex items-center px-3 py-1.5 text-sm font-medium transition-colors hover:text-white"
                 style={{ color: 'rgba(255,255,255,0.9)' }}
               >
