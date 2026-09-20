@@ -5,6 +5,7 @@ export type VerificationStatus =
   | 'pending'
   | 'basic'
   | 'rejected'
+  | 'needs_info'
   | 'unverified';
 
 export type UserTier = 'bulletin' | 'marketplace';

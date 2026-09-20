@@ -10,6 +10,7 @@ const badgeConfig: Record<VerificationStatus, { label: string; dot: string; text
   pending:    { label: 'Pending Review',   dot: 'bg-amber-400',   text: 'text-amber-700',   border: 'border-amber-200 bg-amber-50'   },
   basic:      { label: 'Basic Tier',       dot: 'bg-sky-400',     text: 'text-sky-700',     border: 'border-sky-200 bg-sky-50'       },
   rejected:   { label: 'Action Required',  dot: 'bg-red-400',     text: 'text-red-700',     border: 'border-red-200 bg-red-50'       },
+  needs_info: { label: 'Needs More Info',  dot: 'bg-orange-400',  text: 'text-orange-700',  border: 'border-orange-200 bg-orange-50' },
   unverified: { label: 'Unverified',       dot: 'bg-neutral-400', text: 'text-neutral-600', border: 'border-neutral-200 bg-neutral-50'},
 };
 
