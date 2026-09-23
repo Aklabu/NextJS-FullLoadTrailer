@@ -6,7 +6,6 @@ import {
   RolesSection,
   TiersSection,
   FaqSection,
-  CtaSection,
 } from '@/features/public/how-it-works';
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function HowItWorksPage() {
       <RolesSection />
       <TiersSection />
       <FaqSection />
-      <CtaSection />
     </div>
   );
 }

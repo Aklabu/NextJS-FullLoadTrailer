@@ -5,7 +5,6 @@ import MethodologySection from '@/features/public/homepage/MethodologySection';
 import TiersSection from '@/features/public/homepage/TiersSection';
 import TrustSection from '@/features/public/homepage/TrustSection';
 import FaqSection from '@/features/public/homepage/FaqSection';
-import CtaSection from '@/features/public/homepage/CtaSection';
 
 export const metadata: Metadata = {
   title: 'FullLoadTrailer — Full Trailer Loads. Real Carriers. Zero Friction.',
@@ -24,7 +23,6 @@ export default function HomePage() {
       <TiersSection />
       <TrustSection />
       <FaqSection />
-      <CtaSection />
     </div>
   );
 }
