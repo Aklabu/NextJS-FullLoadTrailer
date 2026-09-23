@@ -29,7 +29,7 @@ function Field({
         placeholder={placeholder}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
         style={{ borderColor: error ? '#ef4444' : '#e0d5c8' }}
       />
       {error && <p id={`${id}-error`} className="mt-1.5 text-xs text-red-500" role="alert">{error}</p>}
@@ -66,9 +66,9 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
           <button
             type="button"
             onClick={() => onTierChange('basic')}
-            className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#d97b3f]"
+            className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
             style={{
-              borderColor: tier === 'basic' ? '#d97b3f' : '#e8e0d6',
+              borderColor: tier === 'basic' ? '#fc3f07' : '#e8e0d6',
               background: tier === 'basic' ? '#fff8f2' : '#fff',
             }}
             aria-pressed={tier === 'basic'}
@@ -81,7 +81,7 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
                 FREE — ALWAYS
               </span>
               {tier === 'basic' && (
-                <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#d97b3f' }} aria-hidden="true">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#fc3f07' }} aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
@@ -98,9 +98,9 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
           <button
             type="button"
             onClick={() => onTierChange('advanced')}
-            className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#d97b3f]"
+            className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
             style={{
-              borderColor: tier === 'advanced' ? '#d97b3f' : '#e8e0d6',
+              borderColor: tier === 'advanced' ? '#fc3f07' : '#e8e0d6',
               background: tier === 'advanced' ? '#fff8f2' : '#fff',
             }}
             aria-pressed={tier === 'advanced'}
@@ -108,12 +108,12 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
             <div className="mb-3 flex items-center justify-between">
               <span
                 className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
-                style={{ background: '#fff0e0', color: '#c2622b' }}
+                style={{ background: '#fff0e0', color: '#d93506' }}
               >
                 TIER 2
               </span>
               {tier === 'advanced' && (
-                <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#d97b3f' }} aria-hidden="true">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#fc3f07' }} aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
@@ -133,7 +133,7 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
       {tier === 'advanced' && (
         <div className="space-y-5 rounded-xl border border-[#f0c896] bg-[#fffbf5] p-5">
           <div className="flex items-start gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
             </svg>
             <p className="text-xs leading-relaxed text-[#7a4a1a]">

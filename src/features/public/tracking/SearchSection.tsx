@@ -49,7 +49,7 @@ export default function SearchSection({ onResult }: Props) {
           display: 'inline-flex', alignItems: 'center', gap: 8,
           background: '#fff', border: '1px solid #fed7aa',
           borderRadius: 999, padding: '6px 16px',
-          fontSize: 12, fontWeight: 600, color: '#c2622b',
+          fontSize: 12, fontWeight: 600, color: '#d93506',
           marginBottom: 24,
         }}
       >
@@ -67,7 +67,7 @@ export default function SearchSection({ onResult }: Props) {
       >
         Track Shipment by Job ID.
         <br />
-        <span style={{ fontStyle: 'italic', color: '#d97b3f' }}>Real-Time Corridor Telemetry.</span>
+        <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>Real-Time Corridor Telemetry.</span>
       </h1>
 
       <p style={{ maxWidth: 560, color: '#6b7280', fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
@@ -125,7 +125,7 @@ export default function SearchSection({ onResult }: Props) {
             onClick={() => handleSearch()}
             disabled={loading}
             style={{
-              background: loading ? '#e5a87a' : '#d97b3f',
+              background: loading ? '#e5a87a' : '#fc3f07',
               color: '#fff', fontWeight: 600, fontSize: 14,
               borderRadius: 12, padding: '12px 24px',
               border: 'none', cursor: loading ? 'not-allowed' : 'pointer',

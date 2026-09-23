@@ -54,7 +54,7 @@ function StepList({ steps }: { steps: { title: string; body: string }[] }) {
               width: 24,
               height: 24,
               borderRadius: '50%',
-              background: '#d97b3f',
+              background: '#fc3f07',
               color: '#fff',
               fontSize: 12,
               fontWeight: 700,
@@ -98,7 +98,7 @@ export default function RolesSection() {
                 fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: 1.5,
-                color: '#c2622b',
+                color: '#d93506',
                 textTransform: 'uppercase',
                 marginBottom: 8,
               }}
@@ -129,7 +129,7 @@ export default function RolesSection() {
               fontFamily: 'system-ui, -apple-system, sans-serif',
             }}
           >
-            <div style={{ height: 4, background: 'linear-gradient(90deg, #d97b3f, #c1414f)' }} />
+            <div style={{ height: 4, background: 'linear-gradient(90deg, #fc3f07, #c1414f)' }} />
             <div style={{ padding: 28 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
@@ -160,7 +160,7 @@ export default function RolesSection() {
                     padding: '4px 10px',
                     borderRadius: 999,
                     background: '#fbeee0',
-                    color: '#c2622b',
+                    color: '#d93506',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -186,7 +186,7 @@ export default function RolesSection() {
                 <span>⏱ Avg. time-to-cover reduced from 2.5 hrs to +14 mins</span>
                 <span
                   style={{
-                    background: '#d97b3f',
+                    background: '#fc3f07',
                     color: '#fff',
                     padding: '3px 10px',
                     borderRadius: 999,
@@ -213,7 +213,7 @@ export default function RolesSection() {
               fontFamily: 'system-ui, -apple-system, sans-serif',
             }}
           >
-            <div style={{ height: 4, background: 'linear-gradient(90deg, #e8c34a, #d97b3f)' }} />
+            <div style={{ height: 4, background: 'linear-gradient(90deg, #e8c34a, #fc3f07)' }} />
             <div style={{ padding: 28 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
@@ -244,7 +244,7 @@ export default function RolesSection() {
                     padding: '4px 10px',
                     borderRadius: 999,
                     background: '#fbeee0',
-                    color: '#c2622b',
+                    color: '#d93506',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -270,7 +270,7 @@ export default function RolesSection() {
                 <span>✅ Zero mystery middlemen &amp; direct shipper negotiations</span>
                 <span
                   style={{
-                    background: '#d97b3f',
+                    background: '#fc3f07',
                     color: '#fff',
                     padding: '3px 10px',
                     borderRadius: 999,

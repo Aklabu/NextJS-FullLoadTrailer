@@ -27,12 +27,12 @@ export default function PricingHero() {
           padding: '6px 16px',
           fontSize: 12,
           fontWeight: 600,
-          color: '#c2622b',
+          color: '#d93506',
           marginBottom: 24,
           fontFamily: 'system-ui, -apple-system, sans-serif',
         }}
       >
-        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#c2622b', display: 'inline-block' }} />
+        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#d93506', display: 'inline-block' }} />
         TRANSPARENT PRICING &amp; ARCHITECTURE TIERS
         <span style={{ color: '#d1d5db' }}>|</span>
         <span style={{ color: '#6b7280', fontWeight: 400 }}>ZERO HIDDEN BROKER SKIM</span>
@@ -54,7 +54,7 @@ export default function PricingHero() {
         <span
           style={{
             fontStyle: 'italic',
-            color: '#d97b3f',
+            color: '#fc3f07',
             textDecoration: 'underline',
             textDecorationColor: '#f3a76a',
             textUnderlineOffset: 8,
@@ -99,7 +99,7 @@ export default function PricingHero() {
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            background: active === 'shipper' ? '#d97b3f' : 'transparent',
+            background: active === 'shipper' ? '#fc3f07' : 'transparent',
             color: active === 'shipper' ? '#fff' : '#4b5563',
             fontSize: 14,
             fontWeight: 600,
@@ -121,7 +121,7 @@ export default function PricingHero() {
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            background: active === 'carrier' ? '#d97b3f' : 'transparent',
+            background: active === 'carrier' ? '#fc3f07' : 'transparent',
             color: active === 'carrier' ? '#fff' : '#4b5563',
             fontSize: 14,
             fontWeight: 600,

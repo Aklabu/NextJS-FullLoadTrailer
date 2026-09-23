@@ -45,7 +45,7 @@ function BulletinVisual() {
           </div>
         ))}
         <div className="mt-1 rounded-xl border-2 border-dashed border-[#e0d5c8] bg-white/60 px-4 py-3 text-center">
-          <p className="text-xs font-semibold text-[#d97b3f]">+ Create Post</p>
+          <p className="text-xs font-semibold text-[#fc3f07]">+ Create Post</p>
         </div>
       </div>
     </div>
@@ -61,10 +61,10 @@ function MarketplaceVisual() {
     >
       <div className="flex flex-col gap-2 w-64">
         {/* Load card */}
-        <div className="rounded-xl border-2 border-[#d97b3f] bg-white px-4 py-3 shadow-sm">
+        <div className="rounded-xl border-2 border-[#fc3f07] bg-white px-4 py-3 shadow-sm">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs font-semibold text-neutral-800">Miami → New York</p>
-            <span className="rounded-full bg-[#fff0e0] px-2 py-0.5 text-[9px] font-bold text-[#c2622b]">BIDDING</span>
+            <span className="rounded-full bg-[#fff0e0] px-2 py-0.5 text-[9px] font-bold text-[#d93506]">BIDDING</span>
           </div>
           <p className="text-[10px] text-neutral-400">48-ft flatbed · 1,240 cu ft · Aug 14</p>
         </div>
@@ -75,7 +75,7 @@ function MarketplaceVisual() {
         ].map((bid) => (
           <div key={bid.carrier} className="flex items-center justify-between rounded-xl border border-[#e8e0d6] bg-white px-4 py-2.5">
             <div className="flex items-center gap-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f3ede4] text-[10px] font-bold text-[#d97b3f]">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f3ede4] text-[10px] font-bold text-[#fc3f07]">
                 {bid.carrier[0]}
               </div>
               <p className="text-xs font-medium text-neutral-700">{bid.carrier}</p>
@@ -88,7 +88,7 @@ function MarketplaceVisual() {
         ))}
         {/* Action row */}
         <div className="flex gap-2">
-          <div className="flex-1 rounded-xl bg-[#d97b3f] py-2 text-center text-[10px] font-bold text-white">Accept</div>
+          <div className="flex-1 rounded-xl bg-[#fc3f07] py-2 text-center text-[10px] font-bold text-white">Accept</div>
           <div className="flex-1 rounded-xl border border-[#e0d5c8] py-2 text-center text-[10px] font-semibold text-neutral-600">Counter</div>
         </div>
       </div>
@@ -106,7 +106,7 @@ function BiddingVisual() {
       <div className="flex flex-col items-center gap-4 w-60">
         {/* Flow diagram */}
         {[
-          { icon: '📦', label: 'Shipper posts load', color: '#fff0e0', textColor: '#c2622b' },
+          { icon: '📦', label: 'Shipper posts load', color: '#fff0e0', textColor: '#d93506' },
           { icon: '⬇️', label: '', color: 'transparent', textColor: '#999' },
           { icon: '🚚', label: 'Carrier places bid', color: '#e6f0f2', textColor: '#224248' },
           { icon: '⬇️', label: '', color: 'transparent', textColor: '#999' },
@@ -148,7 +148,7 @@ function CtaVisual({ role }: { role: UserRole }) {
         >
           {isCarrier ? 'Ready to find your first load?' : 'Ready to post your first load?'}
         </p>
-        <div className="rounded-xl bg-[#d97b3f] px-5 py-2.5 text-sm font-semibold text-white">
+        <div className="rounded-xl bg-[#fc3f07] px-5 py-2.5 text-sm font-semibold text-white">
           {isCarrier ? 'Browse loads →' : 'Post a load →'}
         </div>
       </div>
@@ -283,9 +283,9 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
           {/* Top row — badge + skip */}
           <div className="mb-6 flex items-center justify-between">
             <span
-              className="inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-[#fffbf5] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#c2622b]"
+              className="inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-[#fffbf5] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#d93506]"
             >
-              <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />
+              <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />
               {current.badge}
             </span>
 
@@ -316,7 +316,7 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
             </p>
             {current.tip && (
               <div className="mt-4 flex items-start gap-2 rounded-xl border border-[#f0c896] bg-[#fffbf5] px-4 py-3">
-                <span className="mt-0.5 text-sm text-[#d97b3f]" aria-hidden="true">💡</span>
+                <span className="mt-0.5 text-sm text-[#fc3f07]" aria-hidden="true">💡</span>
                 <p className="text-xs leading-relaxed text-[#7a4a1a]">{current.tip}</p>
               </div>
             )}
@@ -336,7 +336,7 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
                 style={{
                   width: i === step ? 20 : 8,
                   height: 8,
-                  background: i === step ? '#d97b3f' : '#e8e0d6',
+                  background: i === step ? '#fc3f07' : '#e8e0d6',
                 }}
               />
             ))}
@@ -348,7 +348,7 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                className="flex items-center gap-1.5 rounded-xl border border-[#e0d5c8] bg-white px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+                className="flex items-center gap-1.5 rounded-xl border border-[#e0d5c8] bg-white px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
@@ -361,8 +361,8 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
               <button
                 type="button"
                 onClick={() => setStep((s) => s + 1)}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}
               >
                 Next
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -377,15 +377,15 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
                 <Link
                   href={isCarrier ? '/marketplace/loads' : '/board'}
                   onClick={dismiss}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                  style={{ background: '#d97b3f' }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                  style={{ background: '#fc3f07' }}
                 >
                   {isCarrier ? 'Browse loads →' : 'Post your first load →'}
                 </Link>
                 <button
                   type="button"
                   onClick={dismiss}
-                  className="w-full rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-medium text-neutral-500 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+                  className="w-full rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-medium text-neutral-500 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
                 >
                   Go to dashboard
                 </button>

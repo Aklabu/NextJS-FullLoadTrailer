@@ -33,8 +33,8 @@ function Field({
         autoComplete={autoComplete}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
-        style={{ borderColor: error ? '#ef4444' : '#e0d5c8', ...(error ? {} : { '--tw-ring-color': '#d97b3f' } as React.CSSProperties) }}
+        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
+        style={{ borderColor: error ? '#ef4444' : '#e0d5c8', ...(error ? {} : { '--tw-ring-color': '#fc3f07' } as React.CSSProperties) }}
       />
       {error && (
         <p id={`${id}-error`} className="mt-1.5 text-xs text-red-500" role="alert">{error}</p>
@@ -109,7 +109,7 @@ export default function StepCompanyInfo({ company, errors, onChange }: Props) {
             value={company.state}
             onChange={(e) => onChange('state', e.target.value)}
             aria-invalid={!!errors.state}
-            className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20 appearance-none"
+            className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20 appearance-none"
             style={{ borderColor: errors.state ? '#ef4444' : '#e0d5c8' }}
           >
             <option value="">State</option>

@@ -54,7 +54,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         }}
       >
         <span style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, fontWeight: 600, color: '#1a1a1a' }}>
-          <span style={{ color: '#d97b3f' }}>●</span>
+          <span style={{ color: '#fc3f07' }}>●</span>
           {q}
         </span>
         <span style={{ color: '#9ca3af', fontSize: 16, marginLeft: 16, flexShrink: 0 }}>{open ? '↑' : '↓'}</span>
@@ -86,7 +86,7 @@ export default function PricingFaq() {
   return (
     <section style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px 64px' }}>
       <div style={{ textAlign: 'center', marginBottom: 40, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: '#c2622b', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: '#d93506', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
           GOT QUESTIONS?
         </div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 30, fontWeight: 400, color: '#1a1a1a', marginBottom: 8 }}>

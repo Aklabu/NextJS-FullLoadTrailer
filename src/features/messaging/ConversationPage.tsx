@@ -30,7 +30,7 @@ const MOCK_MESSAGES: Message[] = [
 ];
 
 const JOB_STATUS_STYLES: Record<string, { bg: string; text: string }> = {
-  bidding: { bg: '#fff7ed', text: '#c2622b' },
+  bidding: { bg: '#fff7ed', text: '#d93506' },
   booked: { bg: '#d1fae5', text: '#065f46' },
   completed: { bg: '#f0fdf4', text: '#15803d' },
   open: { bg: '#e0f2fe', text: '#0369a1' },
@@ -128,7 +128,7 @@ export default function ConversationPage() {
             <span className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]" style={{ background: jobStyle.bg, color: jobStyle.text }}>
               {MOCK_JOB.status}
             </span>
-            <Link href={`/marketplace/loads/${MOCK_JOB.jobId}`} className="text-xs font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+            <Link href={`/marketplace/loads/${MOCK_JOB.jobId}`} className="text-xs font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
               View job →
             </Link>
           </div>
@@ -153,12 +153,12 @@ export default function ConversationPage() {
                   <div className={`max-w-[75%] ${isMe ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                     {!isMe && <p className="text-[11px] font-medium text-neutral-500">{m.senderName}</p>}
                     <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${isMe ? 'rounded-tr-sm text-white' : 'rounded-tl-sm border border-[#f0ece6] bg-[#fafaf8] text-neutral-800'}`}
-                      style={{ background: isMe ? '#d97b3f' : undefined }}>
+                      style={{ background: isMe ? '#fc3f07' : undefined }}>
                       {m.body}
                       {m.attachments.length > 0 && (
                         <div className="mt-2 space-y-1">
                           {m.attachments.map((a) => (
-                            <a key={a.name} href={a.url} className={`flex items-center gap-1.5 text-xs underline underline-offset-2 ${isMe ? 'text-white/80 hover:text-white' : 'text-[#d97b3f] hover:text-[#c2622b]'}`}>
+                            <a key={a.name} href={a.url} className={`flex items-center gap-1.5 text-xs underline underline-offset-2 ${isMe ? 'text-white/80 hover:text-white' : 'text-[#fc3f07] hover:text-[#d93506]'}`}>
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                               {a.name}
                             </a>
@@ -186,7 +186,7 @@ export default function ConversationPage() {
           <div className="mb-2 flex flex-wrap gap-2">
             {attachments.map((f, i) => (
               <div key={i} className="flex items-center gap-1.5 rounded-lg border border-[#e0d5c8] bg-[#fafaf8] px-2.5 py-1 text-xs text-neutral-600">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#d97b3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#fc3f07]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                 {f.name}
                 <button type="button" onClick={() => setAttachments((p) => p.filter((_, j) => j !== i))} className="ml-0.5 text-neutral-400 hover:text-red-500" aria-label={`Remove ${f.name}`}>×</button>
               </div>
@@ -198,7 +198,7 @@ export default function ConversationPage() {
             type="file" ref={fileRef} multiple className="sr-only" aria-hidden="true"
             onChange={(e) => { if (e.target.files) setAttachments((p) => [...p, ...Array.from(e.target.files!)]); }} />
           <button type="button" onClick={() => fileRef.current?.click()}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#e0d5c8] text-neutral-400 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#e0d5c8] text-neutral-400 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
             aria-label="Attach file">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
           </button>
@@ -207,12 +207,12 @@ export default function ConversationPage() {
             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(e as unknown as React.FormEvent); } }}
             placeholder="Type a message… (Enter to send, Shift+Enter for new line)"
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20"
+            className="flex-1 resize-none rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20"
             style={{ maxHeight: 120, overflowY: 'auto' }}
             aria-label="Message input" />
           <button type="submit" disabled={sending || (!input.trim() && attachments.length === 0)}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition-colors disabled:opacity-50 hover:enabled:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition-colors disabled:opacity-50 hover:enabled:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}
             aria-label="Send message">
             {sending
               ? <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>

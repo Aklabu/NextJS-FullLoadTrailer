@@ -56,7 +56,7 @@ export default function ExecutionSection() {
                 fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: 1.5,
-                color: '#c2622b',
+                color: '#d93506',
                 textTransform: 'uppercase',
                 marginBottom: 8,
               }}
@@ -116,7 +116,7 @@ export default function ExecutionSection() {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, fontWeight: 700, color: '#7a7168' }}>
-                  <span style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#c2622b' }}>{p.num}</span>
+                  <span style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#d93506' }}>{p.num}</span>
                   {p.phase}
                 </div>
                 <div

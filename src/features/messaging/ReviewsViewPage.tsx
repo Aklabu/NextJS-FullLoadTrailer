@@ -88,7 +88,7 @@ export default function ReviewsViewPage() {
                 <span className="w-3 shrink-0 text-right text-xs text-neutral-500">{seg.star}</span>
                 <svg className="h-3 w-3 shrink-0" viewBox="0 0 20 20" fill="#FFCB56" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                 <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#f3ede4]">
-                  <div className="h-full rounded-full transition-all" style={{ width: `${seg.pct}%`, background: ratingFilter === seg.star ? '#2b1508' : '#d97b3f' }} aria-hidden="true" />
+                  <div className="h-full rounded-full transition-all" style={{ width: `${seg.pct}%`, background: ratingFilter === seg.star ? '#2b1508' : '#fc3f07' }} aria-hidden="true" />
                 </div>
                 <span className="w-6 shrink-0 text-right text-xs text-neutral-400">{seg.count}</span>
               </button>
@@ -96,7 +96,7 @@ export default function ReviewsViewPage() {
           </div>
         </div>
         {ratingFilter > 0 && (
-          <button type="button" onClick={() => setRatingFilter(0)} className="mt-4 text-xs font-medium text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+          <button type="button" onClick={() => setRatingFilter(0)} className="mt-4 text-xs font-medium text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
             Clear filter (showing {ratingFilter}★ only)
           </button>
         )}
@@ -108,7 +108,7 @@ export default function ReviewsViewPage() {
         <div className="flex items-center gap-2">
           <label htmlFor="sort" className="text-xs text-neutral-500">Sort:</label>
           <select id="sort" value={sort} onChange={(e) => setSort(e.target.value as SortKey)}
-            className="rounded-xl border border-[#e0d5c8] bg-white px-3.5 py-2 text-sm text-neutral-700 outline-none focus:border-[#d97b3f] appearance-none">
+            className="rounded-xl border border-[#e0d5c8] bg-white px-3.5 py-2 text-sm text-neutral-700 outline-none focus:border-[#fc3f07] appearance-none">
             <option value="newest">Newest first</option>
             <option value="highest">Highest rated</option>
             <option value="lowest">Lowest rated</option>
@@ -120,7 +120,7 @@ export default function ReviewsViewPage() {
       {reviews.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#e0d5c8] bg-white py-12 text-center">
           <p className="text-sm text-neutral-400">No reviews match your filter.</p>
-          <button type="button" onClick={() => setRatingFilter(0)} className="mt-3 text-sm font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">Clear filter</button>
+          <button type="button" onClick={() => setRatingFilter(0)} className="mt-3 text-sm font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">Clear filter</button>
         </div>
       ) : (
         <div className="space-y-4">

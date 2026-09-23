@@ -92,7 +92,7 @@ export default function PricingCards() {
             href="/auth/signup"
             style={{
               display: 'block', width: '100%', textAlign: 'center',
-              background: '#fff7ed', color: '#c2622b',
+              background: '#fff7ed', color: '#d93506',
               fontWeight: 600, fontSize: 14,
               borderRadius: 999, padding: '12px 0',
               textDecoration: 'none',
@@ -112,7 +112,7 @@ export default function PricingCards() {
           style={{
             position: 'relative',
             background: '#fff',
-            border: '2px solid #d97b3f',
+            border: '2px solid #fc3f07',
             borderRadius: 16,
             padding: 32,
             fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -122,7 +122,7 @@ export default function PricingCards() {
           <span
             style={{
               position: 'absolute', top: -16, right: 32,
-              background: '#d97b3f', color: '#fff',
+              background: '#fc3f07', color: '#fff',
               fontSize: 11, fontWeight: 700,
               borderRadius: 999, padding: '6px 16px',
               display: 'inline-flex', alignItems: 'center', gap: 4,
@@ -135,7 +135,7 @@ export default function PricingCards() {
             <div
               style={{
                 width: 40, height: 40, borderRadius: 10,
-                background: '#d97b3f',
+                background: '#fc3f07',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 18, flexShrink: 0,
               }}
@@ -143,7 +143,7 @@ export default function PricingCards() {
               ⚡
             </div>
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#c2622b', letterSpacing: 1, marginBottom: 2 }}>TIER 2 ARCHITECTURE</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#d93506', letterSpacing: 1, marginBottom: 2 }}>TIER 2 ARCHITECTURE</div>
               <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 400, color: '#1a1a1a' }}>Binding Digital Marketplace</h2>
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function PricingCards() {
               <span style={{ fontSize: 36, fontWeight: 700, color: '#1a1a1a' }}>Configurable</span>
               <span
                 style={{
-                  background: '#d97b3f', color: '#fff',
+                  background: '#fc3f07', color: '#fff',
                   fontSize: 11, fontWeight: 700,
                   borderRadius: 10, padding: '8px 12px',
                   textAlign: 'center', lineHeight: 1.4,
@@ -168,7 +168,7 @@ export default function PricingCards() {
                 Zero Broker<br />Commission Skim
               </span>
             </div>
-            <p style={{ fontSize: 11, fontWeight: 600, color: '#c2622b', marginTop: 8, letterSpacing: 0.3 }}>
+            <p style={{ fontSize: 11, fontWeight: 600, color: '#d93506', marginTop: 8, letterSpacing: 0.3 }}>
               PER-TRANSACTION ESCROW OR DEDICATED MONTHLY RETAINER
             </p>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#6b7280', marginTop: 12 }}>
@@ -181,7 +181,7 @@ export default function PricingCards() {
           <ul style={{ listStyle: 'none', marginBottom: 24 }}>
             {tier2Features.map((f, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, padding: '6px 0', color: '#1a1a1a' }}>
-                <span style={{ color: '#c2622b', fontWeight: 700, flexShrink: 0 }}>✓</span>
+                <span style={{ color: '#d93506', fontWeight: 700, flexShrink: 0 }}>✓</span>
                 {f}
               </li>
             ))}
@@ -191,7 +191,7 @@ export default function PricingCards() {
             href="/auth/signup?tier=2"
             style={{
               display: 'block', width: '100%', textAlign: 'center',
-              background: '#d97b3f', color: '#fff',
+              background: '#fc3f07', color: '#fff',
               fontWeight: 600, fontSize: 14,
               borderRadius: 999, padding: '12px 0',
               textDecoration: 'none',
@@ -200,7 +200,7 @@ export default function PricingCards() {
           >
             Select Tier 2 Marketplace Plan →
           </Link>
-          <p style={{ textAlign: 'center', fontSize: 12, color: '#c2622b', marginTop: 12 }}>
+          <p style={{ textAlign: 'center', fontSize: 12, color: '#d93506', marginTop: 12 }}>
             Pre-qualify in under 3 minutes • Instant SAFER verification
           </p>
         </div>

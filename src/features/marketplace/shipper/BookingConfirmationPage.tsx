@@ -49,7 +49,7 @@ export default function BookingConfirmationPage() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
           BOOKING CONFIRMED
         </span>
         <h1 className="mt-1 text-[clamp(24px,4vw,32px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
@@ -61,7 +61,7 @@ export default function BookingConfirmationPage() {
       </div>
 
       {/* Job ID card */}
-      <div className="mb-5 rounded-2xl border-2 border-[#d97b3f] bg-white p-5 text-center shadow-sm">
+      <div className="mb-5 rounded-2xl border-2 border-[#fc3f07] bg-white p-5 text-center shadow-sm">
         <p className="text-xs font-semibold uppercase tracking-[1.5px] text-neutral-400">Master Job ID</p>
         <p className="mt-1 font-mono text-3xl font-bold text-neutral-900">{b.jobId}</p>
         <p className="mt-0.5 text-xs text-neutral-400">Booking ref: {b.bookingId}</p>
@@ -85,7 +85,7 @@ export default function BookingConfirmationPage() {
         <h2 className="mb-4 text-sm font-semibold text-neutral-800" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Load details</h2>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3ede4] text-xs font-bold text-[#d97b3f]" aria-hidden="true">A</div>
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3ede4] text-xs font-bold text-[#fc3f07]" aria-hidden="true">A</div>
             <div>
               <p className="text-[10px] text-neutral-400">PICKUP · {formatDate(b.load.pickupDate)}</p>
               <p className="text-sm font-semibold text-neutral-800">{b.load.origin}</p>
@@ -131,7 +131,7 @@ export default function BookingConfirmationPage() {
 
       {/* Next steps */}
       <div className="mb-6 rounded-2xl border border-[#f0c896] bg-[#fffbf5] p-5">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[1px] text-[#c2622b]">What happens next</p>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[1px] text-[#d93506]">What happens next</p>
         <ul className="space-y-2.5">
           {[
             'Both parties have been notified by email with this confirmation.',
@@ -140,7 +140,7 @@ export default function BookingConfirmationPage() {
             'After delivery, both parties can leave a review.',
           ].map((step, i) => (
             <li key={i} className="flex items-start gap-2.5 text-xs text-[#7a4a1a]">
-              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#d97b3f] text-[9px] font-bold text-white" aria-hidden="true">{i + 1}</span>
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#fc3f07] text-[9px] font-bold text-white" aria-hidden="true">{i + 1}</span>
               {step}
             </li>
           ))}
@@ -150,18 +150,18 @@ export default function BookingConfirmationPage() {
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
         <Link href={`/messages?job=${b.jobId}`}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-          style={{ background: '#d97b3f' }}>
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+          style={{ background: '#fc3f07' }}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
           Message carrier
         </Link>
         <button type="button" onClick={() => window.print()}
-          className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+          className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
           Print / Download
         </button>
         <Link href="/marketplace/my-loads"
-          className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+          className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
           Back to my loads
         </Link>
       </div>

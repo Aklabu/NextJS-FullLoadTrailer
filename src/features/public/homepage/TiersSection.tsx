@@ -29,7 +29,7 @@ export default function TiersSection() {
 
         {/* Header */}
         <div className="mb-12 text-center">
-          <span className="mb-4 inline-flex items-center rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#c2622b]">
+          <span className="mb-4 inline-flex items-center rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#d93506]">
             TWO TIERS, ONE PLATFORM
           </span>
           <h2
@@ -67,7 +67,7 @@ export default function TiersSection() {
             <ul className="mb-8 flex-1 space-y-3">
               {tier1Features.map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm text-neutral-700">
-                  <svg className="h-4 w-4 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   {f}
@@ -84,9 +84,9 @@ export default function TiersSection() {
           </div>
 
           {/* Tier 2 — Marketplace */}
-          <div className="flex flex-col rounded-2xl border-2 border-[#d97b3f] bg-white p-8 shadow-sm">
+          <div className="flex flex-col rounded-2xl border-2 border-[#fc3f07] bg-white p-8 shadow-sm">
             <div className="mb-4">
-              <span className="rounded-full border border-[#f0c896] bg-[#fff0e0] px-3 py-1 text-[10px] font-bold uppercase tracking-[1px] text-[#c2622b]">
+              <span className="rounded-full border border-[#f0c896] bg-[#fff0e0] px-3 py-1 text-[10px] font-bold uppercase tracking-[1px] text-[#d93506]">
                 TIER 2
               </span>
             </div>
@@ -104,7 +104,7 @@ export default function TiersSection() {
             <ul className="mb-8 flex-1 space-y-3">
               {tier2Features.map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm text-neutral-700">
-                  <svg className="h-4 w-4 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   {f}
@@ -114,7 +114,7 @@ export default function TiersSection() {
 
             <Link
               href="/pricing"
-              className="block w-full rounded-xl bg-[#d97b3f] py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
+              className="block w-full rounded-xl bg-[#fc3f07] py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
             >
               See pricing
             </Link>

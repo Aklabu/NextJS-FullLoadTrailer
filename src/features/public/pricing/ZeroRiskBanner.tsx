@@ -47,7 +47,7 @@ export default function ZeroRiskBanner() {
           <Link
             href="/auth/signup"
             style={{
-              background: '#d97b3f',
+              background: '#fc3f07',
               color: '#fff',
               fontSize: 14, fontWeight: 600,
               borderRadius: 999, padding: '10px 20px',

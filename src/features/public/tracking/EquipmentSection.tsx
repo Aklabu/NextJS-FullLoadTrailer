@@ -29,7 +29,7 @@ export default function EquipmentSection({ result }: Props) {
               style={{
                 fontFamily: f.mono ? 'ui-monospace, monospace' : 'Georgia, serif',
                 fontSize: f.mono ? 15 : 17,
-                color: f.mono ? '#c2622b' : '#1a1a1a',
+                color: f.mono ? '#d93506' : '#1a1a1a',
                 marginBottom: 4,
                 fontWeight: f.mono ? 600 : 400,
               }}

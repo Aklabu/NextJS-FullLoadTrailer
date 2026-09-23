@@ -21,8 +21,8 @@ export default function LegalPage({ badge, title, effectiveDate, intro, sections
 
         {/* Header */}
         <div className="mb-10">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />
             {badge}
           </span>
           <h1
@@ -61,11 +61,11 @@ export default function LegalPage({ badge, title, effectiveDate, intro, sections
         <div className="mt-12 rounded-2xl border border-[#e8e0d6] bg-white p-6 text-center shadow-sm">
           <p className="text-sm text-neutral-600">
             Questions about this document? Contact us at{' '}
-            <a href="mailto:legal@fullloadtrailer.com" className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+            <a href="mailto:legal@fullloadtrailer.com" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
               legal@fullloadtrailer.com
             </a>
             {' '}or visit our{' '}
-            <a href="/contact" className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+            <a href="/contact" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
               contact page
             </a>.
           </p>

@@ -63,7 +63,7 @@ function ReportModal({ onClose, onSubmit, state }: {
             </div>
             <p className="text-sm font-semibold text-neutral-800">Report submitted</p>
             <p className="mt-1 text-xs text-neutral-500">Our team will review this post. Thank you.</p>
-            <button type="button" onClick={onClose} className="mt-4 rounded-xl border border-[#e0d5c8] px-5 py-2 text-sm font-semibold text-neutral-600 hover:border-[#d97b3f] hover:text-[#d97b3f] transition-colors">
+            <button type="button" onClick={onClose} className="mt-4 rounded-xl border border-[#e0d5c8] px-5 py-2 text-sm font-semibold text-neutral-600 hover:border-[#fc3f07] hover:text-[#fc3f07] transition-colors">
               Close
             </button>
           </div>
@@ -79,12 +79,12 @@ function ReportModal({ onClose, onSubmit, state }: {
 
             <div className="mb-4 space-y-2">
               {['Spam or duplicate', 'Misleading information', 'Contains contact details', 'Inappropriate content', 'Other'].map((opt) => (
-                <label key={opt} className="flex cursor-pointer items-center gap-3 rounded-xl border border-[#e8e0d6] p-3 transition-colors hover:border-[#d97b3f]">
+                <label key={opt} className="flex cursor-pointer items-center gap-3 rounded-xl border border-[#e8e0d6] p-3 transition-colors hover:border-[#fc3f07]">
                   <input
                     type="radio" name="report-reason" value={opt}
                     checked={reason === opt}
                     onChange={() => setReason(opt)}
-                    className="accent-[#d97b3f]"
+                    className="accent-[#fc3f07]"
                   />
                   <span className="text-sm text-neutral-700">{opt}</span>
                 </label>
@@ -93,7 +93,7 @@ function ReportModal({ onClose, onSubmit, state }: {
 
             <div className="flex gap-3">
               <button type="button" onClick={onClose}
-                className="flex-1 rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+                className="flex-1 rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
               >
                 Cancel
               </button>
@@ -161,7 +161,7 @@ export default function PostDetailPage() {
               className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[1px]"
               style={{
                 background: isLoad ? '#fff0e0' : '#e6f0f2',
-                color: isLoad ? '#c2622b' : '#224248',
+                color: isLoad ? '#d93506' : '#224248',
               }}
             >
               {POST_TYPE_LABELS[post.postType]}
@@ -177,7 +177,7 @@ export default function PostDetailPage() {
             >
               {post.origin}
             </h1>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
             <h1
@@ -223,8 +223,8 @@ export default function PostDetailPage() {
                 <button
                   type="button"
                   onClick={() => setContactRevealed(true)}
-                  className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                  style={{ background: '#d97b3f' }}
+                  className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                  style={{ background: '#fc3f07' }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -270,7 +270,7 @@ export default function PostDetailPage() {
             </div>
             <Link
               href={`/profiles/${post.poster.id}`}
-              className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+              className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
             >
               View profile →
             </Link>

@@ -140,7 +140,7 @@ export default function PublicProfilePage() {
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
             href={`/messages/new?recipient=${params?.id}`}
-            className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] bg-white px-5 py-2.5 text-sm font-semibold text-neutral-700 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+            className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] bg-white px-5 py-2.5 text-sm font-semibold text-neutral-700 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -150,8 +150,8 @@ export default function PublicProfilePage() {
           {profile.role === 'carrier' && (
             <Link
               href={`/marketplace/loads?carrier=${params?.id}`}
-              className="flex items-center gap-2 rounded-xl py-2.5 px-5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}
+              className="flex items-center gap-2 rounded-xl py-2.5 px-5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}
             >
               View active capacity →
             </Link>
@@ -159,8 +159,8 @@ export default function PublicProfilePage() {
           {(profile.role === 'shipper' || profile.role === 'broker') && (
             <Link
               href={`/marketplace/my-loads?shipper=${params?.id}`}
-              className="flex items-center gap-2 rounded-xl py-2.5 px-5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}
+              className="flex items-center gap-2 rounded-xl py-2.5 px-5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}
             >
               View active loads →
             </Link>
@@ -198,7 +198,7 @@ export default function PublicProfilePage() {
                     <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#f3ede4]">
                       <div
                         className="h-full rounded-full transition-all"
-                        style={{ width: `${seg.pct}%`, background: '#d97b3f' }}
+                        style={{ width: `${seg.pct}%`, background: '#fc3f07' }}
                         aria-hidden="true"
                       />
                     </div>
@@ -230,7 +230,7 @@ export default function PublicProfilePage() {
             {profile.totalReviews > profile.recentReviews.length && (
               <Link
                 href={`/profiles/${params?.id}/reviews`}
-                className="mt-4 block text-center text-sm font-medium text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]"
+                className="mt-4 block text-center text-sm font-medium text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
               >
                 See all {profile.totalReviews} reviews →
               </Link>

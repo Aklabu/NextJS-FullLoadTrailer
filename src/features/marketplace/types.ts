@@ -60,7 +60,7 @@ export const PRICING_MODE_LABELS: Record<PricingMode, string> = {
 
 export const LOAD_STATUS_COLORS: Record<LoadStatus, { bg: string; text: string; label: string }> = {
   open:      { bg: '#e0f2fe', text: '#0369a1', label: 'Open' },
-  bidding:   { bg: '#fff7ed', text: '#c2622b', label: 'Bidding' },
+  bidding:   { bg: '#fff7ed', text: '#d93506', label: 'Bidding' },
   booked:    { bg: '#d1fae5', text: '#065f46', label: 'Booked' },
   completed: { bg: '#f0fdf4', text: '#15803d', label: 'Completed' },
   expired:   { bg: '#f5f5f4', text: '#78716c', label: 'Expired' },
@@ -68,7 +68,7 @@ export const LOAD_STATUS_COLORS: Record<LoadStatus, { bg: string; text: string; 
 };
 
 export const BID_STATUS_COLORS: Record<BidStatus, { bg: string; text: string; label: string }> = {
-  pending:   { bg: '#fff7ed', text: '#c2622b', label: 'Pending' },
+  pending:   { bg: '#fff7ed', text: '#d93506', label: 'Pending' },
   countered: { bg: '#fef3c7', text: '#92400e', label: 'Countered' },
   accepted:  { bg: '#d1fae5', text: '#065f46', label: 'Accepted' },
   rejected:  { bg: '#fee2e2', text: '#991b1b', label: 'Rejected' },

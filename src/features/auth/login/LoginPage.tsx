@@ -101,7 +101,7 @@ export default function LoginPage() {
         {/* Center copy */}
         <div>
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-white/75">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
             FREIGHT EXCHANGE PLATFORM
           </span>
 
@@ -113,7 +113,7 @@ export default function LoginPage() {
             <br />
             Real Carriers.
             <br />
-            <span className="italic text-[#d97b3f]">Zero Friction.</span>
+            <span className="italic text-[#fc3f07]">Zero Friction.</span>
           </h2>
 
           <p className="mt-5 max-w-[320px] text-sm leading-relaxed text-white/60">
@@ -156,12 +156,12 @@ export default function LoginPage() {
               FL
             </span>
             <span className="text-base font-semibold tracking-tight text-neutral-900">
-              FullLoad<span style={{ color: '#d97b3f' }}>Trailer</span>
+              FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
             </span>
           </Link>
           <span className="text-sm text-neutral-500">
             No account?{' '}
-            <Link href="/auth/signup" className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+            <Link href="/auth/signup" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
               Sign up
             </Link>
           </span>
@@ -173,8 +173,8 @@ export default function LoginPage() {
 
             {/* Header */}
             <div className="mb-8">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
                 WELCOME BACK
               </span>
               <h1
@@ -185,7 +185,7 @@ export default function LoginPage() {
               </h1>
               <p className="mt-2 text-sm text-neutral-500">
                 Don&apos;t have one?{' '}
-                <Link href="/auth/signup" className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+                <Link href="/auth/signup" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
                   Create an account
                 </Link>
               </p>
@@ -237,7 +237,7 @@ export default function LoginPage() {
                   onChange={handleChange}
                   disabled={isLoading}
                   placeholder="you@company.com"
-                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:opacity-60"
+                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:opacity-60"
                 />
               </div>
 
@@ -249,7 +249,7 @@ export default function LoginPage() {
                   </label>
                   <Link
                     href="/auth/forgot-password"
-                    className="text-xs font-medium text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]"
+                    className="text-xs font-medium text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
                     tabIndex={0}
                   >
                     Forgot password?
@@ -266,7 +266,7 @@ export default function LoginPage() {
                     onChange={handleChange}
                     disabled={isLoading}
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:opacity-60"
+                    className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:opacity-60"
                   />
                   <button
                     type="button"
@@ -293,8 +293,8 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading || !fields.email.trim() || !fields.password}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b] hover:enabled:scale-[1.01]"
-                style={{ background: '#d97b3f' }}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506] hover:enabled:scale-[1.01]"
+                style={{ background: '#fc3f07' }}
               >
                 {isLoading ? (
                   <>
@@ -328,7 +328,7 @@ export default function LoginPage() {
             {/* Sign-up nudge */}
             <Link
               href="/auth/signup"
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#e0d5c8] bg-white py-3.5 text-sm font-semibold text-neutral-700 transition-all hover:border-[#d97b3f] hover:text-[#d97b3f]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#e0d5c8] bg-white py-3.5 text-sm font-semibold text-neutral-700 transition-all hover:border-[#fc3f07] hover:text-[#fc3f07]"
             >
               Create a free account
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -23,7 +23,7 @@ export default function PricingCta() {
             padding: '6px 16px',
             fontSize: 12,
             fontWeight: 600,
-            color: '#c2622b',
+            color: '#d93506',
             marginBottom: 24,
           }}
         >
@@ -41,7 +41,7 @@ export default function PricingCta() {
           }}
         >
           Ready to streamline your{' '}
-          <span style={{ fontStyle: 'italic', color: '#d97b3f' }}>freight execution?</span>
+          <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>freight execution?</span>
         </h2>
 
         <p style={{ color: '#4b5563', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.6, fontSize: 15 }}>
@@ -70,7 +70,7 @@ export default function PricingCta() {
           <Link
             href="/auth/signup?tier=2"
             style={{
-              background: '#d97b3f',
+              background: '#fc3f07',
               color: '#fff',
               fontWeight: 600,
               fontSize: 14,

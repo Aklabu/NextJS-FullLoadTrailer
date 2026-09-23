@@ -83,7 +83,7 @@ function OtpInput({ value, onChange, disabled }: { value: string; onChange: (v: 
           onChange={(e) => handleInput(i, e)}
           onKeyDown={(e) => handleKey(i, e)}
           onPaste={handlePaste}
-          className="h-14 w-12 rounded-xl border border-[#e0d5c8] bg-white text-center font-mono text-xl font-bold text-neutral-900 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:opacity-60"
+          className="h-14 w-12 rounded-xl border border-[#e0d5c8] bg-white text-center font-mono text-xl font-bold text-neutral-900 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:opacity-60"
           style={{ caretColor: 'transparent' }}
         />
       ))}
@@ -250,8 +250,8 @@ export default function ForgotPasswordPage() {
           <button
             type="button"
             onClick={() => router.push('/auth/login')}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}
           >
             Go to Login
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -279,12 +279,12 @@ export default function ForgotPasswordPage() {
             FL
           </span>
           <span className="text-base font-semibold tracking-tight text-neutral-900">
-            FullLoad<span style={{ color: '#d97b3f' }}>Trailer</span>
+            FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
           </span>
         </Link>
         <span className="text-sm text-neutral-500">
           Remember your password?{' '}
-          <Link href="/auth/login" className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+          <Link href="/auth/login" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
             Log in
           </Link>
         </span>
@@ -296,8 +296,8 @@ export default function ForgotPasswordPage() {
 
           {/* Header */}
           <div className="mb-8">
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
               PASSWORD RECOVERY
             </span>
             <h1
@@ -330,7 +330,7 @@ export default function ForgotPasswordPage() {
                     <div
                       className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-colors"
                       style={{
-                        background: done ? '#d97b3f' : active ? '#2b1508' : '#e8e0d6',
+                        background: done ? '#fc3f07' : active ? '#2b1508' : '#e8e0d6',
                         color: done || active ? '#fff' : '#a09080',
                       }}
                     >
@@ -345,7 +345,7 @@ export default function ForgotPasswordPage() {
                   {i < STEPS.length - 1 && (
                     <div
                       className="mb-5 mx-1.5 h-0.5 flex-1 rounded-full transition-colors"
-                      style={{ background: step > s.n ? '#d97b3f' : '#e8e0d6' }}
+                      style={{ background: step > s.n ? '#fc3f07' : '#e8e0d6' }}
                     />
                   )}
                 </div>
@@ -380,14 +380,14 @@ export default function ForgotPasswordPage() {
                   onChange={(e) => { setEmail(e.target.value); clearError(); }}
                   disabled={isLoading}
                   placeholder="you@company.com"
-                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:opacity-60"
+                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:opacity-60"
                 />
               </div>
               <button
                 type="submit"
                 disabled={isLoading || !email.trim()}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}
               >
                 {isLoading ? (
                   <>
@@ -401,7 +401,7 @@ export default function ForgotPasswordPage() {
               </button>
               <p className="text-center text-[13px] text-neutral-400">
                 Back to{' '}
-                <Link href="/auth/login" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+                <Link href="/auth/login" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
                   Log in
                 </Link>
               </p>
@@ -421,8 +421,8 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={isLoading || otp.replace(/\D/g, '').length < 6}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}
               >
                 {isLoading ? (
                   <>
@@ -442,7 +442,7 @@ export default function ForgotPasswordPage() {
                   type="button"
                   onClick={handleResend}
                   disabled={resendCooldown > 0 || isLoading}
-                  className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b] disabled:cursor-not-allowed disabled:text-neutral-400 disabled:no-underline"
+                  className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506] disabled:cursor-not-allowed disabled:text-neutral-400 disabled:no-underline"
                 >
                   {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend code'}
                 </button>
@@ -480,7 +480,7 @@ export default function ForgotPasswordPage() {
                     onChange={(e) => { setPassword(e.target.value); clearError(); }}
                     disabled={isLoading}
                     placeholder="Min. 8 characters"
-                    className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:opacity-60"
+                    className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:opacity-60"
                   />
                   <button
                     type="button"
@@ -534,7 +534,7 @@ export default function ForgotPasswordPage() {
                     onChange={(e) => { setConfirmPassword(e.target.value); clearError(); }}
                     disabled={isLoading}
                     placeholder="Repeat your password"
-                    className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:opacity-60"
+                    className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:opacity-60"
                     style={{ borderColor: confirmPassword && password !== confirmPassword ? '#ef4444' : undefined }}
                   />
                   <button
@@ -555,8 +555,8 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={isLoading || !password || password !== confirmPassword || password.length < 8}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}
               >
                 {isLoading ? (
                   <>

@@ -66,7 +66,7 @@ function BidRow({ bid, onAction }: { bid: Bid; onAction: (bidId: string, action:
           </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <Link href={`/profiles/${bid.carrier.id}`} className="text-sm font-semibold text-neutral-800 hover:text-[#d97b3f] transition-colors">
+              <Link href={`/profiles/${bid.carrier.id}`} className="text-sm font-semibold text-neutral-800 hover:text-[#fc3f07] transition-colors">
                 {bid.carrier.companyName}
               </Link>
               <VerificationBadge status={bid.carrier.verificationStatus} />
@@ -104,17 +104,17 @@ function BidRow({ bid, onAction }: { bid: Bid; onAction: (bidId: string, action:
           </button>
           {!showCounter ? (
             <button type="button" onClick={() => setShowCounter(true)}
-              className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-xs font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+              className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-xs font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
               Counter
             </button>
           ) : (
             <div className="flex items-center gap-2">
               <input type="number" value={counterVal} onChange={(e) => setCounterVal(e.target.value)}
-                placeholder="Your counter ($)" className="w-36 rounded-xl border border-[#e0d5c8] px-3 py-2 text-xs outline-none focus:border-[#d97b3f]" />
+                placeholder="Your counter ($)" className="w-36 rounded-xl border border-[#e0d5c8] px-3 py-2 text-xs outline-none focus:border-[#fc3f07]" />
               <button type="button" onClick={() => { onAction(bid.id, 'counter', Number(counterVal)); setShowCounter(false); setCounterVal(''); }}
                 disabled={!counterVal || Number(counterVal) <= 0}
-                className="rounded-xl px-3 py-2 text-xs font-semibold text-white disabled:opacity-50 hover:enabled:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}>Send</button>
+                className="rounded-xl px-3 py-2 text-xs font-semibold text-white disabled:opacity-50 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}>Send</button>
               <button type="button" onClick={() => { setShowCounter(false); setCounterVal(''); }}
                 className="text-xs text-neutral-400 hover:text-neutral-600">Cancel</button>
             </div>
@@ -124,7 +124,7 @@ function BidRow({ bid, onAction }: { bid: Bid; onAction: (bidId: string, action:
             Reject
           </button>
           <Link href={`/messages?job=${MOCK_LOAD.id}&carrier=${bid.carrier.id}`}
-            className="ml-auto flex items-center gap-1 rounded-xl border border-[#e0d5c8] px-3 py-2 text-xs font-medium text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+            className="ml-auto flex items-center gap-1 rounded-xl border border-[#e0d5c8] px-3 py-2 text-xs font-medium text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
             Message
           </Link>
@@ -175,7 +175,7 @@ export default function LoadDetailPage() {
                 <p className="text-xs font-mono text-neutral-400">{load.jobId}</p>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
                   <h1 className="text-2xl font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{load.origin}</h1>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
                   <h1 className="text-2xl font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{load.destination}</h1>
                 </div>
               </div>
@@ -214,8 +214,8 @@ export default function LoadDetailPage() {
               </h2>
               {load.status === 'booked' && (
                 <Link href={`/marketplace/booking/${load.id}`}
-                  className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                  style={{ background: '#d97b3f' }}>
+                  className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                  style={{ background: '#fc3f07' }}>
                   View booking →
                 </Link>
               )}
@@ -239,7 +239,7 @@ export default function LoadDetailPage() {
           <ol className="relative border-l border-[#e8e0d6] pl-4 space-y-4">
             {load.auditLog.map((e) => (
               <li key={e.id} className="relative">
-                <span className="absolute -left-[18px] flex h-3 w-3 items-center justify-center rounded-full border-2 border-white bg-[#d97b3f]" aria-hidden="true" />
+                <span className="absolute -left-[18px] flex h-3 w-3 items-center justify-center rounded-full border-2 border-white bg-[#fc3f07]" aria-hidden="true" />
                 <p className="text-xs font-medium text-neutral-700">{e.action}</p>
                 <p className="text-[10px] text-neutral-400">{e.actor} · {formatTs(e.timestamp)}</p>
               </li>

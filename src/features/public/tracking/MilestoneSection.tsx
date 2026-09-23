@@ -29,7 +29,7 @@ export default function MilestoneSection({ result }: Props) {
               <div
                 style={{
                   width: 32, height: 32, borderRadius: '50%',
-                  background: m.active ? '#d97b3f' : '#f3f4f6',
+                  background: m.active ? '#fc3f07' : '#f3f4f6',
                   color: m.active ? '#fff' : '#6b7280',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 14,
@@ -40,7 +40,7 @@ export default function MilestoneSection({ result }: Props) {
               <span
                 style={{
                   fontFamily: 'ui-monospace, monospace', fontSize: 11,
-                  color: m.active ? '#c2622b' : '#9ca3af',
+                  color: m.active ? '#d93506' : '#9ca3af',
                   fontWeight: m.active ? 600 : 400,
                 }}
               >

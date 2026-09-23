@@ -33,7 +33,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           borderTop: 'none',
           borderRight: 'none',
           borderBottom: 'none',
-          borderLeft: '3px solid #d97b3f',
+          borderLeft: '3px solid #fc3f07',
           background: '#ffffff',
           borderRadius: 10,
           padding: '18px 20px',
@@ -86,7 +86,7 @@ export default function FaqSection() {
             fontSize: 12,
             fontWeight: 700,
             letterSpacing: 1.5,
-            color: '#c2622b',
+            color: '#d93506',
             textTransform: 'uppercase',
           }}
         >

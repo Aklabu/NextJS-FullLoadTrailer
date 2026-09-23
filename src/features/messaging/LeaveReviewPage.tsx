@@ -105,7 +105,7 @@ export default function LeaveReviewPage() {
         <div className="mb-4 flex h-14 w-14 mx-auto items-center justify-center rounded-xl text-2xl" style={{ background: '#f3ede4' }} aria-hidden="true">🔒</div>
         <p className="text-base font-medium text-neutral-700">Review not yet available</p>
         <p className="mt-2 text-sm text-neutral-500">Reviews can only be submitted after both parties have confirmed job completion.</p>
-        <Link href="/dashboard" className="mt-6 inline-block text-sm font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">Back to dashboard</Link>
+        <Link href="/dashboard" className="mt-6 inline-block text-sm font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">Back to dashboard</Link>
       </div>
     );
   }
@@ -119,7 +119,7 @@ export default function LeaveReviewPage() {
         </div>
         <p className="text-base font-medium text-neutral-700">You've already reviewed this job</p>
         <p className="mt-2 text-sm text-neutral-500">Your review for <span className="font-semibold">{job.counterparty.name}</span> on job {job.jobId} has been submitted.</p>
-        <Link href={`/profiles/${job.counterparty.id}`} className="mt-6 inline-block text-sm font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">View their profile →</Link>
+        <Link href={`/profiles/${job.counterparty.id}`} className="mt-6 inline-block text-sm font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">View their profile →</Link>
       </div>
     );
   }
@@ -134,8 +134,8 @@ export default function LeaveReviewPage() {
         <h1 className="mb-2 text-2xl font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Review submitted</h1>
         <p className="mb-8 text-sm text-neutral-500">Your review for {job.counterparty.name} has been published on their profile.</p>
         <div className="flex flex-col gap-3">
-          <Link href={`/profiles/${job.counterparty.id}`} className="flex w-full items-center justify-center rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]" style={{ background: '#d97b3f' }}>View their profile →</Link>
-          <Link href="/dashboard" className="rounded-xl border border-[#e0d5c8] py-3 text-center text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">Back to dashboard</Link>
+          <Link href={`/profiles/${job.counterparty.id}`} className="flex w-full items-center justify-center rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]" style={{ background: '#fc3f07' }}>View their profile →</Link>
+          <Link href="/dashboard" className="rounded-xl border border-[#e0d5c8] py-3 text-center text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">Back to dashboard</Link>
         </div>
       </div>
     );
@@ -144,8 +144,8 @@ export default function LeaveReviewPage() {
   return (
     <div className="mx-auto max-w-[560px] px-6 py-10">
       <div className="mb-8">
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-          <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />POST-JOB REVIEW
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+          <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />POST-JOB REVIEW
         </span>
         <h1 className="mt-2 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
           Leave a review
@@ -197,13 +197,13 @@ export default function LeaveReviewPage() {
             </label>
             <textarea id="reviewText" value={reviewText} onChange={(e) => setReviewText(e.target.value)} rows={4}
               placeholder="Describe your experience working with this company…"
-              className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+              className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
             <p className="mt-1.5 text-xs text-neutral-400">Your review will be published on their public profile.</p>
           </div>
 
           <button type="submit" disabled={submitting || overallRating === 0}
-            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}>
+            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}>
             {submitting ? (
               <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Submitting…</>
             ) : 'Submit review'}

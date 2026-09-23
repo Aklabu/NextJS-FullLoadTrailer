@@ -23,7 +23,7 @@ export default function NotFound() {
           FL
         </span>
         <span className="text-lg font-semibold tracking-tight text-neutral-900">
-          FullLoad<span style={{ color: '#d97b3f' }}>Trailer</span>
+          FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
         </span>
       </Link>
 
@@ -42,7 +42,7 @@ export default function NotFound() {
         style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
       >
         This load went{' '}
-        <span className="italic" style={{ color: '#d97b3f' }}>
+        <span className="italic" style={{ color: '#fc3f07' }}>
           off-route
         </span>
       </h1>
@@ -58,8 +58,8 @@ export default function NotFound() {
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-          style={{ background: '#d97b3f' }}
+          className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+          style={{ background: '#fc3f07' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -68,7 +68,7 @@ export default function NotFound() {
         </Link>
         <Link
           href="/dashboard"
-          className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] bg-white px-6 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+          className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] bg-white px-6 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
         >
           Go to dashboard
         </Link>
@@ -83,7 +83,7 @@ export default function NotFound() {
       {/* Bottom note */}
       <p className="mt-12 text-xs text-neutral-400">
         If you followed a link that should work,{' '}
-        <Link href="/contact" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+        <Link href="/contact" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
           let us know
         </Link>
         .

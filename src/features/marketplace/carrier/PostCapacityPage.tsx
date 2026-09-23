@@ -43,7 +43,7 @@ function Field({ id, label, value, onChange, error, type = 'text', placeholder, 
       </label>
       <input id={id} type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
         aria-invalid={!!error}
-        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
         style={{ borderColor: error ? '#ef4444' : '#e0d5c8' }} />
       {error && <p className="mt-1.5 text-xs text-red-500" role="alert">{error}</p>}
     </div>
@@ -99,9 +99,9 @@ export default function PostCapacityPage() {
         <h1 className="mb-2 text-2xl font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Capacity posted</h1>
         <p className="mb-8 text-sm text-neutral-500">Your available capacity is now visible to shippers and brokers on your route.</p>
         <div className="flex flex-col gap-3">
-          <Link href="/marketplace/carrier/my-capacity" className="flex w-full items-center justify-center rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]" style={{ background: '#d97b3f' }}>View my postings →</Link>
+          <Link href="/marketplace/carrier/my-capacity" className="flex w-full items-center justify-center rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]" style={{ background: '#fc3f07' }}>View my postings →</Link>
           <button type="button" onClick={() => { setFields(INITIAL); setSubmitState('idle'); }}
-            className="rounded-xl border border-[#e0d5c8] py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+            className="rounded-xl border border-[#e0d5c8] py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
             Post another
           </button>
         </div>
@@ -116,8 +116,8 @@ export default function PostCapacityPage() {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" /></svg>
           My Capacity Postings
         </Link>
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-          <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />CARRIER · MARKETPLACE
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+          <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />CARRIER · MARKETPLACE
         </span>
         <h1 className="mt-2 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Post available capacity</h1>
         <p className="mt-1 text-sm text-neutral-500">Advertise your empty trailer space so shippers and brokers can find you.</p>
@@ -147,7 +147,7 @@ export default function PostCapacityPage() {
             <div>
               <label htmlFor="equipmentType" className="mb-1.5 block text-sm font-medium text-neutral-700">Equipment type</label>
               <select id="equipmentType" value={fields.equipmentType} onChange={(e) => set('equipmentType', e.target.value)}
-                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none focus:border-[#d97b3f] appearance-none">
+                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none focus:border-[#fc3f07] appearance-none">
                 {EQUIPMENT_OPTIONS.map((o) => <option key={o}>{o}</option>)}
               </select>
             </div>
@@ -157,13 +157,13 @@ export default function PostCapacityPage() {
             <label htmlFor="notes" className="mb-1.5 block text-sm font-medium text-neutral-700">Notes <span className="text-neutral-400 text-xs">(optional)</span></label>
             <textarea id="notes" value={fields.notes} onChange={(e) => set('notes', e.target.value)} rows={3}
               placeholder="e.g. Flexible on load type, have straps and tarps, prefer LTL…"
-              className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+              className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
           </div>
 
           <div className="flex items-center gap-3 pt-1">
             <button type="submit" disabled={submitState === 'submitting'}
-              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}>
+              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}>
               {submitState === 'submitting' ? (
                 <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Publishing…</>
               ) : 'Publish capacity'}

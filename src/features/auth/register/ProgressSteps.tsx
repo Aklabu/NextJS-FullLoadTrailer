@@ -25,7 +25,7 @@ export default function ProgressSteps({ current }: ProgressStepsProps) {
               {i > 0 && (
                 <div
                   className="h-0.5 flex-1 rounded-full transition-colors duration-300"
-                  style={{ background: current > s.n - 1 ? '#d97b3f' : '#e8e0d6' }}
+                  style={{ background: current > s.n - 1 ? '#fc3f07' : '#e8e0d6' }}
                   aria-hidden="true"
                 />
               )}
@@ -34,7 +34,7 @@ export default function ProgressSteps({ current }: ProgressStepsProps) {
               <div
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-all duration-300"
                 style={{
-                  background: done ? '#d97b3f' : active ? '#2b1508' : '#f3ede4',
+                  background: done ? '#fc3f07' : active ? '#2b1508' : '#f3ede4',
                   color: done || active ? '#fff' : '#a09080',
                   boxShadow: active ? '0 0 0 4px rgba(217,123,63,0.15)' : 'none',
                 }}
@@ -53,7 +53,7 @@ export default function ProgressSteps({ current }: ProgressStepsProps) {
               {i < STEPS.length - 1 && (
                 <div
                   className="h-0.5 flex-1 rounded-full transition-colors duration-300"
-                  style={{ background: current > s.n ? '#d97b3f' : '#e8e0d6' }}
+                  style={{ background: current > s.n ? '#fc3f07' : '#e8e0d6' }}
                   aria-hidden="true"
                 />
               )}
@@ -62,7 +62,7 @@ export default function ProgressSteps({ current }: ProgressStepsProps) {
             {/* Label */}
             <span
               className="mt-2 text-[11px] font-medium text-center transition-colors duration-200"
-              style={{ color: active ? '#2b1508' : done ? '#d97b3f' : '#a09080' }}
+              style={{ color: active ? '#2b1508' : done ? '#fc3f07' : '#a09080' }}
             >
               {s.label}
             </span>

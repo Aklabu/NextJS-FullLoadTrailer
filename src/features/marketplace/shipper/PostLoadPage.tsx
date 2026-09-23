@@ -64,7 +64,7 @@ function Field({ id, label, value, onChange, error, type = 'text', placeholder, 
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-invalid={!!error}
-        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
         style={{ borderColor: error ? '#ef4444' : '#e0d5c8' }}
       />
       {error && <p className="mt-1.5 text-xs text-red-500" role="alert">{error}</p>}
@@ -146,8 +146,8 @@ export default function PostLoadPage() {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" /></svg>
           My Posted Loads
         </Link>
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-          <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />MARKETPLACE
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+          <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />MARKETPLACE
         </span>
         <h1 className="mt-2 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Post a load</h1>
         <p className="mt-1 text-sm text-neutral-500">Create a structured, biddable load listing visible to qualified carriers.</p>
@@ -187,7 +187,7 @@ export default function PostLoadPage() {
             <div>
               <label htmlFor="equipmentType" className="mb-1.5 block text-sm font-medium text-neutral-700">Equipment type</label>
               <select id="equipmentType" value={fields.equipmentType} onChange={(e) => set('equipmentType', e.target.value)}
-                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none focus:border-[#d97b3f] appearance-none">
+                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none focus:border-[#fc3f07] appearance-none">
                 {EQUIPMENT_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
               </select>
             </div>
@@ -195,7 +195,7 @@ export default function PostLoadPage() {
               <label htmlFor="specialRequirements" className="mb-1.5 block text-sm font-medium text-neutral-700">Special requirements <span className="text-neutral-400">(optional)</span></label>
               <textarea id="specialRequirements" value={fields.specialRequirements} onChange={(e) => set('specialRequirements', e.target.value)}
                 rows={3} placeholder="e.g. Liftgate required, fragile items, temperature control…"
-                className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+                className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
             </div>
           </div>
         </SectionCard>
@@ -213,7 +213,7 @@ export default function PostLoadPage() {
                 <button key={mode} type="button" onClick={() => set('pricingMode', mode)}
                   aria-pressed={fields.pricingMode === mode}
                   className="flex flex-col rounded-xl border-2 p-4 text-left transition-all"
-                  style={{ borderColor: fields.pricingMode === mode ? '#d97b3f' : '#e8e0d6', background: fields.pricingMode === mode ? '#fff8f2' : '#fff' }}>
+                  style={{ borderColor: fields.pricingMode === mode ? '#fc3f07' : '#e8e0d6', background: fields.pricingMode === mode ? '#fff8f2' : '#fff' }}>
                   <span className="mb-1 text-sm font-semibold text-neutral-800">{PRICING_MODE_LABELS[mode]}</span>
                   <span className="text-xs leading-relaxed text-neutral-400">{descriptions[mode]}</span>
                 </button>
@@ -238,7 +238,7 @@ export default function PostLoadPage() {
               <button key={opt.val} type="button" onClick={() => set('visibility', opt.val)}
                 aria-pressed={fields.visibility === opt.val}
                 className="flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all"
-                style={{ borderColor: fields.visibility === opt.val ? '#d97b3f' : '#e8e0d6', background: fields.visibility === opt.val ? '#fff8f2' : '#fff' }}>
+                style={{ borderColor: fields.visibility === opt.val ? '#fc3f07' : '#e8e0d6', background: fields.visibility === opt.val ? '#fff8f2' : '#fff' }}>
                 <span className="text-xl mt-0.5" aria-hidden="true">{opt.icon}</span>
                 <div>
                   <p className="text-sm font-semibold text-neutral-800">{opt.label}</p>
@@ -252,14 +252,14 @@ export default function PostLoadPage() {
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 pt-1">
           <button type="button" disabled={isbusy} onClick={() => submit(false)}
-            className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}>
+            className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}>
             {submitMode === 'publishing' ? (
               <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Publishing…</>
             ) : 'Publish Load'}
           </button>
           <button type="button" disabled={isbusy} onClick={() => submit(true)}
-            className="rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors disabled:opacity-60 hover:enabled:border-[#d97b3f] hover:enabled:text-[#d97b3f]">
+            className="rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors disabled:opacity-60 hover:enabled:border-[#fc3f07] hover:enabled:text-[#fc3f07]">
             {submitMode === 'drafting' ? 'Saving…' : 'Save Draft'}
           </button>
           <Link href="/marketplace/my-loads" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Cancel</Link>

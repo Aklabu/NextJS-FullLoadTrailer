@@ -58,7 +58,7 @@ function InputField({
         placeholder={placeholder}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+        className="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
         style={{ borderColor: error ? '#ef4444' : '#e0d5c8' }}
       />
       {error && <p id={`${id}-error`} className="mt-1.5 text-xs text-red-500" role="alert">{error}</p>}
@@ -129,8 +129,8 @@ export default function CreatePostPage() {
           </svg>
           Back to Board
         </Link>
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-          <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+          <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />
           BULLETIN BOARD
         </span>
         <h1
@@ -173,7 +173,7 @@ export default function CreatePostPage() {
                   aria-pressed={fields.postType === type}
                   className="flex flex-col items-start rounded-xl border-2 p-4 text-left transition-all"
                   style={{
-                    borderColor: fields.postType === type ? '#d97b3f' : '#e8e0d6',
+                    borderColor: fields.postType === type ? '#fc3f07' : '#e8e0d6',
                     background: fields.postType === type ? '#fff8f2' : '#fff',
                   }}
                 >
@@ -220,7 +220,7 @@ export default function CreatePostPage() {
                 id="equipmentType"
                 value={fields.equipmentType}
                 onChange={(e) => setField('equipmentType', e.target.value)}
-                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition-colors focus:border-[#d97b3f] appearance-none"
+                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition-colors focus:border-[#fc3f07] appearance-none"
               >
                 {(Object.keys(EQUIPMENT_LABELS) as EquipmentType[]).map((k) => (
                   <option key={k} value={k}>{EQUIPMENT_LABELS[k]}</option>
@@ -249,7 +249,7 @@ export default function CreatePostPage() {
               placeholder="Briefly describe the load or capacity. Do not include full addresses or detailed inventory."
               aria-invalid={!!errors.description}
               aria-describedby={errors.description ? 'description-error' : 'description-hint'}
-              className="w-full resize-none rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+              className="w-full resize-none rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
               style={{ borderColor: errors.description ? '#ef4444' : '#e0d5c8' }}
             />
             {errors.description
@@ -263,8 +263,8 @@ export default function CreatePostPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}
+              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}
             >
               {isSubmitting ? (
                 <>
@@ -297,7 +297,7 @@ export default function CreatePostPage() {
       {/* Note */}
       <p className="mt-5 text-center text-xs text-neutral-400">
         Bulletin Board posts are community-only and do not include pricing or bidding.{' '}
-        <Link href="/pricing" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+        <Link href="/pricing" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
           Upgrade for marketplace bidding →
         </Link>
       </p>

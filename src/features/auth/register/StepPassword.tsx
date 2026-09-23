@@ -66,7 +66,7 @@ export default function StepPassword({ fields, errors, onChange }: Props) {
             placeholder="Min. 8 characters"
             aria-invalid={!!errors.password}
             aria-describedby={errors.password ? 'reg-password-error' : 'password-strength'}
-            className="w-full rounded-xl border bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+            className="w-full rounded-xl border bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
             style={{ borderColor: errors.password ? '#ef4444' : '#e0d5c8' }}
           />
           <button
@@ -118,7 +118,7 @@ export default function StepPassword({ fields, errors, onChange }: Props) {
             placeholder="Repeat your password"
             aria-invalid={!!errors.confirmPassword || mismatch}
             aria-describedby={errors.confirmPassword ? 'reg-confirm-error' : undefined}
-            className="w-full rounded-xl border bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#d97b3f]/20"
+            className="w-full rounded-xl border bg-white px-4 py-3 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
             style={{ borderColor: (errors.confirmPassword || mismatch) ? '#ef4444' : '#e0d5c8' }}
           />
           <button
@@ -175,9 +175,9 @@ export default function StepPassword({ fields, errors, onChange }: Props) {
 
       <p className="text-xs text-neutral-400">
         By creating an account you agree to our{' '}
-        <a href="/terms" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+        <a href="/terms" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]" target="_blank" rel="noopener noreferrer">Terms of Service</a>
         {' '}and{' '}
-        <a href="/privacy" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+        <a href="/privacy" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
       </p>
     </div>
   );

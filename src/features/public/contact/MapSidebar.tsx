@@ -87,7 +87,7 @@ export default function MapSidebar() {
               width: 36, height: 36, borderRadius: 10,
               background: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 16, flexShrink: 0, color: '#c2622b',
+              fontSize: 16, flexShrink: 0, color: '#d93506',
             }}
           >
             📍
@@ -113,7 +113,7 @@ export default function MapSidebar() {
           <span style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 500, color: '#1a1a1a' }}>
             🔒 Direct Escrow &amp; Gate Line
           </span>
-          <span style={{ color: '#c2622b', fontWeight: 600, fontSize: 14 }}>(800) 555-0199</span>
+          <span style={{ color: '#d93506', fontWeight: 600, fontSize: 14 }}>(800) 555-0199</span>
         </div>
       </div>
     </div>

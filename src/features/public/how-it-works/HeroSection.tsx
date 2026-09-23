@@ -30,7 +30,7 @@ export default function HeroSection() {
         <br />
         <span
           style={{
-            color: '#d97b3f',
+            color: '#fc3f07',
             textDecoration: 'underline',
             textDecorationColor: '#f3a76a',
             textUnderlineOffset: 8,
@@ -82,7 +82,7 @@ export default function HeroSection() {
             border: 'none',
             cursor: 'pointer',
             transition: 'background 0.2s, color 0.2s',
-            background: activeRole === 'shipper' ? '#d97b3f' : 'transparent',
+            background: activeRole === 'shipper' ? '#fc3f07' : 'transparent',
             color: activeRole === 'shipper' ? '#fff' : '#7a7168',
           }}
         >
@@ -114,7 +114,7 @@ export default function HeroSection() {
             border: 'none',
             cursor: 'pointer',
             transition: 'background 0.2s, color 0.2s',
-            background: activeRole === 'carrier' ? '#d97b3f' : 'transparent',
+            background: activeRole === 'carrier' ? '#fc3f07' : 'transparent',
             color: activeRole === 'carrier' ? '#fff' : '#7a7168',
           }}
         >

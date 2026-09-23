@@ -31,7 +31,7 @@ export default function ContactFaq() {
   return (
     <section style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px 80px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: '#c2622b', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: '#d93506', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
           RAPID SELF-SERVICE
         </div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 30, fontWeight: 400, color: '#1a1a1a', marginBottom: 8 }}>
@@ -46,7 +46,7 @@ export default function ContactFaq() {
         {faqs.map((f, i) => (
           <div key={i} style={{ background: '#f7ece0', borderRadius: 16, padding: 24 }}>
             <div style={{ display: 'flex', gap: 12, marginBottom: 8 }}>
-              <span style={{ color: '#c2622b', fontSize: 18, flexShrink: 0 }}>{f.icon}</span>
+              <span style={{ color: '#d93506', fontSize: 18, flexShrink: 0 }}>{f.icon}</span>
               <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 400, color: '#1a1a1a', lineHeight: 1.3 }}>
                 {f.q}
               </h3>
@@ -58,7 +58,7 @@ export default function ContactFaq() {
               <Link
                 href={f.link.href}
                 style={{
-                  fontSize: 14, fontWeight: 600, color: '#c2622b',
+                  fontSize: 14, fontWeight: 600, color: '#d93506',
                   textDecoration: 'none',
                   display: 'inline-flex', alignItems: 'center', gap: 4,
                 }}

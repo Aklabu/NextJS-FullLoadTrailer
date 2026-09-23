@@ -21,11 +21,11 @@ export default function ContactHero() {
           padding: '6px 16px',
           fontSize: 12,
           fontWeight: 600,
-          color: '#c2622b',
+          color: '#d93506',
           marginBottom: 24,
         }}
       >
-        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#c2622b', display: 'inline-block' }} />
+        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#d93506', display: 'inline-block' }} />
         DIRECT SUPPORT &amp; INQUIRIES
       </div>
 
@@ -42,7 +42,7 @@ export default function ContactHero() {
       >
         Get in Touch with FullTrailerLoad.
         <br />
-        <span style={{ fontStyle: 'italic', color: '#d97b3f' }}>
+        <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>
           Direct Support &amp; Rapid Answers
         </span>
       </h1>
@@ -68,7 +68,7 @@ export default function ContactHero() {
             borderRadius: 999, padding: '8px 16px',
           }}
         >
-          ⚡ Average Response: <strong style={{ color: '#c2622b' }}>14 Mins</strong>
+          ⚡ Average Response: <strong style={{ color: '#d93506' }}>14 Mins</strong>
         </span>
         <span
           style={{

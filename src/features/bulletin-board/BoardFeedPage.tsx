@@ -91,7 +91,7 @@ function FilterBar({
             id="filter-origin" type="text" value={filters.origin}
             onChange={(e) => onChange('origin', e.target.value)}
             placeholder="e.g. Chicago, IL"
-            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20"
+            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20"
           />
         </div>
 
@@ -102,7 +102,7 @@ function FilterBar({
             id="filter-dest" type="text" value={filters.destination}
             onChange={(e) => onChange('destination', e.target.value)}
             placeholder="e.g. Detroit, MI"
-            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20"
+            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20"
           />
         </div>
 
@@ -112,7 +112,7 @@ function FilterBar({
           <select
             id="filter-equipment" value={filters.equipmentType}
             onChange={(e) => onChange('equipmentType', e.target.value)}
-            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#d97b3f] appearance-none"
+            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#fc3f07] appearance-none"
           >
             {(Object.keys(EQUIPMENT_LABELS) as EquipmentType[]).map((k) => (
               <option key={k} value={k}>{EQUIPMENT_LABELS[k]}</option>
@@ -126,7 +126,7 @@ function FilterBar({
           <input
             id="filter-from" type="date" value={filters.dateFrom}
             onChange={(e) => onChange('dateFrom', e.target.value)}
-            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#d97b3f]"
+            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#fc3f07]"
           />
         </div>
 
@@ -136,7 +136,7 @@ function FilterBar({
           <input
             id="filter-to" type="date" value={filters.dateTo}
             onChange={(e) => onChange('dateTo', e.target.value)}
-            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#d97b3f]"
+            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#fc3f07]"
           />
         </div>
 
@@ -146,7 +146,7 @@ function FilterBar({
           <select
             id="filter-type" value={filters.postType}
             onChange={(e) => onChange('postType', e.target.value)}
-            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#d97b3f] appearance-none"
+            className="w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:border-[#fc3f07] appearance-none"
           >
             <option value="all">All posts</option>
             <option value="load_available">Load Available</option>
@@ -159,7 +159,7 @@ function FilterBar({
         <div className="mt-3 flex justify-end">
           <button
             type="button" onClick={onReset}
-            className="flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-[#d97b3f] transition-colors"
+            className="flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-[#fc3f07] transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -177,14 +177,14 @@ function PostCard({ post }: { post: BoardPost }) {
   const isLoad = post.postType === 'load_available';
 
   return (
-    <div className="group rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#d97b3f] hover:shadow-md">
+    <div className="group rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#fc3f07] hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         {/* Post type pill */}
         <span
           className="shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
           style={{
             background: isLoad ? '#fff0e0' : '#e6f0f2',
-            color: isLoad ? '#c2622b' : '#224248',
+            color: isLoad ? '#d93506' : '#224248',
           }}
         >
           {POST_TYPE_LABELS[post.postType]}
@@ -196,7 +196,7 @@ function PostCard({ post }: { post: BoardPost }) {
       {/* Route */}
       <div className="mt-3 flex items-center gap-2">
         <span className="text-sm font-semibold text-neutral-900">{post.origin}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
         <span className="text-sm font-semibold text-neutral-900">{post.destination}</span>
@@ -243,7 +243,7 @@ function PostCard({ post }: { post: BoardPost }) {
           >
             {post.poster.companyName.slice(0, 2).toUpperCase()}
           </div>
-          <span className="truncate text-xs font-medium text-neutral-600 hover:text-[#d97b3f] transition-colors">
+          <span className="truncate text-xs font-medium text-neutral-600 hover:text-[#fc3f07] transition-colors">
             {post.poster.companyName}
           </span>
           <VerificationBadge status={post.poster.verificationStatus} />
@@ -253,14 +253,14 @@ function PostCard({ post }: { post: BoardPost }) {
         <div className="flex shrink-0 items-center gap-2">
           <Link
             href={`/board/${post.id}`}
-            className="rounded-lg border border-[#e0d5c8] px-3 py-1.5 text-xs font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+            className="rounded-lg border border-[#e0d5c8] px-3 py-1.5 text-xs font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
           >
             View
           </Link>
           <Link
             href={`/board/${post.id}#contact`}
-            className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}
+            className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}
           >
             Contact Poster
           </Link>
@@ -337,8 +337,8 @@ export default function BoardFeedPage() {
       {/* Page header */}
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />
+          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />
             TIER 1 · BULLETIN BOARD
           </span>
           <h1
@@ -354,8 +354,8 @@ export default function BoardFeedPage() {
 
         <Link
           href="/board/create"
-          className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-          style={{ background: '#d97b3f' }}
+          className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+          style={{ background: '#fc3f07' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
@@ -393,14 +393,14 @@ export default function BoardFeedPage() {
           <div className="mt-5 flex gap-3">
             <button
               type="button" onClick={handleReset}
-              className="rounded-xl border border-[#e0d5c8] px-5 py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+              className="rounded-xl border border-[#e0d5c8] px-5 py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
             >
               Clear filters
             </button>
             <Link
               href="/board/create"
-              className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}
+              className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}
             >
               Create a post
             </Link>
@@ -419,7 +419,7 @@ export default function BoardFeedPage() {
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f] disabled:opacity-40"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-40"
             aria-label="Previous page"
           >
             ‹
@@ -432,8 +432,8 @@ export default function BoardFeedPage() {
               aria-current={n === page ? 'page' : undefined}
               className="flex h-9 w-9 items-center justify-center rounded-xl border text-sm font-medium transition-colors"
               style={{
-                borderColor: n === page ? '#d97b3f' : '#e0d5c8',
-                background: n === page ? '#d97b3f' : '#fff',
+                borderColor: n === page ? '#fc3f07' : '#e0d5c8',
+                background: n === page ? '#fc3f07' : '#fff',
                 color: n === page ? '#fff' : '#525252',
               }}
             >
@@ -444,7 +444,7 @@ export default function BoardFeedPage() {
             type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f] disabled:opacity-40"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-40"
             aria-label="Next page"
           >
             ›

@@ -30,7 +30,7 @@ export default function FeatureMatrix() {
     <section id="feature-matrix" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 64px' }}>
       {/* Section header */}
       <div style={{ textAlign: 'center', marginBottom: 40, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: '#c2622b', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: '#d93506', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
           ARCHITECTURAL MATRIX
         </div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 30, fontWeight: 400, color: '#1a1a1a', marginBottom: 8 }}>
@@ -69,7 +69,7 @@ export default function FeatureMatrix() {
                         padding: '8px 24px',
                         fontSize: 11,
                         fontWeight: 700,
-                        color: '#c2622b',
+                        color: '#d93506',
                         letterSpacing: 1.5,
                         textTransform: 'uppercase',
                       }}

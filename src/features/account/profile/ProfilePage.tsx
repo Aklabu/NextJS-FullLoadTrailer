@@ -46,7 +46,7 @@ function Field({
         id={id} type={type} value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder} disabled={disabled}
-        className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20 disabled:bg-neutral-50 disabled:text-neutral-400"
+        className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20 disabled:bg-neutral-50 disabled:text-neutral-400"
       />
     </div>
   );
@@ -168,8 +168,8 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={isSaving}
-              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}
+              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}
             >
               {isSaving ? (
                 <>
@@ -202,7 +202,7 @@ export default function ProfilePage() {
           </div>
           <Link
             href="/auth/forgot-password"
-            className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+            className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
           >
             Change password
           </Link>
@@ -223,7 +223,7 @@ export default function ProfilePage() {
           {MOCK_STATUS !== 'verified' && (
             <Link
               href="/auth/verify-status"
-              className="shrink-0 rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+              className="shrink-0 rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
             >
               Check status
             </Link>

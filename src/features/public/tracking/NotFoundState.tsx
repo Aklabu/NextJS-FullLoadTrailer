@@ -21,7 +21,7 @@ export default function NotFoundState({ jobId }: { jobId: string }) {
           <code
             style={{
               fontFamily: 'ui-monospace, monospace', fontSize: 13,
-              background: '#f7ece0', padding: '2px 8px', borderRadius: 4, color: '#c2622b',
+              background: '#f7ece0', padding: '2px 8px', borderRadius: 4, color: '#d93506',
             }}
           >
             {jobId}

@@ -21,7 +21,7 @@ function FileRow({ f, onRemove }: { f: UploadedFile; onRemove: (id: string) => v
       {/* File icon */}
       <div
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm"
-        style={{ background: isError ? '#fef2f2' : '#f3ede4', color: isError ? '#ef4444' : '#d97b3f' }}
+        style={{ background: isError ? '#fef2f2' : '#f3ede4', color: isError ? '#ef4444' : '#fc3f07' }}
         aria-hidden="true"
       >
         {isError ? '✕' : '📄'}
@@ -42,7 +42,7 @@ function FileRow({ f, onRemove }: { f: UploadedFile; onRemove: (id: string) => v
           <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-[#f3ede4]">
             <div
               className="h-full rounded-full transition-all duration-300"
-              style={{ width: `${f.progress}%`, background: '#d97b3f' }}
+              style={{ width: `${f.progress}%`, background: '#fc3f07' }}
               role="progressbar"
               aria-valuenow={f.progress}
               aria-valuemin={0}
@@ -116,11 +116,11 @@ export default function StepDocuments({ tier, files, onAdd, onRemove }: Props) {
       {/* What to upload */}
       {tier === 'advanced' && (
         <div className="rounded-xl border border-[#f0c896] bg-[#fffbf5] p-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[1px] text-[#c2622b]">Required documents</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[1px] text-[#d93506]">Required documents</p>
           <ul className="space-y-1.5">
             {advancedDocs.map((d) => (
               <li key={d} className="flex items-start gap-2 text-xs text-[#7a4a1a]">
-                <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 {d}
@@ -139,7 +139,7 @@ export default function StepDocuments({ tier, files, onAdd, onRemove }: Props) {
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
         aria-label="Upload documents — click or drag and drop"
-        className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#e0d5c8] bg-white px-6 py-10 text-center transition-colors hover:border-[#d97b3f] hover:bg-[#fffbf5] focus-visible:outline-2 focus-visible:outline-[#d97b3f]"
+        className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#e0d5c8] bg-white px-6 py-10 text-center transition-colors hover:border-[#fc3f07] hover:bg-[#fffbf5] focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
       >
         <div
           className="flex h-12 w-12 items-center justify-center rounded-xl text-2xl"

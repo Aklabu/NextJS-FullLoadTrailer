@@ -53,7 +53,7 @@ function FaqItem({ icon, q, a }: { icon: React.ReactNode; q: string; a: string }
         aria-expanded={open}
         className="flex w-full items-start gap-3 px-6 py-5 text-left"
       >
-        <span className="mt-0.5 shrink-0 text-[#d97b3f]">{icon}</span>
+        <span className="mt-0.5 shrink-0 text-[#fc3f07]">{icon}</span>
         <span className="flex-1 text-sm font-semibold text-neutral-800">{q}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ function FaqItem({ icon, q, a }: { icon: React.ReactNode; q: string; a: string }
 
       {open && (
         <div className="px-6 pb-5 pl-[52px]">
-          <p className="text-sm leading-relaxed text-[#d97b3f]">{a}</p>
+          <p className="text-sm leading-relaxed text-[#fc3f07]">{a}</p>
         </div>
       )}
     </div>
@@ -82,7 +82,7 @@ export default function FaqSection() {
 
         {/* Header */}
         <div className="mb-10 text-center">
-          <span className="mb-4 inline-flex items-center rounded-full border border-[#e8c99a] bg-[#fff0e0] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
+          <span className="mb-4 inline-flex items-center rounded-full border border-[#e8c99a] bg-[#fff0e0] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
             PLATFORM CLARITY
           </span>
           <h2
@@ -93,8 +93,8 @@ export default function FaqSection() {
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-neutral-500">
             Everything you need to{' '}
-            <span className="text-[#d97b3f]">know</span> about our graduated freight exchange tiers, vetting, and{' '}
-            <span className="text-[#d97b3f]">binding</span> contracts.
+            <span className="text-[#fc3f07]">know</span> about our graduated freight exchange tiers, vetting, and{' '}
+            <span className="text-[#fc3f07]">binding</span> contracts.
           </p>
         </div>
 

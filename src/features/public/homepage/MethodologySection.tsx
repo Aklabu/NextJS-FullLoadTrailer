@@ -6,23 +6,23 @@ const steps = [
     title: 'Post or Discover',
     body: 'Broadcast informal return capacity in seconds, or publish structured, biddable full trailer load specifications with lane origin, cubic volume, and trailer equipment constraints.',
     bullets: [
-      { color: 'text-[#d97b3f]', text: 'Shippers: Post bulk specs or fixed rates' },
-      { color: 'text-[#d97b3f]', text: 'Carriers: Filter backhauls & empty space' },
+      { color: 'text-[#fc3f07]', text: 'Shippers: Post bulk specs or fixed rates' },
+      { color: 'text-[#fc3f07]', text: 'Carriers: Filter backhauls & empty space' },
     ],
-    numBg: 'bg-[#f3ede4] text-[#c2622b]',
+    numBg: 'bg-[#f3ede4] text-[#d93506]',
     active: false,
   },
   {
     num: '02',
     tag: 'NEGOTIATION',
-    tagColor: 'text-[#c2622b] bg-[#ffe4cc]',
+    tagColor: 'text-[#d93506] bg-[#ffe4cc]',
     title: 'Automated Vetting & Counter-Bidding',
     body: 'Real-time FMCSA/DOT active authority checks, COI inspection, and structured multi-round counteroffer negotiation with zero phone tag or broker friction.',
     bullets: [
-      { color: 'text-[#d97b3f]', text: '$1M auto liability & active MC verification' },
-      { color: 'text-[#d97b3f]', text: 'Sub-14 min average counter-acceptance' },
+      { color: 'text-[#fc3f07]', text: '$1M auto liability & active MC verification' },
+      { color: 'text-[#fc3f07]', text: 'Sub-14 min average counter-acceptance' },
     ],
-    numBg: 'bg-[#d97b3f] text-white',
+    numBg: 'bg-[#fc3f07] text-white',
     active: true,
   },
   {
@@ -32,10 +32,10 @@ const steps = [
     title: 'Binding Lock-In & Job Tracking',
     body: 'Digital rate confirmation handshake, automated document dispatch, and direct job-linked in-platform messaging with real-time lane milestone updates.',
     bullets: [
-      { color: 'text-[#d97b3f]', text: 'Automated doc generation & legal binding' },
-      { color: 'text-[#d97b3f]', text: 'Anti-disintermediation encrypted chat' },
+      { color: 'text-[#fc3f07]', text: 'Automated doc generation & legal binding' },
+      { color: 'text-[#fc3f07]', text: 'Anti-disintermediation encrypted chat' },
     ],
-    numBg: 'bg-[#f3ede4] text-[#c2622b]',
+    numBg: 'bg-[#f3ede4] text-[#d93506]',
     active: false,
   },
 ];
@@ -47,7 +47,7 @@ export default function MethodologySection() {
 
         {/* Section header */}
         <div className="mb-12 text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#ece1d3] bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#ece1d3] bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
             ⇄ OPERATIONAL METHODOLOGY
           </span>
           <h2
@@ -56,7 +56,7 @@ export default function MethodologySection() {
           >
             From Bulletin to Binding Handshake
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#d97b3f]">
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#fc3f07]">
             Three streamlined milestones bridging informal community capacity with high-velocity, legally binding digital freight execution.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function MethodologySection() {
               <ul className="space-y-2">
                 {step.bullets.map((b, i) => (
                   <li key={i} className={`flex items-center gap-2 text-xs font-semibold ${b.color}`}>
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#fff0e4] text-[10px] text-[#d97b3f]">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#fff0e4] text-[10px] text-[#fc3f07]">
                       ✓
                     </span>
                     {b.text}

@@ -66,13 +66,13 @@ function StatusPill({ status }: { status: LoadStatus }) {
 
 function LoadCard({ load }: { load: MarketplaceLoad }) {
   return (
-    <div className="rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#d97b3f] hover:shadow-md">
+    <div className="rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#fc3f07] hover:shadow-md">
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-mono text-neutral-400">{load.jobId}</p>
           <div className="mt-1 flex flex-wrap items-center gap-2">
             <span className="text-sm font-semibold text-neutral-900">{load.origin}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
             <span className="text-sm font-semibold text-neutral-900">{load.destination}</span>
           </div>
         </div>
@@ -90,20 +90,20 @@ function LoadCard({ load }: { load: MarketplaceLoad }) {
       {/* Bids stat */}
       <div className="mb-4 flex items-center gap-2">
         <div className="flex items-center gap-1.5 rounded-lg bg-[#fff8f2] px-3 py-1.5">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" /></svg>
-          <span className="text-xs font-semibold text-[#d97b3f]">{load.bids.length} bid{load.bids.length !== 1 ? 's' : ''}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" /></svg>
+          <span className="text-xs font-semibold text-[#fc3f07]">{load.bids.length} bid{load.bids.length !== 1 ? 's' : ''}</span>
         </div>
       </div>
 
       <div className="flex items-center gap-2">
         <Link href={`/marketplace/loads/${load.id}`}
-          className="flex-1 rounded-xl py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-          style={{ background: '#d97b3f' }}>
+          className="flex-1 rounded-xl py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+          style={{ background: '#fc3f07' }}>
           View &amp; Manage
         </Link>
         {(load.status === 'open' || load.status === 'draft') && load.bids.length === 0 && (
           <Link href={`/marketplace/loads/${load.id}/edit`}
-            className="rounded-xl border border-[#e0d5c8] px-4 py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+            className="rounded-xl border border-[#e0d5c8] px-4 py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
             Edit
           </Link>
         )}
@@ -133,15 +133,15 @@ export default function MyPostedLoadsPage() {
       {/* Header */}
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />MARKETPLACE
+          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />MARKETPLACE
           </span>
           <h1 className="mt-1 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>My Posted Loads</h1>
           <p className="mt-1 text-sm text-neutral-500">Manage your active and past load listings.</p>
         </div>
         <Link href="/marketplace/post-load"
-          className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-          style={{ background: '#d97b3f' }}>
+          className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+          style={{ background: '#fc3f07' }}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" /></svg>
           Post a Load
         </Link>
@@ -167,7 +167,7 @@ export default function MyPostedLoadsPage() {
         <div className="relative flex-1 max-w-xs">
           <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by job ID, route…"
-            className="w-full rounded-xl border border-[#e0d5c8] bg-white py-2.5 pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+            className="w-full rounded-xl border border-[#e0d5c8] bg-white py-2.5 pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
         </div>
       </div>
 
@@ -178,14 +178,14 @@ export default function MyPostedLoadsPage() {
             onClick={() => setActiveTab(t.key)}
             className="flex items-center gap-1.5 rounded-xl border px-4 py-2 text-sm font-medium transition-colors"
             style={{
-              borderColor: activeTab === t.key ? '#d97b3f' : '#e8e0d6',
+              borderColor: activeTab === t.key ? '#fc3f07' : '#e8e0d6',
               background: activeTab === t.key ? '#fff8f2' : '#fff',
-              color: activeTab === t.key ? '#c2622b' : '#737373',
+              color: activeTab === t.key ? '#d93506' : '#737373',
             }}>
             {t.label}
             {counts[t.key] > 0 && (
               <span className="rounded-full px-1.5 py-0.5 text-[10px] font-bold"
-                style={{ background: activeTab === t.key ? '#d97b3f' : '#f3ede4', color: activeTab === t.key ? '#fff' : '#7a7168' }}>
+                style={{ background: activeTab === t.key ? '#fc3f07' : '#f3ede4', color: activeTab === t.key ? '#fff' : '#7a7168' }}>
                 {counts[t.key]}
               </span>
             )}
@@ -202,8 +202,8 @@ export default function MyPostedLoadsPage() {
           </p>
           {!search && activeTab === 'all' && (
             <Link href="/marketplace/post-load"
-              className="mt-5 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-              style={{ background: '#d97b3f' }}>
+              className="mt-5 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}>
               Post your first load →
             </Link>
           )}

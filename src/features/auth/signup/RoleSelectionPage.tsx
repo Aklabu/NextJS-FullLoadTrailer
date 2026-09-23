@@ -25,9 +25,9 @@ const roles: RoleCard[] = [
     badge: 'DEMAND',
     description: 'Post full trailer loads and receive competitive bids from verified carriers.',
     detail: 'Moving companies, warehouses, and direct shippers looking to book freight capacity.',
-    accentColor: '#d97b3f',
+    accentColor: '#fc3f07',
     badgeBg: '#fff0e0',
-    badgeText: '#c2622b',
+    badgeText: '#d93506',
   },
   {
     role: 'broker',
@@ -79,7 +79,7 @@ export default function RoleSelectionPage() {
             FL
           </span>
           <span className="text-base font-semibold tracking-tight text-neutral-900">
-            FullLoad<span style={{ color: '#d97b3f' }}>Trailer</span>
+            FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
           </span>
         </Link>
 
@@ -87,7 +87,7 @@ export default function RoleSelectionPage() {
           Already have an account?{' '}
           <Link
             href="/auth/login"
-            className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]"
+            className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
           >
             Log in
           </Link>
@@ -99,8 +99,8 @@ export default function RoleSelectionPage() {
 
         {/* Header */}
         <div className="mb-12 text-center">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
             CREATE YOUR ACCOUNT
           </span>
 
@@ -110,7 +110,7 @@ export default function RoleSelectionPage() {
           >
             How will you use
             <br />
-            <span className="italic" style={{ color: '#d97b3f' }}>
+            <span className="italic" style={{ color: '#fc3f07' }}>
               FullLoadTrailer?
             </span>
           </h1>
@@ -127,7 +127,7 @@ export default function RoleSelectionPage() {
               key={card.role}
               type="button"
               onClick={() => handleSelect(card.role)}
-              className="group flex flex-col rounded-2xl border border-[#e8e0d6] bg-white p-8 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d97b3f]"
+              className="group flex flex-col rounded-2xl border border-[#e8e0d6] bg-white p-8 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fc3f07]"
               style={{ cursor: 'pointer' }}
               aria-label={`Sign up as ${card.title}`}
             >
@@ -168,7 +168,7 @@ export default function RoleSelectionPage() {
 
               {/* CTA row */}
               <div
-                className="flex items-center gap-2 text-sm font-semibold transition-colors group-hover:text-[#c2622b]"
+                className="flex items-center gap-2 text-sm font-semibold transition-colors group-hover:text-[#d93506]"
                 style={{ color: card.accentColor }}
               >
                 Select &amp; Continue
@@ -195,7 +195,7 @@ export default function RoleSelectionPage() {
           Not sure which to pick?{' '}
           <Link
             href="/how-it-works"
-            className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]"
+            className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
           >
             Read how the platform works →
           </Link>

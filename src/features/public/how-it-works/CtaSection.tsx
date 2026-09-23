@@ -42,7 +42,7 @@ export default function CtaSection() {
             }}
           >
             Ready to accelerate your{' '}
-            <span style={{ color: '#d97b3f' }}>
+            <span style={{ color: '#fc3f07' }}>
               freight
               <br />
               workflows
@@ -82,7 +82,7 @@ export default function CtaSection() {
                 borderRadius: 999,
                 fontWeight: 600,
                 fontSize: 14,
-                background: '#d97b3f',
+                background: '#fc3f07',
                 color: '#fff',
                 textDecoration: 'none',
                 display: 'inline-block',
@@ -98,7 +98,7 @@ export default function CtaSection() {
                 borderRadius: 999,
                 fontWeight: 600,
                 fontSize: 14,
-                background: '#c2622b',
+                background: '#d93506',
                 color: '#fff',
                 textDecoration: 'none',
                 display: 'inline-block',

@@ -22,7 +22,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
 ];
 
 const JOB_STATUS_STYLES: Record<string, { bg: string; text: string }> = {
-  bidding:   { bg: '#fff7ed', text: '#c2622b' },
+  bidding:   { bg: '#fff7ed', text: '#d93506' },
   booked:    { bg: '#d1fae5', text: '#065f46' },
   completed: { bg: '#f0fdf4', text: '#15803d' },
   open:      { bg: '#e0f2fe', text: '#0369a1' },
@@ -58,14 +58,14 @@ export default function MessagingInboxPage() {
       {/* Header */}
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />
+          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />
             MESSAGES
           </span>
           <h1 className="mt-1 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
             Inbox
             {totalUnread > 0 && (
-              <span className="ml-3 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white" style={{ background: '#d97b3f' }} aria-label={`${totalUnread} unread`}>
+              <span className="ml-3 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white" style={{ background: '#fc3f07' }} aria-label={`${totalUnread} unread`}>
                 {totalUnread > 9 ? '9+' : totalUnread}
               </span>
             )}
@@ -81,7 +81,7 @@ export default function MessagingInboxPage() {
         </svg>
         <input type="search" value={search} onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by job ID or company…"
-          className="w-full rounded-xl border border-[#e0d5c8] bg-white py-2.5 pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+          className="w-full rounded-xl border border-[#e0d5c8] bg-white py-2.5 pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
       </div>
 
       {/* Conversation list */}
@@ -100,8 +100,8 @@ export default function MessagingInboxPage() {
                 key={c.id}
                 href={`/messages/${c.id}`}
                 role="listitem"
-                className="flex items-start gap-4 rounded-2xl border bg-white p-4 transition-all hover:border-[#d97b3f] hover:shadow-sm"
-                style={{ borderColor: c.unreadCount > 0 ? '#d97b3f' : '#e8e0d6' }}
+                className="flex items-start gap-4 rounded-2xl border bg-white p-4 transition-all hover:border-[#fc3f07] hover:shadow-sm"
+                style={{ borderColor: c.unreadCount > 0 ? '#fc3f07' : '#e8e0d6' }}
               >
                 {/* Avatar */}
                 <div className="relative flex-shrink-0">
@@ -109,7 +109,7 @@ export default function MessagingInboxPage() {
                     {c.counterparty.slice(0, 2).toUpperCase()}
                   </div>
                   {c.unreadCount > 0 && (
-                    <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: '#d97b3f' }} aria-hidden="true">
+                    <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: '#fc3f07' }} aria-hidden="true">
                       {c.unreadCount}
                     </span>
                   )}

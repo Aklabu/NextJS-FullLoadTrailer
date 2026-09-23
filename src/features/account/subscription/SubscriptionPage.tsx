@@ -30,7 +30,7 @@ const BILLING_HISTORY = [
 
 function CheckIcon() {
   return (
-    <svg className="h-4 w-4 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <svg className="h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
     </svg>
   );
@@ -44,8 +44,8 @@ export default function SubscriptionPage() {
 
       {/* Header */}
       <div>
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-          <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+          <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />
           ACCOUNT PLAN
         </span>
         <h1
@@ -75,7 +75,7 @@ export default function SubscriptionPage() {
             className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[1px]"
             style={{
               background: CURRENT_TIER === 'advanced' ? '#fff0e0' : '#f3ede4',
-              color: CURRENT_TIER === 'advanced' ? '#c2622b' : '#7a7168',
+              color: CURRENT_TIER === 'advanced' ? '#d93506' : '#7a7168',
             }}
           >
             {CURRENT_TIER === 'basic' ? 'FREE — ALWAYS' : 'TIER 2'}
@@ -94,8 +94,8 @@ export default function SubscriptionPage() {
           <button
             type="button"
             onClick={() => setShowUpgradeModal(true)}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}
           >
             Upgrade to Marketplace
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -121,7 +121,7 @@ export default function SubscriptionPage() {
             <tr className="border-t border-[#e8e0d6] bg-[#fafaf8]">
               <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[1px] text-neutral-400">Feature</th>
               <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-[1px] text-neutral-400">Bulletin</th>
-              <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-[1px] text-[#c2622b]">Marketplace</th>
+              <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-[1px] text-[#d93506]">Marketplace</th>
             </tr>
           </thead>
           <tbody>
@@ -145,7 +145,7 @@ export default function SubscriptionPage() {
                 </td>
                 <td className="px-4 py-3 text-center">
                   {row.advanced
-                    ? <span className="text-[#d97b3f] font-bold">✓</span>
+                    ? <span className="text-[#fc3f07] font-bold">✓</span>
                     : <span className="text-neutral-300">–</span>}
                 </td>
               </tr>
@@ -156,7 +156,7 @@ export default function SubscriptionPage() {
         <div className="border-t border-[#e8e0d6] px-6 py-4">
           <div className="flex items-center justify-between">
             <span className="text-xs text-neutral-400">Pricing values are TBD — contact us for current rates.</span>
-            <Link href="/pricing" className="text-xs font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+            <Link href="/pricing" className="text-xs font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
               View full pricing →
             </Link>
           </div>
@@ -191,7 +191,7 @@ export default function SubscriptionPage() {
         )}
         <p className="mt-4 text-xs text-neutral-400">
           Payments are pending final client confirmation. Contact{' '}
-          <Link href="/contact" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">support</Link>
+          <Link href="/contact" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">support</Link>
           {' '}for billing inquiries.
         </p>
       </div>
@@ -221,15 +221,15 @@ export default function SubscriptionPage() {
               <button
                 type="button"
                 onClick={() => setShowUpgradeModal(false)}
-                className="flex-1 rounded-xl border border-[#e0d5c8] py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+                className="flex-1 rounded-xl border border-[#e0d5c8] py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
               >
                 Cancel
               </button>
               <Link
                 href="/contact?subject=Marketplace+Upgrade"
                 onClick={() => setShowUpgradeModal(false)}
-                className="flex flex-1 items-center justify-center rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}
+                className="flex flex-1 items-center justify-center rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}
               >
                 Request upgrade →
               </Link>

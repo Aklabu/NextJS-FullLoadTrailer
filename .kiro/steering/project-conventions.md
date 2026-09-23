@@ -22,6 +22,8 @@ Use single-line comments only. No JSDoc blocks, no decorative separators.
 ## Colors
 
 - Background: #FFFFFF
+- Primary brand orange (buttons, links, accents): #fc3f07
+- Primary brand orange hover: #d93506
 - Yellow accent (sparingly): #FFCB56
 - Peach accent (sparingly): #FFA259
 - Slate/teal (selective contrast): #224248

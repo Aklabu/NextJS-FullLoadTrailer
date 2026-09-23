@@ -13,7 +13,7 @@ export default function CtaSection() {
         {/* Badge */}
         <div className="mb-6">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-white/80">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
             STEP INTO MODERN LOGISTICS
           </span>
         </div>
@@ -35,7 +35,7 @@ export default function CtaSection() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/auth/signup?role=shipper"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#d97b3f] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#fc3f07] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />

@@ -23,7 +23,7 @@ export default function TiersSection() {
             fontSize: 12,
             fontWeight: 700,
             letterSpacing: 1.5,
-            color: '#c2622b',
+            color: '#d93506',
             textTransform: 'uppercase',
           }}
         >
@@ -148,7 +148,7 @@ export default function TiersSection() {
                   letterSpacing: 0.5,
                   padding: '5px 12px',
                   borderRadius: 999,
-                  background: '#d97b3f',
+                  background: '#fc3f07',
                   color: '#fff',
                 }}
               >
@@ -167,7 +167,7 @@ export default function TiersSection() {
             <ul style={{ listStyle: 'none' }}>
               {tier2Items.map((item, i) => (
                 <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 14, padding: '8px 0', color: '#2b2420' }}>
-                  <span style={{ color: '#c2622b', fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  <span style={{ color: '#d93506', fontWeight: 700, flexShrink: 0 }}>✓</span>
                   {item.text}
                 </li>
               ))}
@@ -188,7 +188,7 @@ export default function TiersSection() {
               <span>Ideal for: Dedicated Freight Lanes &amp; Enterprise Fleets</span>
               <span
                 style={{
-                  background: '#d97b3f',
+                  background: '#fc3f07',
                   color: '#fff',
                   padding: '3px 10px',
                   borderRadius: 999,

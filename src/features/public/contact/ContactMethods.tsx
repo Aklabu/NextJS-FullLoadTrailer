@@ -48,7 +48,7 @@ export default function ContactMethods() {
                   width: 44, height: 44, borderRadius: 12,
                   background: '#fff7ed',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 18, marginBottom: 24, color: '#c2622b',
+                  fontSize: 18, marginBottom: 24, color: '#d93506',
                 }}
               >
                 {m.icon}

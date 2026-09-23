@@ -40,8 +40,8 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: 
       aria-checked={checked}
       aria-label={label}
       onClick={() => onChange(!checked)}
-      className="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[#d97b3f]"
-      style={{ background: checked ? '#d97b3f' : '#e8e0d6' }}
+      className="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
+      style={{ background: checked ? '#fc3f07' : '#e8e0d6' }}
     >
       <span
         className="inline-block h-3.5 w-3.5 rounded-full bg-white shadow-sm transition-transform duration-200"
@@ -123,7 +123,7 @@ export default function NotificationsPage() {
             </svg>
             <span className="text-[10px] font-semibold uppercase tracking-[1px] text-neutral-400">Email</span>
             <button type="button" onClick={() => toggleAllForChannel('email', !prefs.every((p) => p.email))}
-              className="text-[9px] text-[#d97b3f] underline underline-offset-1 hover:text-[#c2622b]">
+              className="text-[9px] text-[#fc3f07] underline underline-offset-1 hover:text-[#d93506]">
               {prefs.every((p) => p.email) ? 'None' : 'All'}
             </button>
           </div>
@@ -133,7 +133,7 @@ export default function NotificationsPage() {
             </svg>
             <span className="text-[10px] font-semibold uppercase tracking-[1px] text-neutral-400">In-app</span>
             <button type="button" onClick={() => toggleAllForChannel('inApp', !prefs.every((p) => p.inApp))}
-              className="text-[9px] text-[#d97b3f] underline underline-offset-1 hover:text-[#c2622b]">
+              className="text-[9px] text-[#fc3f07] underline underline-offset-1 hover:text-[#d93506]">
               {prefs.every((p) => p.inApp) ? 'None' : 'All'}
             </button>
           </div>
@@ -185,8 +185,8 @@ export default function NotificationsPage() {
           <button
             type="submit"
             disabled={isSaving}
-            className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}
+            className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}
           >
             {isSaving ? (
               <>

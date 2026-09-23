@@ -17,7 +17,7 @@ export default function TrackingSupportBanner() {
               width: 48, height: 48, borderRadius: 12,
               background: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 20, flexShrink: 0, color: '#c2622b',
+              fontSize: 20, flexShrink: 0, color: '#d93506',
             }}
           >
             🎧
@@ -53,7 +53,7 @@ export default function TrackingSupportBanner() {
             href="/contact"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
-              background: '#d97b3f', color: '#fff',
+              background: '#fc3f07', color: '#fff',
               fontSize: 14, fontWeight: 600,
               borderRadius: 999, padding: '12px 20px',
               textDecoration: 'none', whiteSpace: 'nowrap',

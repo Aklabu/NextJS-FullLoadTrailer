@@ -45,7 +45,7 @@ export default function HeroSection() {
         {/* Badge */}
         <div className="mb-6">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.18] bg-white/10 px-4 py-1.5 text-[11px] font-bold tracking-[1px] text-white/75">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
             NEXT-GEN FREIGHT EXCHANGE · TIER 1 &amp; TIER 2
           </span>
         </div>
@@ -62,7 +62,7 @@ export default function HeroSection() {
               Full Trailer Loads.
               <br />
               Real Carriers.{' '}
-              <span className="italic text-[#d97b3f]">Zero Friction.</span>
+              <span className="italic text-[#fc3f07]">Zero Friction.</span>
             </h1>
 
             <p className="mb-8 max-w-[420px] text-sm leading-[1.75] text-white/[0.72]">
@@ -72,7 +72,7 @@ export default function HeroSection() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/auth/signup"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#d97b3f] px-[22px] py-[13px] text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#fc3f07] px-[22px] py-[13px] text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
               >
                 Get Started / Sign Up
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -95,7 +95,7 @@ export default function HeroSection() {
           >
             <div className="mb-3.5 flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.8px] text-white/85">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 shrink-0" viewBox="0 0 20 20" fill="#d97b3f" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 shrink-0" viewBox="0 0 20 20" fill="#fc3f07" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
                 Track a Shipment by Job ID
@@ -113,7 +113,7 @@ export default function HeroSection() {
               />
               <button
                 type="submit"
-                className="shrink-0 cursor-pointer rounded-[7px] border-none bg-[#d97b3f] px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#c2622b]"
+                className="shrink-0 cursor-pointer rounded-[7px] border-none bg-[#fc3f07] px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#d93506]"
               >
                 Track →
               </button>
@@ -137,13 +137,13 @@ export default function HeroSection() {
 
           <div className="flex flex-wrap gap-2.5">
             <div className="flex items-center gap-2.5 rounded-[10px] bg-white px-4 py-2.5">
-              <span className="text-lg text-[#d97b3f]">⚡</span>
+              <span className="text-lg text-[#fc3f07]">⚡</span>
               <div>
                 <div className="text-xs font-bold text-neutral-900">Avg 14-min</div>
                 <div className="text-[11px] text-neutral-500">first counter-offer</div>
               </div>
             </div>
-            <div className="rounded-[10px] bg-[#d97b3f] px-4 py-2.5">
+            <div className="rounded-[10px] bg-[#fc3f07] px-4 py-2.5">
               <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[1px] text-white/75">ACTIVE VOLUME</div>
               <div className="text-[13px] font-bold text-white">2,400+ Loads/Mo</div>
             </div>

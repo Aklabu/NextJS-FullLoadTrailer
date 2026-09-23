@@ -59,7 +59,7 @@ export default function ContactForm() {
         fontFamily: 'system-ui, -apple-system, sans-serif',
       }}
     >
-      <div style={{ fontSize: 11, fontWeight: 700, color: '#c2622b', letterSpacing: 1.5, marginBottom: 4, textTransform: 'uppercase' }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: '#d93506', letterSpacing: 1.5, marginBottom: 4, textTransform: 'uppercase' }}>
         INQUIRY DISPATCH
       </div>
       <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 24, fontWeight: 400, color: '#1a1a1a', marginBottom: 4 }}>
@@ -77,7 +77,7 @@ export default function ContactForm() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="contact-form-2col">
           <div>
             <label style={{ display: 'block', fontSize: 14, fontWeight: 500, marginBottom: 6, color: '#1a1a1a' }}>
-              Full Name <span style={{ color: '#d97b3f' }}>*</span>
+              Full Name <span style={{ color: '#fc3f07' }}>*</span>
             </label>
             <input
               type="text"
@@ -91,7 +91,7 @@ export default function ContactForm() {
           </div>
           <div>
             <label style={{ display: 'block', fontSize: 14, fontWeight: 500, marginBottom: 6, color: '#1a1a1a' }}>
-              Work Email <span style={{ color: '#d97b3f' }}>*</span>
+              Work Email <span style={{ color: '#fc3f07' }}>*</span>
             </label>
             <input
               type="email"
@@ -131,8 +131,8 @@ export default function ContactForm() {
                 onClick={() => setUrgency('normal')}
                 style={{
                   flex: 1, fontSize: 13, fontWeight: 600,
-                  border: urgency === 'normal' ? '2px solid #d97b3f' : '1px solid #e5e7eb',
-                  color: urgency === 'normal' ? '#c2622b' : '#6b7280',
+                  border: urgency === 'normal' ? '2px solid #fc3f07' : '1px solid #e5e7eb',
+                  color: urgency === 'normal' ? '#d93506' : '#6b7280',
                   background: urgency === 'normal' ? '#fff7ed' : '#fff',
                   borderRadius: 8, padding: '10px 8px',
                   cursor: 'pointer',
@@ -145,8 +145,8 @@ export default function ContactForm() {
                 onClick={() => setUrgency('urgent')}
                 style={{
                   flex: 1, fontSize: 13, fontWeight: 600,
-                  border: urgency === 'urgent' ? '2px solid #d97b3f' : '1px solid #e5e7eb',
-                  color: urgency === 'urgent' ? '#c2622b' : '#6b7280',
+                  border: urgency === 'urgent' ? '2px solid #fc3f07' : '1px solid #e5e7eb',
+                  color: urgency === 'urgent' ? '#d93506' : '#6b7280',
                   background: urgency === 'urgent' ? '#fff7ed' : '#fff',
                   borderRadius: 8, padding: '10px 8px',
                   cursor: 'pointer',
@@ -161,7 +161,7 @@ export default function ContactForm() {
         {/* Category */}
         <div>
           <label style={{ display: 'block', fontSize: 14, fontWeight: 500, marginBottom: 6, color: '#1a1a1a' }}>
-            Inquiry Category <span style={{ color: '#d97b3f' }}>*</span>
+            Inquiry Category <span style={{ color: '#fc3f07' }}>*</span>
           </label>
           <select name="category" value={form.category} onChange={handleChange} required style={inputStyle}>
             <option>Account &amp; SAFER / COI Verification</option>
@@ -175,7 +175,7 @@ export default function ContactForm() {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             <label style={{ fontSize: 14, fontWeight: 500, color: '#1a1a1a' }}>
-              Message Description <span style={{ color: '#d97b3f' }}>*</span>
+              Message Description <span style={{ color: '#fc3f07' }}>*</span>
             </label>
             <span style={{ fontSize: 12, color: '#9ca3af' }}>Max 1,500 chars</span>
           </div>
@@ -223,7 +223,7 @@ export default function ContactForm() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            background: status === 'submitting' ? '#e5a87a' : '#d97b3f',
+            background: status === 'submitting' ? '#e5a87a' : '#fc3f07',
             color: '#fff',
             fontWeight: 600,
             fontSize: 14,

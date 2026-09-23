@@ -103,7 +103,7 @@ export default function CarrierLoadDetailPage() {
                 <p className="text-xs font-mono text-neutral-400">{load.jobId}</p>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
                   <h1 className="text-2xl font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{load.origin}</h1>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
                   <h1 className="text-2xl font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{load.destination}</h1>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export default function CarrierLoadDetailPage() {
 
             {load.specialRequirements && (
               <div className="mt-4 rounded-xl border border-[#f0c896] bg-[#fffbf5] p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[1px] text-[#c2622b]">Special requirements</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[1px] text-[#d93506]">Special requirements</p>
                 <p className="mt-1 text-sm text-[#7a4a1a]">{load.specialRequirements}</p>
               </div>
             )}
@@ -147,7 +147,7 @@ export default function CarrierLoadDetailPage() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <Link href={`/profiles/${load.poster.id}`} className="text-sm font-semibold text-neutral-800 hover:text-[#d97b3f] transition-colors">{load.poster.companyName}</Link>
+                  <Link href={`/profiles/${load.poster.id}`} className="text-sm font-semibold text-neutral-800 hover:text-[#fc3f07] transition-colors">{load.poster.companyName}</Link>
                   <VerificationBadge status={load.poster.verificationStatus} />
                 </div>
                 {load.poster.avgRating && (
@@ -175,17 +175,17 @@ export default function CarrierLoadDetailPage() {
               <div>
                 <label htmlFor="bidAmount" className="mb-1.5 block text-sm font-medium text-neutral-700">Your bid (USD) <span className="text-red-500">*</span></label>
                 <input id="bidAmount" type="number" value={bidInput} onChange={(e) => { setBidInput(e.target.value); setError(''); }} placeholder="e.g. 2200"
-                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
               </div>
               <div>
                 <label htmlFor="bidNote" className="mb-1.5 block text-sm font-medium text-neutral-700">Note <span className="text-neutral-400 text-xs">(optional)</span></label>
                 <textarea id="bidNote" value={bidNote} onChange={(e) => setBidNote(e.target.value)} rows={3}
                   placeholder="e.g. Available on time, have liftgate…"
-                  className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20" />
+                  className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
               </div>
               <button type="button" onClick={handlePlaceBid} disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}>
+                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}>
                 {submitting ? <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Submitting…</> : 'Submit Bid'}
               </button>
             </div>
@@ -203,7 +203,7 @@ export default function CarrierLoadDetailPage() {
                 className="w-full rounded-xl border border-red-200 py-2.5 text-sm font-semibold text-red-500 transition-colors hover:bg-red-50 disabled:opacity-60">
                 Withdraw bid
               </button>
-              <Link href={`/messages?job=${load.id}`} className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+              <Link href={`/messages?job=${load.id}`} className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
                 Message shipper
               </Link>
@@ -214,7 +214,7 @@ export default function CarrierLoadDetailPage() {
           {bidState === 'countered' && (
             <div className="space-y-4">
               <div className="rounded-xl border border-[#f0c896] bg-[#fffbf5] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[1px] text-[#c2622b]">Shipper countered</p>
+                <p className="text-xs font-semibold uppercase tracking-[1px] text-[#d93506]">Shipper countered</p>
                 <p className="mt-1 text-2xl font-bold text-neutral-900">${counterAmount?.toLocaleString()}</p>
                 <p className="text-xs text-[#7a4a1a] mt-1">Your original bid: ${myAmount.toLocaleString()}</p>
               </div>
@@ -239,8 +239,8 @@ export default function CarrierLoadDetailPage() {
                 <p className="text-xs text-emerald-700 mt-0.5">Agreed rate: ${myAmount.toLocaleString()}</p>
               </div>
               <Link href={`/marketplace/booking/${load.id}`}
-                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}>
+                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}>
                 View Booking Confirmation →
               </Link>
             </div>
@@ -252,7 +252,7 @@ export default function CarrierLoadDetailPage() {
               <p className="text-sm font-semibold text-neutral-600">{bidState === 'rejected' ? 'Bid rejected' : 'Bid withdrawn'}</p>
               <p className="mt-1 text-xs text-neutral-400">This load is {bidState === 'rejected' ? 'no longer available for rebidding.' : 'still open — you can submit a new bid.'}</p>
               {bidState === 'withdrawn' && (
-                <button type="button" onClick={() => setBidState('none')} className="mt-3 text-sm font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+                <button type="button" onClick={() => setBidState('none')} className="mt-3 text-sm font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
                   Place a new bid
                 </button>
               )}

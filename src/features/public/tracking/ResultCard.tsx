@@ -11,7 +11,7 @@ export default function ResultCard({ result }: Props) {
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 56px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       <div style={{ background: '#fff', borderRadius: 24, overflow: 'hidden', boxShadow: '0 1px 6px rgba(0,0,0,0.06)' }}>
         {/* Top bar */}
-        <div style={{ height: 6, background: 'linear-gradient(to right, #d97b3f, #c2622b)' }} />
+        <div style={{ height: 6, background: 'linear-gradient(to right, #fc3f07, #d93506)' }} />
 
         <div style={{ padding: '32px' }}>
           {/* Job header */}
@@ -31,12 +31,12 @@ export default function ResultCard({ result }: Props) {
                 <span
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
-                    fontSize: 12, fontWeight: 600, color: isDelivered ? '#15803d' : '#c2622b',
+                    fontSize: 12, fontWeight: 600, color: isDelivered ? '#15803d' : '#d93506',
                     background: isDelivered ? '#dcfce7' : '#fff7ed',
                     borderRadius: 999, padding: '6px 12px',
                   }}
                 >
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDelivered ? '#22c55e' : '#c2622b', display: 'inline-block' }} />
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDelivered ? '#22c55e' : '#d93506', display: 'inline-block' }} />
                   {isDelivered ? 'DELIVERED' : 'IN TRANSIT'}
                 </span>
               </div>
@@ -85,7 +85,7 @@ export default function ResultCard({ result }: Props) {
                 <div style={{ fontSize: 11, fontWeight: 700, color: '#9ca3af', letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' }}>
                   TOTAL DISTANCE &amp; TARGET ETA
                 </div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#c2622b', marginBottom: 4 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#d93506', marginBottom: 4 }}>
                   {result.distance} • {result.eta}
                 </div>
                 <div style={{ fontSize: 12, color: '#6b7280' }}>{result.scheduleNote}</div>
@@ -100,7 +100,7 @@ export default function ResultCard({ result }: Props) {
                   style={{
                     position: 'absolute', left: 0, top: 0, height: 6,
                     width: `${result.progressPercent}%`,
-                    background: '#d97b3f', borderRadius: 999,
+                    background: '#fc3f07', borderRadius: 999,
                   }}
                 />
                 {/* Start dot */}
@@ -108,7 +108,7 @@ export default function ResultCard({ result }: Props) {
                   style={{
                     position: 'absolute', left: -4, top: -5,
                     width: 16, height: 16, borderRadius: '50%',
-                    background: '#d97b3f', color: '#fff',
+                    background: '#fc3f07', color: '#fff',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 9,
                   }}
@@ -128,7 +128,7 @@ export default function ResultCard({ result }: Props) {
                     <div
                       style={{
                         width: 24, height: 24, borderRadius: '50%',
-                        background: '#d97b3f', color: '#fff',
+                        background: '#fc3f07', color: '#fff',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         fontSize: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
                       }}
@@ -153,7 +153,7 @@ export default function ResultCard({ result }: Props) {
                   style={{
                     position: 'absolute', right: -4, top: -5,
                     width: 16, height: 16, borderRadius: '50%',
-                    background: isDelivered ? '#d97b3f' : '#e5e7eb',
+                    background: isDelivered ? '#fc3f07' : '#e5e7eb',
                     color: isDelivered ? '#fff' : '#6b7280',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 9,

@@ -44,7 +44,7 @@ function timeAgo(iso: string) {
 
 function FilterBar({ filters, onChange, onReset }: { filters: Filters; onChange: (k: keyof Filters, v: string) => void; onReset: () => void }) {
   const hasActive = Object.entries(filters).some(([k, v]) => k === 'equipmentType' ? v !== 'Any' : v !== '');
-  const inputCls = 'w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#d97b3f] focus:ring-2 focus:ring-[#d97b3f]/20';
+  const inputCls = 'w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20';
 
   return (
     <div className="rounded-2xl border border-[#e8e0d6] bg-white p-4 shadow-sm">
@@ -70,7 +70,7 @@ function FilterBar({ filters, onChange, onReset }: { filters: Filters; onChange:
       </div>
       {hasActive && (
         <div className="mt-3 flex justify-end">
-          <button type="button" onClick={onReset} className="flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-[#d97b3f] transition-colors">
+          <button type="button" onClick={onReset} className="flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-[#fc3f07] transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
             Clear filters
           </button>
@@ -84,7 +84,7 @@ function LoadCard({ load }: { load: MarketplaceLoad }) {
   const cfg = LOAD_STATUS_COLORS[load.status];
   const isEligible = load.status === 'open' || load.status === 'bidding';
   return (
-    <div className="group rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#d97b3f] hover:shadow-md">
+    <div className="group rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#fc3f07] hover:shadow-md">
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-mono text-neutral-400">{load.jobId}</span>
@@ -98,7 +98,7 @@ function LoadCard({ load }: { load: MarketplaceLoad }) {
 
       <div className="mb-2 flex flex-wrap items-center gap-2">
         <span className="text-sm font-semibold text-neutral-900">{load.origin}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
         <span className="text-sm font-semibold text-neutral-900">{load.destination}</span>
       </div>
 
@@ -113,15 +113,15 @@ function LoadCard({ load }: { load: MarketplaceLoad }) {
       <div className="mb-4 flex items-center gap-2">
         <Link href={`/profiles/${load.poster.id}`} className="flex items-center gap-1.5">
           <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: '#2b1508' }} aria-hidden="true">{load.poster.companyName.slice(0, 2).toUpperCase()}</div>
-          <span className="text-xs text-neutral-500 hover:text-[#d97b3f] transition-colors">{load.poster.companyName}</span>
+          <span className="text-xs text-neutral-500 hover:text-[#fc3f07] transition-colors">{load.poster.companyName}</span>
           <VerificationBadge status={load.poster.verificationStatus} />
         </Link>
         {load.bids.length > 0 && <span className="ml-auto text-[11px] text-neutral-400">{load.bids.length} bid{load.bids.length !== 1 ? 's' : ''}</span>}
       </div>
 
       <Link href={`/marketplace/carrier/loads/${load.id}`}
-        className="flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-        style={{ background: isEligible ? '#d97b3f' : '#a8a29e' }}>
+        className="flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+        style={{ background: isEligible ? '#fc3f07' : '#a8a29e' }}>
         {isEligible ? 'View & Bid →' : 'View Details →'}
       </Link>
     </div>
@@ -178,8 +178,8 @@ export default function BrowseLoadsPage() {
     <div className="mx-auto max-w-[1100px] px-6 py-8">
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />CARRIER · MARKETPLACE
+          <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />CARRIER · MARKETPLACE
           </span>
           <h1 className="mt-1 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Browse Loads</h1>
           <p className="mt-1 text-sm text-neutral-500">Find verified loads matching your route and equipment.</p>
@@ -187,7 +187,7 @@ export default function BrowseLoadsPage() {
         <div className="flex items-center gap-2">
           <label htmlFor="sort" className="text-xs text-neutral-500">Sort:</label>
           <select id="sort" value={sort} onChange={(e) => setSort(e.target.value as SortKey)}
-            className="rounded-xl border border-[#e0d5c8] bg-white px-3.5 py-2 text-sm text-neutral-700 outline-none focus:border-[#d97b3f] appearance-none">
+            className="rounded-xl border border-[#e0d5c8] bg-white px-3.5 py-2 text-sm text-neutral-700 outline-none focus:border-[#fc3f07] appearance-none">
             <option value="newest">Newest first</option>
             <option value="pickup_asc">Pickup date ↑</option>
             <option value="cuft_desc">Largest load first</option>
@@ -213,7 +213,7 @@ export default function BrowseLoadsPage() {
           <p className="text-base font-medium text-neutral-700">No loads match your filters</p>
           <p className="mt-1 text-sm text-neutral-400">Try adjusting your route or dates.</p>
           <button type="button" onClick={() => setFilters(EMPTY_FILTERS)}
-            className="mt-5 rounded-xl border border-[#e0d5c8] px-5 py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+            className="mt-5 rounded-xl border border-[#e0d5c8] px-5 py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
             Clear all filters
           </button>
         </div>
@@ -226,14 +226,14 @@ export default function BrowseLoadsPage() {
       {!loading && totalPages > 1 && (
         <div className="mt-8 flex items-center justify-center gap-2">
           <button type="button" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f] disabled:opacity-40" aria-label="Previous page">‹</button>
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-40" aria-label="Previous page">‹</button>
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
             <button key={n} type="button" onClick={() => setPage(n)} aria-current={n === page ? 'page' : undefined}
               className="flex h-9 w-9 items-center justify-center rounded-xl border text-sm font-medium transition-colors"
-              style={{ borderColor: n === page ? '#d97b3f' : '#e0d5c8', background: n === page ? '#d97b3f' : '#fff', color: n === page ? '#fff' : '#525252' }}>{n}</button>
+              style={{ borderColor: n === page ? '#fc3f07' : '#e0d5c8', background: n === page ? '#fc3f07' : '#fff', color: n === page ? '#fff' : '#525252' }}>{n}</button>
           ))}
           <button type="button" onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f] disabled:opacity-40" aria-label="Next page">›</button>
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0d5c8] text-sm text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-40" aria-label="Next page">›</button>
         </div>
       )}
     </div>

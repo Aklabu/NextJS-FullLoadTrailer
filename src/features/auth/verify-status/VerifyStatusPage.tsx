@@ -224,7 +224,7 @@ export default function VerifyStatusPage() {
             FL
           </span>
           <span className="text-base font-semibold tracking-tight text-neutral-900">
-            FullLoad<span style={{ color: '#d97b3f' }}>Trailer</span>
+            FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
           </span>
         </Link>
         <Link
@@ -240,8 +240,8 @@ export default function VerifyStatusPage() {
 
         {/* Page badge + title */}
         <div className="mb-8">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
             ACCOUNT VERIFICATION
           </span>
           <h1
@@ -318,8 +318,8 @@ export default function VerifyStatusPage() {
                 {(data.status === 'rejected' || data.status === 'needs_info') && (
                   <Link
                     href="/auth/register"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                    style={{ background: '#d97b3f' }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                    style={{ background: '#fc3f07' }}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
@@ -332,8 +332,8 @@ export default function VerifyStatusPage() {
                 {data.status === 'unverified' && (
                   <Link
                     href="/auth/register"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                    style={{ background: '#d97b3f' }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                    style={{ background: '#fc3f07' }}
                   >
                     Complete registration →
                   </Link>
@@ -343,8 +343,8 @@ export default function VerifyStatusPage() {
                 {data.status === 'basic' && (
                   <Link
                     href="/board"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-                    style={{ background: '#d97b3f' }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                    style={{ background: '#fc3f07' }}
                   >
                     Go to Bulletin Board →
                   </Link>
@@ -354,7 +354,7 @@ export default function VerifyStatusPage() {
                 {data.status !== 'verified' && (
                   <Link
                     href="/contact"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#e0d5c8] bg-white py-3.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#e0d5c8] bg-white py-3.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -382,7 +382,7 @@ export default function VerifyStatusPage() {
         {/* FAQ nudge */}
         <p className="mt-6 text-center text-xs text-neutral-400">
           Questions about the verification process?{' '}
-          <Link href="/how-it-works" className="text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]">
+          <Link href="/how-it-works" className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
             Read how it works →
           </Link>
         </p>

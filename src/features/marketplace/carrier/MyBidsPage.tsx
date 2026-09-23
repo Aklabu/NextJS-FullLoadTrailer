@@ -53,13 +53,13 @@ function BidRow({ bid, onWithdraw }: { bid: BidSummary; onWithdraw: (id: string)
   const loadCfg = LOAD_STATUS_COLORS[bid.loadStatus];
 
   return (
-    <div className="rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#d97b3f]">
+    <div className="rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#fc3f07]">
       <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
         <div>
           <p className="text-xs font-mono text-neutral-400">{bid.jobId}</p>
           <div className="mt-1 flex flex-wrap items-center gap-2">
             <span className="text-sm font-semibold text-neutral-900">{bid.origin}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#d97b3f]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
             <span className="text-sm font-semibold text-neutral-900">{bid.destination}</span>
           </div>
           <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
@@ -81,7 +81,7 @@ function BidRow({ bid, onWithdraw }: { bid: BidSummary; onWithdraw: (id: string)
         </div>
         {bid.counterAmount && (
           <div className="rounded-xl bg-[#fffbf5] border border-[#f0c896] px-4 py-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[1px] text-[#c2622b]">Counter offered</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[1px] text-[#d93506]">Counter offered</p>
             <p className="text-lg font-bold text-neutral-900">${bid.counterAmount.toLocaleString()}</p>
           </div>
         )}
@@ -89,7 +89,7 @@ function BidRow({ bid, onWithdraw }: { bid: BidSummary; onWithdraw: (id: string)
 
       <div className="flex flex-wrap gap-2">
         <Link href={`/marketplace/carrier/loads/${bid.loadId}`}
-          className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f]">
+          className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
           View load
         </Link>
         {(bid.bidStatus === 'pending' || bid.bidStatus === 'countered') && (
@@ -107,8 +107,8 @@ function BidRow({ bid, onWithdraw }: { bid: BidSummary; onWithdraw: (id: string)
         )}
         {bid.bidStatus === 'accepted' && (
           <Link href={`/marketplace/booking/${bid.loadId}`}
-            className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]"
-            style={{ background: '#d97b3f' }}>
+            className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}>
             View booking →
           </Link>
         )}
@@ -134,8 +134,8 @@ export default function MyBidsPage() {
   return (
     <div className="mx-auto max-w-[800px] px-6 py-8">
       <div className="mb-6">
-        <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-          <span className="h-1 w-1 rounded-full bg-[#d97b3f]" aria-hidden="true" />CARRIER · MARKETPLACE
+        <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+          <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />CARRIER · MARKETPLACE
         </span>
         <h1 className="mt-1 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>My Bids</h1>
         <p className="mt-1 text-sm text-neutral-500">Track all your bidding activity across loads.</p>
@@ -147,11 +147,11 @@ export default function MyBidsPage() {
           <button key={t.key} type="button" role="tab" aria-selected={activeTab === t.key}
             onClick={() => setActiveTab(t.key)}
             className="flex items-center gap-1.5 rounded-xl border px-4 py-2 text-sm font-medium transition-colors"
-            style={{ borderColor: activeTab === t.key ? '#d97b3f' : '#e8e0d6', background: activeTab === t.key ? '#fff8f2' : '#fff', color: activeTab === t.key ? '#c2622b' : '#737373' }}>
+            style={{ borderColor: activeTab === t.key ? '#fc3f07' : '#e8e0d6', background: activeTab === t.key ? '#fff8f2' : '#fff', color: activeTab === t.key ? '#d93506' : '#737373' }}>
             {t.label}
             {counts[t.key] > 0 && (
               <span className="rounded-full px-1.5 py-0.5 text-[10px] font-bold"
-                style={{ background: activeTab === t.key ? '#d97b3f' : '#f3ede4', color: activeTab === t.key ? '#fff' : '#7a7168' }}>
+                style={{ background: activeTab === t.key ? '#fc3f07' : '#f3ede4', color: activeTab === t.key ? '#fff' : '#7a7168' }}>
                 {counts[t.key]}
               </span>
             )}
@@ -167,7 +167,7 @@ export default function MyBidsPage() {
           </div>
           <p className="text-base font-medium text-neutral-700">No {activeTab} bids</p>
           {activeTab === 'active' && (
-            <Link href="/marketplace/carrier/loads" className="mt-5 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#c2622b]" style={{ background: '#d97b3f' }}>
+            <Link href="/marketplace/carrier/loads" className="mt-5 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]" style={{ background: '#fc3f07' }}>
               Browse loads →
             </Link>
           )}

@@ -58,14 +58,14 @@ export default function RegisterPage() {
             FL
           </span>
           <span className="text-base font-semibold tracking-tight text-neutral-900">
-            FullLoad<span style={{ color: '#d97b3f' }}>Trailer</span>
+            FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
           </span>
         </Link>
         <span className="text-sm text-neutral-500">
           Already have an account?{' '}
           <Link
             href="/auth/login"
-            className="font-semibold text-[#d97b3f] underline underline-offset-2 hover:text-[#c2622b]"
+            className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
           >
             Log in
           </Link>
@@ -77,8 +77,8 @@ export default function RegisterPage() {
 
         {/* Page header */}
         <div className="mb-8">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#c2622b]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d97b3f]" />
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
             CREATE YOUR ACCOUNT
           </span>
           <h1
@@ -151,7 +151,7 @@ export default function RegisterPage() {
                   type="button"
                   onClick={form.prevStep}
                   disabled={isSubmitting}
-                  className="flex items-center gap-1.5 rounded-xl border border-[#e0d5c8] bg-white px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#d97b3f] hover:text-[#d97b3f] disabled:opacity-50"
+                  className="flex items-center gap-1.5 rounded-xl border border-[#e0d5c8] bg-white px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-50"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
@@ -174,8 +174,8 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#c2622b]"
-                style={{ background: '#d97b3f' }}
+                className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}
               >
                 {isSubmitting ? (
                   <>

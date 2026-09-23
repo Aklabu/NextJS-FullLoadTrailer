@@ -15,7 +15,7 @@ export default function StatsBar() {
             className="flex flex-col items-center justify-center rounded-2xl border border-[#ece1d3] bg-white px-6 py-5 text-center"
           >
             <span
-              className="font-serif text-[clamp(22px,3vw,28px)] font-normal leading-tight text-[#d97b3f]"
+              className="font-serif text-[clamp(22px,3vw,28px)] font-normal leading-tight text-[#fc3f07]"
               style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
             >
               {s.value}
