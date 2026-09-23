@@ -52,7 +52,7 @@ export default function RegisterPage() {
         <Link href="/" className="flex items-center gap-2" aria-label="FullLoadTrailer home">
           <span
             className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-bold"
-            style={{ background: '#FFCB56', color: '#1A1953' }}
+            style={{ background: '#ff3d03', color: '#1A1953' }}
             aria-hidden="true"
           >
             FL

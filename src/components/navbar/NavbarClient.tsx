@@ -26,7 +26,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
       href={href}
       className={`relative px-1 py-0.5 text-sm font-medium transition-colors
         after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full
-        after:bg-[#FFCB56] after:transition-all
+        after:bg-[#ff3d03] after:transition-all
         ${isActive ? 'text-white after:w-full' : 'after:w-0 hover:after:w-full'}`}
       style={{ color: isActive ? '#ffffff' : 'rgba(255,255,255,0.85)' }}
     >
@@ -40,13 +40,13 @@ function Logo() {
     <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="FullLoadTrailer home">
       <span
         className="h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold"
-        style={{ background: '#FFCB56', color: '#1A1953' }}
+        style={{ background: '#ff3d03', color: '#1A1953' }}
         aria-hidden="true"
       >
         FL
       </span>
       <span className="text-base font-semibold tracking-tight text-white">
-        FullLoad<span style={{ color: '#FFCB56' }}>Trailer</span>
+        FullLoad<span style={{ color: '#ff3d03' }}>Trailer</span>
       </span>
     </Link>
   );
@@ -78,7 +78,7 @@ function NotificationBell({ count = 0 }: { count: number }) {
       {count > 0 && (
         <span
           className="absolute top-0.5 right-0.5 h-4 w-4 rounded-full text-[10px] font-bold text-white flex items-center justify-center"
-          style={{ background: '#FFA259' }}
+          style={{ background: '#d13100' }}
           aria-hidden="true"
         >
           {count > 9 ? '9+' : count}
@@ -120,7 +120,7 @@ function ProfileDropdown({ user, onLogout }: { user: AuthUser; onLogout: () => v
       >
         <span
           className="h-7 w-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
-          style={{ background: '#FFCB56', color: '#1A1953' }}
+          style={{ background: '#ff3d03', color: '#1A1953' }}
           aria-hidden="true"
         >
           {user.companyName.slice(0, 2).toUpperCase()}
@@ -248,7 +248,7 @@ function MobileMenu({
               href="/auth/signup"
               onClick={onClose}
               className="block rounded-md px-3 py-2 text-sm font-medium text-center rounded-lg transition-opacity hover:opacity-90"
-                style={{ background: '#FFCB56', color: '#1A1953' }}
+                style={{ background: '#ff3d03', color: '#1A1953' }}
               >
                 Sign Up
             </Link>
@@ -268,7 +268,7 @@ export default function NavbarClient({ user, notificationCount = 0 }: NavbarClie
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full" style={{ background: '#1B211A', borderBottom: '2px solid #FFCB56' }}>
+    <header className="sticky top-0 z-40 w-full" style={{ background: '#1B211A', borderBottom: '2px solid #ff3d03' }}>
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         <Logo />
@@ -302,7 +302,7 @@ export default function NavbarClient({ user, notificationCount = 0 }: NavbarClie
               <Link
                 href="/auth/signup"
                 className="inline-flex items-center px-4 py-1.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-                style={{ background: '#FFCB56', color: '#1A1953' }}
+                style={{ background: '#ff3d03', color: '#1A1953' }}
               >
                 Sign Up
               </Link>

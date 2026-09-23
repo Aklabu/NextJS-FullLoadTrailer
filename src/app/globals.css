@@ -5,8 +5,8 @@
   --foreground: #171717;
 
   /* Brand palette */
-  --color-yellow: #FFCB56;
-  --color-peach: #FFA259;
+  --color-yellow: #ff3d03;
+  --color-peach: #d13100;
   --color-slate: #224248;
 }
 
@@ -17,8 +17,8 @@
   --font-mono: var(--font-geist-mono);
 
   /* Brand tokens available as Tailwind utilities */
-  --color-brand-yellow: #FFCB56;
-  --color-brand-peach: #FFA259;
+  --color-brand-yellow: #ff3d03;
+  --color-brand-peach: #d13100;
   --color-brand-slate: #224248;
 }
 

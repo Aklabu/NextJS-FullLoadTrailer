@@ -17,7 +17,7 @@ export default function NotFound() {
       <Link href="/" className="mb-10 flex items-center gap-2" aria-label="FullLoadTrailer home">
         <span
           className="flex h-8 w-8 items-center justify-center rounded-md text-sm font-bold"
-          style={{ background: '#FFCB56', color: '#1A1953' }}
+          style={{ background: '#ff3d03', color: '#1A1953' }}
           aria-hidden="true"
         >
           FL

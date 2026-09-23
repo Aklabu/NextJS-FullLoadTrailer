@@ -3,20 +3,20 @@ import { footerLinks } from '@/lib/navConfig';
 
 export default function Footer() {
   return (
-    <footer className="w-full" style={{ background: '#1B211A', borderTop: '2px solid #FFCB56' }}>
+    <footer className="w-full" style={{ background: '#1B211A', borderTop: '2px solid #ff3d03' }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
           <Link href="/" aria-label="FullLoadTrailer home" className="flex items-center gap-2 shrink-0">
             <span
               className="h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold"
-              style={{ background: '#FFCB56', color: '#1A1953' }}
+              style={{ background: '#ff3d03', color: '#1A1953' }}
               aria-hidden="true"
             >
               FL
             </span>
             <span className="text-base font-semibold tracking-tight text-white">
-              FullLoad<span style={{ color: '#FFCB56' }}>Trailer</span>
+              FullLoad<span style={{ color: '#ff3d03' }}>Trailer</span>
             </span>
           </Link>
 
