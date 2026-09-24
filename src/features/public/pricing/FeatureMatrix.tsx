@@ -3,26 +3,36 @@ type MatrixRow =
   | { type: 'row'; label: string; tier1: string; tier2: string; tier1Green?: boolean; tier2Green?: boolean };
 
 const rows: MatrixRow[] = [
-  { type: 'heading', label: '1. LOAD POSTING & DISCOVERY' },
-  { type: 'row', label: 'Spot Load Posting (Origin, Dest, Cu Ft)', tier1: '✓ Unlimited', tier2: '✓ Unlimited', tier1Green: true, tier2Green: true },
-  { type: 'row', label: 'Reverse Capacity Broadcast (Return Space)', tier1: '✓ Included', tier2: '✓ Real-time Matching', tier1Green: true, tier2Green: true },
-  { type: 'row', label: 'Equipment Specs & Demands', tier1: 'Basic Notes', tier2: 'Programmatic Rules' },
-  { type: 'row', label: 'Visibility Controls (Public vs Private)', tier1: '—', tier2: '✓ Configurable', tier2Green: true },
+  { type: 'heading', label: '1. COMMUNITY & COMMUNICATION' },
+  { type: 'row', label: 'One main community (industry-wide)', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Real-time chat', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Reply to posts', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Private messaging', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Share photos and documents', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Notifications', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Multiple groups', tier1: '—', tier2: '—' },
 
-  { type: 'heading', label: '2. DOT AUTHORITY & COMPLIANCE' },
-  { type: 'row', label: 'Identity Verification', tier1: 'Basic Account', tier2: 'DOT/MC + COI Audit' },
-  { type: 'row', label: 'Real-Time FMCSA SAFER Query', tier1: '—', tier2: '✓ Automated API', tier2Green: true },
-  { type: 'row', label: '$1M Active Liability Policy Check', tier1: 'Manual', tier2: '✓ In-Platform', tier2Green: true },
-  { type: 'row', label: 'Re-Brokering & Chameleon Carrier Shield', tier1: '—', tier2: '✓ Enforced', tier2Green: true },
+  { type: 'heading', label: '2. LOAD POSTING & DISCOVERY' },
+  { type: 'row', label: 'Post loads and available trucks', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Ask questions and share info', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Search and filter by category', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Structured load listings', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Carrier / mover matching', tier1: '—', tier2: '✓', tier2Green: true },
 
-  { type: 'heading', label: '3. BIDDING & RATE EXECUTION' },
-  { type: 'row', label: 'Negotiation Medium', tier1: 'Phone & Email', tier2: 'Digital Counteroffers' },
-  { type: 'row', label: 'Binding Rate Handshake & Job ID', tier1: '—', tier2: '✓ Auto Rate Con PDF', tier2Green: true },
-  { type: 'row', label: 'Job-Scoped Encrypted Messaging', tier1: '—', tier2: '✓ Audit Trail', tier2Green: true },
+  { type: 'heading', label: '3. VERIFICATION & COMPLIANCE' },
+  { type: 'row', label: 'Basic member screening', tier1: '✓', tier2: '✓', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'DOT / MC information (required)', tier1: '✓ Basic', tier2: '✓ Full verification', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'COI (certificate of insurance)', tier1: '✓ Basic / required', tier2: '✓ Verified', tier1Green: true, tier2Green: true },
+  { type: 'row', label: 'Advanced verification', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Third-party verification', tier1: '—', tier2: '✓', tier2Green: true },
 
-  { type: 'heading', label: '4. TERMS & SETTLEMENT' },
-  { type: 'row', label: 'Platform Subscription', tier1: '$0 Free', tier2: 'Volume Scaled' },
-  { type: 'row', label: 'Broker Commission Skim', tier1: '0%', tier2: '0% Direct Pay', tier2Green: true },
+  { type: 'heading', label: '4. MARKETPLACE FEATURES' },
+  { type: 'row', label: 'Bidding', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Booking', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Transactions', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Closing sheet', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Document management', tier1: '—', tier2: '✓', tier2Green: true },
+  { type: 'row', label: 'Shipment tracking', tier1: '—', tier2: '✓', tier2Green: true },
 ];
 
 export default function FeatureMatrix() {
@@ -31,13 +41,13 @@ export default function FeatureMatrix() {
       {/* Section header */}
       <div style={{ textAlign: 'center', marginBottom: 40, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: '#d93506', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
-          ARCHITECTURAL MATRIX
+          TIER COMPARISON
         </div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 30, fontWeight: 400, color: '#1a1a1a', marginBottom: 8 }}>
-          Deep Feature Breakdown
+          Full Feature Breakdown
         </h2>
         <p style={{ fontSize: 14, color: '#6b7280', maxWidth: 480, margin: '0 auto' }}>
-          Compare specific compliance, bidding, and settlement capabilities between operating tiers.
+          Compare community, verification, and marketplace capabilities between tiers.
         </p>
       </div>
 
@@ -46,15 +56,15 @@ export default function FeatureMatrix() {
           <thead>
             <tr style={{ borderBottom: '1px solid #e5e7eb' }}>
               <th style={{ textAlign: 'left', fontWeight: 600, padding: '16px 24px', width: '50%', color: '#1a1a1a' }}>
-                Capabilities &amp; Governance
+                Feature
               </th>
               <th style={{ textAlign: 'center', fontWeight: 600, padding: '16px 24px', color: '#1a1a1a' }}>
                 Tier 1<br />
-                <span style={{ fontSize: 12, fontWeight: 400, color: '#9ca3af' }}>Community Bulletin</span>
+                <span style={{ fontSize: 12, fontWeight: 400, color: '#9ca3af' }}>Community</span>
               </th>
               <th style={{ textAlign: 'center', fontWeight: 600, padding: '16px 24px', background: '#fff7ed', color: '#1a1a1a' }}>
                 ★ Tier 2<br />
-                <span style={{ fontSize: 12, fontWeight: 400, color: '#9ca3af' }}>Binding Marketplace</span>
+                <span style={{ fontSize: 12, fontWeight: 400, color: '#9ca3af' }}>Marketplace</span>
               </th>
             </tr>
           </thead>
