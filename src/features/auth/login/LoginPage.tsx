@@ -85,7 +85,7 @@ export default function LoginPage() {
         }}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2" aria-label="FullLoadTrailer home">
+        <Link href="/" className="flex items-center gap-2" aria-label="FullTrailerLoad home">
           <span
             className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-bold"
             style={{ background: '#ff3d03', color: '#1A1953' }}
@@ -94,7 +94,7 @@ export default function LoginPage() {
             FL
           </span>
           <span className="text-base font-semibold tracking-tight text-white">
-            FullLoad<span style={{ color: '#ff3d03' }}>Trailer</span>
+            FullTrailer<span style={{ color: '#ff3d03' }}>Load</span>
           </span>
         </Link>
 
@@ -147,7 +147,7 @@ export default function LoginPage() {
       >
         {/* Mobile logo bar */}
         <div className="flex items-center justify-between px-6 py-5 lg:hidden">
-          <Link href="/" className="flex items-center gap-2" aria-label="FullLoadTrailer home">
+          <Link href="/" className="flex items-center gap-2" aria-label="FullTrailerLoad home">
             <span
               className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-bold"
               style={{ background: '#ff3d03', color: '#1A1953' }}
@@ -156,7 +156,7 @@ export default function LoginPage() {
               FL
             </span>
             <span className="text-base font-semibold tracking-tight text-neutral-900">
-              FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
+              FullTrailer<span style={{ color: '#fc3f07' }}>Load</span>
             </span>
           </Link>
           <span className="text-sm text-neutral-500">
@@ -320,7 +320,7 @@ export default function LoginPage() {
             <div className="my-8 flex items-center gap-3">
               <div className="h-px flex-1 bg-[#e8e0d6]" />
               <span className="text-[11px] font-medium uppercase tracking-[1px] text-neutral-400">
-                New to FullLoadTrailer?
+                New to FullTrailerLoad?
               </span>
               <div className="h-px flex-1 bg-[#e8e0d6]" />
             </div>

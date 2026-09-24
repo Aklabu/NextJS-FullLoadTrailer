@@ -9,9 +9,9 @@ import {
 } from '@/features/public/contact';
 
 export const metadata: Metadata = {
-  title: 'Contact & Support — FullLoadTrailer',
+  title: 'Contact & Support — FullTrailerLoad',
   description:
-    'Get in touch with the FullLoadTrailer operations team for onboarding help, SAFER verification, rate confirmation disputes, or emergency dispatch support.',
+    'Get in touch with the FullTrailerLoad operations team for onboarding help, SAFER verification, rate confirmation disputes, or emergency dispatch support.',
 };
 
 export default function ContactPage() {

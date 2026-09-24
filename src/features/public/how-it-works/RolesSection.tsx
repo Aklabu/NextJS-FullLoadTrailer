@@ -1,38 +1,38 @@
 const demandSteps = [
   {
-    title: 'Define Specifications & Equipment',
-    body: 'Specify origin, dropoff, cubic volume, weight, liftgate requirements, and choose between a target Buy-It-Now or dynamic auction window.',
+    title: 'Define Move Specifications',
+    body: 'Specify origin, destination, cubic footage, weight, access requirements, and choose between a fixed price or open bidding window for your household goods move.',
   },
   {
-    title: 'Screen Verified Carriers In Real Time',
-    body: 'Incoming bids reveal carrier safety ratings, active Operating Authority, inspected fleets, and historic on-time arrival performance.',
+    title: 'Screen Verified Movers In Real Time',
+    body: 'Incoming bids reveal carrier USDOT authority, active cargo insurance, safety ratings, and historic on-time completion performance.',
   },
   {
     title: 'Negotiate Counteroffers Transparently',
-    body: 'Accept optimal quotes or send binding counteroffers. Expiration counters create urgency without endless phone negotiations.',
+    body: 'Accept the best quote or send binding counteroffers. Expiration timers create urgency without endless phone tag or back-and-forth emails.',
   },
   {
-    title: 'Automated Dispatch & Encrypted Handshake',
-    body: 'Receive instant system-signed rate confirmations, BOL generation, and automated telemetry tracking directly in your dashboard.',
+    title: 'Binding Move Confirmation & Encrypted Handshake',
+    body: 'Receive instant system-signed move confirmations, HHG bill of lading generation, and direct job-linked in-platform messaging in your dashboard.',
   },
 ];
 
 const supplySteps = [
   {
-    title: 'Discover High-Density Verified Lanes',
-    body: 'Filter regional freight matches by equipment spec (Dry Van, Reefer, Flatbed), deadhead radius, and guaranteed payment credentials.',
+    title: 'Discover Verified Household Goods Jobs',
+    body: 'Filter available moves by origin, destination, cubic footage, move date, and truck type — and bid directly on jobs that fit your schedule and capacity.',
   },
   {
     title: 'Direct Transparent Bidding',
-    body: 'Place bids at your true cost-per-mile. See real-time market feedback and eliminate unnecessary brokerage cuts that erode margins.',
+    body: 'Place bids at your true cost. See real-time market feedback and connect directly with moving companies and brokers — no mystery middlemen cutting your margin.',
   },
   {
-    title: 'Post Empty Backhaul Capacity',
-    body: 'Reverse listing broadcasts your scheduled destination dropoffs, letting vetted shippers secure your empty space days before arrival.',
+    title: 'Post Available Return Capacity',
+    body: 'Reverse listing broadcasts your scheduled destination and available truck space, letting verified moving companies book your empty return before you arrive.',
   },
   {
-    title: 'Guaranteed Rate Lock & Swift Settlements',
-    body: 'Accepted rates lock programmatically into a rate confirmation with clear payment escrows and fast digital settlement upon delivery proof.',
+    title: 'Guaranteed Move Lock & Swift Settlement',
+    body: 'Accepted bids lock into a binding move confirmation with clear payment terms and fast digital settlement upon job completion and delivery confirmation.',
   },
 ];
 
@@ -106,11 +106,11 @@ export default function RolesSection() {
               ROLE PERSPECTIVES
             </p>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, fontWeight: 400, color: '#2b2420' }}>
-              Operational Workflows Compared
+              Role Workflows Compared
             </h2>
           </div>
           <p style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#7a7168', fontSize: 14 }}>
-            Dual-perspective architectural view
+            Dual-perspective view for moving companies and carriers
           </p>
         </div>
 
@@ -149,8 +149,8 @@ export default function RolesSection() {
                     🏠
                   </div>
                   <div>
-                    <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 20, fontWeight: 400, color: '#2b2420' }}>Shippers &amp; Brokers</h3>
-                    <div style={{ fontSize: 12, color: '#7a7168' }}>Demand-side dispatch workflow</div>
+                    <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 20, fontWeight: 400, color: '#2b2420' }}>Moving Companies &amp; Brokers</h3>
+                    <div style={{ fontSize: 12, color: '#7a7168' }}>Demand-side move workflow</div>
                   </div>
                 </div>
                 <span
@@ -183,7 +183,7 @@ export default function RolesSection() {
                   color: '#2b2420',
                 }}
               >
-                <span>⏱ Avg. time-to-cover reduced from 2.5 hrs to +14 mins</span>
+                <span>⏱ Avg. time-to-book reduced from 2.5 hrs to +14 mins</span>
                 <span
                   style={{
                     background: '#fc3f07',
@@ -233,7 +233,7 @@ export default function RolesSection() {
                     🚚
                   </div>
                   <div>
-                    <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 20, fontWeight: 400, color: '#2b2420' }}>Carriers &amp; Fleets</h3>
+                    <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 20, fontWeight: 400, color: '#2b2420' }}>HHG Carriers &amp; Owner-Operators</h3>
                     <div style={{ fontSize: 12, color: '#7a7168' }}>Capacity-side fulfillment workflow</div>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function RolesSection() {
                   color: '#2b2420',
                 }}
               >
-                <span>✅ Zero mystery middlemen &amp; direct shipper negotiations</span>
+                <span>✅ Zero mystery middlemen &amp; direct moving company negotiations</span>
                 <span
                   style={{
                     background: '#fc3f07',

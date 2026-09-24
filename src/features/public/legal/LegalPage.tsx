@@ -61,8 +61,8 @@ export default function LegalPage({ badge, title, effectiveDate, intro, sections
         <div className="mt-12 rounded-2xl border border-[#e8e0d6] bg-white p-6 text-center shadow-sm">
           <p className="text-sm text-neutral-600">
             Questions about this document? Contact us at{' '}
-            <a href="mailto:legal@fullloadtrailer.com" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
-              legal@fullloadtrailer.com
+            <a href="mailto:legal@FullTrailerLoad.com" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
+              legal@FullTrailerLoad.com
             </a>
             {' '}or visit our{' '}
             <a href="/contact" className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FullLoadTrailer — Freight Marketplace",
+  title: "FullTrailerLoad — Freight Marketplace",
   description:
     "The freight community that keeps deals on-platform — from bulletin board to booked load.",
 };

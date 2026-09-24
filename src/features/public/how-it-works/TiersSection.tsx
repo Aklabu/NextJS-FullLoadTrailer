@@ -1,14 +1,14 @@
 const tier1Items = [
   { check: true, text: 'Free instant public listing without verification waiting periods' },
-  { check: true, text: 'One-click contact reveal for direct dispatcher-to-driver dialogue' },
-  { check: true, text: 'Community rating scorecards and peer lane testimonials' },
+  { check: true, text: 'One-click contact reveal for direct mover-to-mover dialogue' },
+  { check: true, text: 'Community rating scorecards and peer move testimonials' },
   { check: false, text: 'Manual offline carrier insurance vetting and outside billing' },
 ];
 
 const tier2Items = [
-  { text: 'Automated live FMCSA SAFER API check & insurance verification' },
+  { text: 'Automated live FMCSA/USDOT authority check & insurance verification' },
   { text: 'Structured counteroffers with legal offer & acceptance audit stamps' },
-  { text: 'Automated Rate Confirmation generation with unique Master Job ID' },
+  { text: 'Automated Move Confirmation generation with unique Master Job ID' },
   { text: 'Encrypted job-scoped messaging shielding both parties from circumvention' },
 ];
 
@@ -49,7 +49,7 @@ export default function TiersSection() {
             marginBottom: 36,
           }}
         >
-          FullTrailerLoad provides two distinct operating tiers designed to support both casual peer-to-peer spot dispatching and institutional legal compliance.
+          FullTrailerLoad provides two distinct operating tiers designed to support both casual peer-to-peer household goods connections and fully compliant digital move execution.
         </p>
 
         {/* Tier cards */}

@@ -10,7 +10,7 @@ const faqs = [
       </svg>
     ),
     q: 'How does Tier 1 Bulletin differ from Tier 2 Digital Marketplace?',
-    a: 'Tier 1 functions as an open, zero-fee community board where operators connect directly via posted phone/email contacts. Tier 2 introduces our full transaction engine: FMCSA automated vetting, escrow protections, binding counter-negotiations, rate lock confirmations, and encrypted in-platform dispatch messaging.',
+    a: 'Tier 1 is an open, zero-fee community board where moving companies, brokers, and carriers connect directly via posted phone or email contacts. Tier 2 introduces our full transaction engine: FMCSA/USDOT automated vetting, escrow protections, binding counter-negotiations, move confirmation lock-ins, and encrypted in-platform job messaging.',
   },
   {
     icon: (
@@ -18,8 +18,8 @@ const faqs = [
         <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
       </svg>
     ),
-    q: 'How are carriers and brokers vetted before booking?',
-    a: 'For all Tier 2 marketplace interactions, our system executes real-time programmatic queries to FMCSA and DOT registries verifying active operating authority, safety rating status, MC numbers, and active Certificates of Insurance ($1M auto liability + cargo coverage).',
+    q: 'How are movers and brokers vetted before booking?',
+    a: 'For all Tier 2 marketplace interactions, our system executes real-time programmatic queries to FMCSA and USDOT registries verifying active operating authority, safety rating status, USDOT numbers, and active Certificates of Insurance (cargo coverage + liability).',
   },
   {
     icon: (
@@ -28,8 +28,8 @@ const faqs = [
         <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
       </svg>
     ),
-    q: 'Can I use the platform for partial loads or LTL?',
-    a: 'While FullTrailerLoad is engineered primarily for full trailer equipment (Dry Van, Reefer, Flatbed, Step Deck), Tier 1 bulletin postings permit capacity-sharing announcements (e.g., partial trailer floor space or empty return backhauls) when specified in the cubic volume fields.',
+    q: 'Can I use the platform for partial moves or shared truck space?',
+    a: 'While FullTrailerLoad is designed primarily for full truck household goods moves, Tier 1 bulletin postings permit capacity-sharing announcements (e.g., partial truck space or available return capacity) when specified in the cubic footage fields.',
   },
   {
     icon: (
@@ -37,8 +37,8 @@ const faqs = [
         <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
       </svg>
     ),
-    q: 'Are rate counteroffers legally binding?',
-    a: "Yes. Under Tier 2 marketplace rules, when a shipper or carrier clicks 'Accept' on a submitted counteroffer, a digital rate confirmation handshake is executed immediately with timestamps, dispatch paperwork, and legal rate obligations locked in our audit ledger.",
+    q: 'Are move counteroffers legally binding?',
+    a: "Yes. Under Tier 2 marketplace rules, when a moving company or carrier clicks 'Accept' on a submitted counteroffer, a digital move confirmation handshake is executed immediately with timestamps, job documentation, and legal rate obligations locked in our audit ledger.",
   },
 ];
 
@@ -93,8 +93,8 @@ export default function FaqSection() {
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-neutral-500">
             Everything you need to{' '}
-            <span className="text-[#fc3f07]">know</span> about our graduated freight exchange tiers, vetting, and{' '}
-            <span className="text-[#fc3f07]">binding</span> contracts.
+            <span className="text-[#fc3f07]">know</span> about our graduated moving marketplace tiers, vetting, and{' '}
+            <span className="text-[#fc3f07]">binding</span> move confirmations.
           </p>
         </div>
 

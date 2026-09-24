@@ -36,9 +36,8 @@ export default function HeroSection() {
             textUnderlineOffset: 8,
           }}
         >
-          Seamless Freight
-        </span>{' '}
-        Execution
+          Household Goods Moving
+        </span>
       </h1>
 
       {/* Subtitle */}
@@ -52,7 +51,7 @@ export default function HeroSection() {
           fontSize: 16,
         }}
       >
-        Whether you are dispatching heavy freight or monetizing backhaul trailer capacity, discover our graduated architecture from community spot board to legally binding rate execution.
+        Whether you are coordinating household goods moves or listing available truck capacity, discover our graduated platform — from community bulletin board to legally binding move confirmation.
       </p>
 
       {/* Role pills */}
@@ -86,7 +85,7 @@ export default function HeroSection() {
             color: activeRole === 'shipper' ? '#fff' : '#7a7168',
           }}
         >
-          🏠 Shippers &amp; Freight Brokers
+          🏠 Moving Companies &amp; Brokers
           <span
             style={{
               fontSize: 10,
@@ -118,7 +117,7 @@ export default function HeroSection() {
             color: activeRole === 'carrier' ? '#fff' : '#7a7168',
           }}
         >
-          🚚 Commercial Carriers &amp; Fleets
+          🚚 HHG Carriers &amp; Owner-Operators
           <span
             style={{
               fontSize: 10,

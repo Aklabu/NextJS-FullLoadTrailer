@@ -9,7 +9,7 @@ import {
 } from '@/features/public/how-it-works';
 
 export const metadata: Metadata = {
-  title: 'How It Works — FullLoadTrailer',
+  title: 'How It Works — FullTrailerLoad',
   description:
     'Discover how FullTrailerLoad powers seamless freight execution — from community bulletin board spot dispatching to legally binding digital rate confirmations.',
 };

@@ -1,7 +1,7 @@
 import { MyPostedLoadsPage } from '@/features/marketplace/shipper';
 
 export const metadata = {
-  title: 'My Posted Loads — FullLoadTrailer',
+  title: 'My Posted Loads — FullTrailerLoad',
   description: 'Manage all your active and past load listings.',
 };
 

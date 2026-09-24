@@ -4,10 +4,10 @@ const steps = [
     tag: 'INITIATION',
     tagColor: 'text-[#7a7168] bg-[#f3ede4]',
     title: 'Post or Discover',
-    body: 'Broadcast informal return capacity in seconds, or publish structured, biddable full trailer load specifications with lane origin, cubic volume, and trailer equipment constraints.',
+    body: 'Broadcast available truck capacity in seconds, or publish structured, biddable household goods move specs with origin, destination, cubic footage, and equipment details.',
     bullets: [
-      { color: 'text-[#fc3f07]', text: 'Shippers: Post bulk specs or fixed rates' },
-      { color: 'text-[#fc3f07]', text: 'Carriers: Filter backhauls & empty space' },
+      { color: 'text-[#fc3f07]', text: 'Moving companies: Post jobs or fixed-price moves' },
+      { color: 'text-[#fc3f07]', text: 'Carriers: Browse available moves & return capacity' },
     ],
     numBg: 'bg-[#f3ede4] text-[#d93506]',
     active: false,
@@ -16,10 +16,10 @@ const steps = [
     num: '02',
     tag: 'NEGOTIATION',
     tagColor: 'text-[#d93506] bg-[#ffe4cc]',
-    title: 'Automated Vetting & Counter-Bidding',
-    body: 'Real-time FMCSA/DOT active authority checks, COI inspection, and structured multi-round counteroffer negotiation with zero phone tag or broker friction.',
+    title: 'Verified Vetting & Counter-Bidding',
+    body: 'Real-time FMCSA/DOT authority checks, cargo insurance verification, and structured multi-round counteroffer negotiation — all in-platform, with zero phone tag.',
     bullets: [
-      { color: 'text-[#fc3f07]', text: '$1M auto liability & active MC verification' },
+      { color: 'text-[#fc3f07]', text: 'USDOT number & active authority verification' },
       { color: 'text-[#fc3f07]', text: 'Sub-14 min average counter-acceptance' },
     ],
     numBg: 'bg-[#fc3f07] text-white',
@@ -29,8 +29,8 @@ const steps = [
     num: '03',
     tag: 'EXECUTION',
     tagColor: 'text-[#1e6b5e] bg-[#d4f0ea]',
-    title: 'Binding Lock-In & Job Tracking',
-    body: 'Digital rate confirmation handshake, automated document dispatch, and direct job-linked in-platform messaging with real-time lane milestone updates.',
+    title: 'Binding Lock-In & Move Tracking',
+    body: 'Digital move confirmation handshake, automated document dispatch, and direct job-linked in-platform messaging with real-time move milestone updates.',
     bullets: [
       { color: 'text-[#fc3f07]', text: 'Automated doc generation & legal binding' },
       { color: 'text-[#fc3f07]', text: 'Anti-disintermediation encrypted chat' },
@@ -54,10 +54,10 @@ export default function MethodologySection() {
             className="mt-4 text-[clamp(28px,4vw,42px)] font-normal leading-tight text-neutral-900"
             style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
           >
-            From Bulletin to Binding Handshake
+            From Bulletin to Binding Move Confirmation
           </h2>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#fc3f07]">
-            Three streamlined milestones bridging informal community capacity with high-velocity, legally binding digital freight execution.
+            Three streamlined milestones bridging informal community capacity posts with verified digital marketplace bidding and legally binding move confirmations.
           </p>
         </div>
 

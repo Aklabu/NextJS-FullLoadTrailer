@@ -1,8 +1,8 @@
 const stats = [
-  { value: '$48M+', label: 'FREIGHT VALUE HANDLED' },
-  { value: '12,500+', label: 'VERIFIED CARRIERS' },
+  { value: '$48M+', label: 'MOVE VALUE FACILITATED' },
+  { value: '12,500+', label: 'VERIFIED MOVERS' },
   { value: '< 14 min', label: 'AVG. TIME-TO-BID' },
-  { value: '99.8%', label: 'ON-TIME EXECUTION' },
+  { value: '99.8%', label: 'ON-TIME COMPLETION' },
 ];
 
 export default function StatsBar() {

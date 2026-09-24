@@ -1,7 +1,7 @@
 import { ConversationPage } from '@/features/messaging';
 
 export const metadata = {
-  title: 'Conversation — FullLoadTrailer',
+  title: 'Conversation — FullTrailerLoad',
 };
 
 export default function ConversationRoute() {

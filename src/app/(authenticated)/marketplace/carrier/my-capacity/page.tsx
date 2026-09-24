@@ -1,7 +1,7 @@
 import { MyCapacityPostingsPage } from '@/features/marketplace/carrier';
 
 export const metadata = {
-  title: 'My Capacity Postings — FullLoadTrailer',
+  title: 'My Capacity Postings — FullTrailerLoad',
   description: 'Manage your active and past trailer capacity listings.',
 };
 

@@ -1,7 +1,7 @@
 import { ReviewsViewPage } from '@/features/messaging';
 
 export const metadata = {
-  title: 'Reviews — FullLoadTrailer',
+  title: 'Reviews — FullTrailerLoad',
 };
 
 export default function ReviewsViewRoute() {

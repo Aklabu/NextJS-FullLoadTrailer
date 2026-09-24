@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: '404 — Page Not Found — FullLoadTrailer',
+  title: '404 — Page Not Found — FullTrailerLoad',
 };
 
 export default function NotFound() {
@@ -14,7 +14,7 @@ export default function NotFound() {
       }}
     >
       {/* Logo */}
-      <Link href="/" className="mb-10 flex items-center gap-2" aria-label="FullLoadTrailer home">
+      <Link href="/" className="mb-10 flex items-center gap-2" aria-label="FullTrailerLoad home">
         <span
           className="flex h-8 w-8 items-center justify-center rounded-md text-sm font-bold"
           style={{ background: '#ff3d03', color: '#1A1953' }}
@@ -23,7 +23,7 @@ export default function NotFound() {
           FL
         </span>
         <span className="text-lg font-semibold tracking-tight text-neutral-900">
-          FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
+          FullTrailer<span style={{ color: '#fc3f07' }}>Load</span>
         </span>
       </Link>
 

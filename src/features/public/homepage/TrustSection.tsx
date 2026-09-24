@@ -5,15 +5,15 @@ const testimonials = [
     quote:
       '"The difference between traditional static boards and FullTrailerLoad Tier 2 is night and day. We trimmed our time-to-cover from 2.5 hours down to 18 minutes, and every counteroffer is locked with vetted paperwork."',
     name: 'Marcus Keller',
-    role: 'Director of Freight Operations · Apex Freight Logistics',
+    role: 'Operations Manager · Apex Moving & Storage',
   },
   {
     initials: 'DR',
     stars: 5,
     quote:
-      '"As an owner-operator running Midwest-to-Southwest lanes, I can post my return capacity straight from the cab. No mystery brokers, no ghost loads. When a shipper counters, we agree and book right on the screen."',
+      '"As an owner-operator running Midwest-to-Southwest routes, I can post my return capacity straight from the cab. No mystery brokers, no ghost jobs. When a moving company counters, we agree and book right on the screen."',
     name: 'Darren Reynolds',
-    role: 'Owner-Operator · Red Rock Hauling LLC (3 Trucks)',
+    role: 'Owner-Operator · Red Rock Moving LLC (3 Trucks)',
   },
 ];
 
@@ -34,14 +34,14 @@ export default function TrustSection() {
             <div>
               <div className="mb-1 flex flex-wrap items-center gap-3">
                 <span className="text-base font-semibold text-neutral-900">
-                  Integrated FMCSA &amp; DOT Validation
+                  FMCSA &amp; USDOT Authority Verification
                 </span>
                 <span className="rounded-full bg-[#d4f0ea] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[1px] text-[#1e6b5e]">
                   REAL-TIME VETTING
                 </span>
               </div>
               <p className="max-w-md text-sm leading-relaxed text-neutral-500">
-                Every carrier must maintain valid operating authority, $1M auto liability, and cargo insurance minimums before bidding on Tier 2 loads.
+                Every mover must maintain valid USDOT operating authority, cargo insurance, and liability coverage minimums before bidding on Tier 2 jobs.
               </p>
             </div>
           </div>
@@ -49,8 +49,8 @@ export default function TrustSection() {
           {/* Verification pills */}
           <div className="flex flex-wrap gap-2">
             {[
-              { dot: 'bg-green-500', label: 'DOT Verified' },
-              { dot: 'bg-[#fc3f07]', label: 'MC Validated' },
+              { dot: 'bg-green-500', label: 'USDOT Verified' },
+              { dot: 'bg-[#fc3f07]', label: 'Authority Validated' },
               { dot: 'bg-[#d93506]', label: 'COI Checked' },
             ].map((p) => (
               <span

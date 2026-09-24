@@ -5,8 +5,8 @@ const phases = [
     icon: '📡',
     title: 'Post & Broadcast',
     description:
-      "Shippers post verified freight with exact lane origin, dropoff window, cubic volume & equipment demands (53' Dry Van, Reefer, Flatbed) or broadcast instant Tier 1 bulletin notices.",
-    footerLeft: '✅ Lane Corridor Pinging',
+      "Moving companies and brokers post household goods jobs with origin, destination, cubic footage, and move date — or broadcast instant Tier 1 bulletin notices to find available capacity fast.",
+    footerLeft: '✅ Real-Time Availability Pinging',
     badge: 'AUTO ACTIVE',
     badgeStyle: { background: '#dff1e4', color: '#3f8f5f' },
   },
@@ -14,9 +14,9 @@ const phases = [
     num: '02',
     phase: 'PHASE 2',
     icon: '🛡️',
-    title: 'FMCSA Vetting & Bidding',
+    title: 'USDOT Vetting & Bidding',
     description:
-      'Carriers submit structured offers. Automated pipelines query live DOT authority, $1M auto liability validation, and safety compliance while multi-round transparent counteroffers resolve in minutes.',
+      'Carriers submit structured bids. Automated pipelines verify live USDOT authority, cargo insurance, and safety compliance while multi-round transparent counteroffers resolve in minutes.',
     footerLeft: '📋 Immutable Counter Logs',
     badge: 'FMCSA LIVE',
     badgeStyle: { background: '#fbe6b8', color: '#a9782c' },
@@ -25,9 +25,9 @@ const phases = [
     num: '03',
     phase: 'PHASE 3',
     icon: '🔖',
-    title: 'Lock-in & Rate Confirmation',
+    title: 'Lock-in & Move Confirmation',
     description:
-      'Digital rate handshake creates a unified Master Job ID. Legally binding rate confirmations execute automatically, opening secure encrypted job-channel communication.',
+      'Digital move confirmation handshake creates a unified Master Job ID. Legally binding confirmations execute automatically, opening a secure encrypted job-channel for all communication.',
     footerLeft: '🔒 Direct Settlement',
     badge: 'ZERO BROKERS',
     badgeStyle: { background: '#fbeee0', color: '#7a7168' },
@@ -71,7 +71,7 @@ export default function ExecutionSection() {
                 color: '#2b2420',
               }}
             >
-              Post → Bid → Book &amp; Dispatch
+              Post → Bid → Book &amp; Confirm
             </h2>
           </div>
           <p
@@ -82,7 +82,7 @@ export default function ExecutionSection() {
               maxWidth: 320,
             }}
           >
-            Programmatic checkpoints eliminate dry runs, phone tag, and fraudulent double-brokering across every stage.
+            Programmatic checkpoints eliminate missed connections, phone tag, and double-brokering across every stage.
           </p>
         </div>
 

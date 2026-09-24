@@ -10,7 +10,7 @@ import {
 } from '@/features/public/pricing';
 
 export const metadata: Metadata = {
-  title: 'Pricing — FullLoadTrailer',
+  title: 'Pricing — FullTrailerLoad',
   description:
     'Simple, scalable freight tiers. Start free on the community bulletin board or unlock the full binding digital marketplace with FMCSA compliance and escrow protection.',
 };

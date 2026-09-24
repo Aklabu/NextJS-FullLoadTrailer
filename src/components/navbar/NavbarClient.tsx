@@ -37,7 +37,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="FullLoadTrailer home">
+    <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="FullTrailerLoad home">
       <span
         className="h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold"
         style={{ background: '#ff3d03', color: '#1A1953' }}
@@ -46,7 +46,7 @@ function Logo() {
         FL
       </span>
       <span className="text-base font-semibold tracking-tight text-white">
-        FullLoad<span style={{ color: '#ff3d03' }}>Trailer</span>
+        FullTrailer<span style={{ color: '#ff3d03' }}>Load</span>
       </span>
     </Link>
   );

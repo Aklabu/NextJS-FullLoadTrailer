@@ -70,7 +70,7 @@ export default function RoleSelectionPage() {
     >
       {/* Top bar — minimal, just logo + login link */}
       <div className="mx-auto flex max-w-[1100px] items-center justify-between px-6 py-5">
-        <Link href="/" className="flex items-center gap-2" aria-label="FullLoadTrailer home">
+        <Link href="/" className="flex items-center gap-2" aria-label="FullTrailerLoad home">
           <span
             className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-bold"
             style={{ background: '#ff3d03', color: '#1A1953' }}
@@ -79,7 +79,7 @@ export default function RoleSelectionPage() {
             FL
           </span>
           <span className="text-base font-semibold tracking-tight text-neutral-900">
-            FullLoad<span style={{ color: '#fc3f07' }}>Trailer</span>
+            FullTrailer<span style={{ color: '#fc3f07' }}>Load</span>
           </span>
         </Link>
 
@@ -111,7 +111,7 @@ export default function RoleSelectionPage() {
             How will you use
             <br />
             <span className="italic" style={{ color: '#fc3f07' }}>
-              FullLoadTrailer?
+              FullTrailerLoad?
             </span>
           </h1>
 

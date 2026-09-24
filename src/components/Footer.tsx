@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
-          <Link href="/" aria-label="FullLoadTrailer home" className="flex items-center gap-2 shrink-0">
+          <Link href="/" aria-label="FullTrailerLoad home" className="flex items-center gap-2 shrink-0">
             <span
               className="h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold"
               style={{ background: '#ff3d03', color: '#1A1953' }}
@@ -16,7 +16,7 @@ export default function Footer() {
               FL
             </span>
             <span className="text-base font-semibold tracking-tight text-white">
-              FullLoad<span style={{ color: '#ff3d03' }}>Trailer</span>
+              FullTrailer<span style={{ color: '#ff3d03' }}>Load</span>
             </span>
           </Link>
 
@@ -44,7 +44,7 @@ export default function Footer() {
         </nav>
 
         <p className="mt-6 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-          &copy; {new Date().getFullYear()} FullLoadTrailer. All rights reserved.
+          &copy; {new Date().getFullYear()} FullTrailerLoad. All rights reserved.
         </p>
 
       </div>

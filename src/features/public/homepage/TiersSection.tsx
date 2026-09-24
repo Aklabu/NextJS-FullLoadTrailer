@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const tier1Features = [
-  'Post load or capacity listings',
+  'Post move or capacity listings',
   'Browse community board',
   'Verified badge display',
   'Basic contact reveal',
@@ -10,7 +10,7 @@ const tier1Features = [
 const tier2Features = [
   'Everything in Bulletin Board',
   'Structured bidding & counteroffers',
-  'Booking confirmations with job IDs',
+  'Move confirmations with job IDs',
   'In-platform messaging per job',
   'Carrier capacity postings',
   'Broker pipeline dashboard',
@@ -61,7 +61,7 @@ export default function TiersSection() {
               Bulletin Board
             </h3>
             <p className="mb-6 text-sm leading-relaxed text-neutral-500">
-              Post and browse informal freight listings. Connect directly with verified peers.
+              Post and browse informal household goods listings. Connect directly with verified movers and moving companies.
             </p>
 
             <ul className="mb-8 flex-1 space-y-3">
@@ -98,7 +98,7 @@ export default function TiersSection() {
               Marketplace
             </h3>
             <p className="mb-6 text-sm leading-relaxed text-neutral-500">
-              Full bidding marketplace with structured pricing, counteroffers, and booking confirmations.
+              Full bidding marketplace with structured pricing, counteroffers, and binding move confirmations.
             </p>
 
             <ul className="mb-8 flex-1 space-y-3">

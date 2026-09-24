@@ -5,7 +5,7 @@ export const privacyContent = {
   title: 'Privacy Policy',
   effectiveDate: 'September 19, 2026',
   intro:
-    'FullLoadTrailer ("we", "us", or "our") is committed to protecting the privacy of the businesses and individuals who use our freight exchange platform. This Privacy Policy explains what information we collect, how we use and protect it, and the choices you have regarding your data. By using the Platform you agree to the practices described here.',
+    'FullTrailerLoad ("we", "us", or "our") is committed to protecting the privacy of the businesses and individuals who use our freight exchange platform. This Privacy Policy explains what information we collect, how we use and protect it, and the choices you have regarding your data. By using the Platform you agree to the practices described here.',
   sections: [
     {
       heading: 'Information We Collect',
@@ -17,7 +17,7 @@ export const privacyContent = {
     },
     {
       heading: 'Information Sharing',
-      body: 'We share your information only in the following circumstances. With counterparties: we disclose the contact and company details necessary to facilitate a confirmed booking — typically after a bid is accepted and a Master Job ID is generated. With service providers: we engage vetted third-party vendors (hosting, email delivery, payment processing, analytics) who process data on our behalf under strict confidentiality obligations. With regulatory bodies: we may disclose information when required by law, court order, or FMCSA regulation. In connection with a business transfer: if FullLoadTrailer is acquired or merges with another entity, your data may be transferred as part of that transaction, subject to equivalent privacy protections. We do not sell, rent, or trade your personal information to third parties for their own marketing purposes.',
+      body: 'We share your information only in the following circumstances. With counterparties: we disclose the contact and company details necessary to facilitate a confirmed booking — typically after a bid is accepted and a Master Job ID is generated. With service providers: we engage vetted third-party vendors (hosting, email delivery, payment processing, analytics) who process data on our behalf under strict confidentiality obligations. With regulatory bodies: we may disclose information when required by law, court order, or FMCSA regulation. In connection with a business transfer: if FullTrailerLoad is acquired or merges with another entity, your data may be transferred as part of that transaction, subject to equivalent privacy protections. We do not sell, rent, or trade your personal information to third parties for their own marketing purposes.',
     },
     {
       heading: 'Data Retention',
@@ -33,15 +33,15 @@ export const privacyContent = {
     },
     {
       heading: 'Your Rights',
-      body: 'Depending on your jurisdiction, you may have the right to: access a copy of the personal data we hold about your account; request correction of inaccurate data; request deletion of your data, subject to our retention obligations; restrict or object to certain processing; and receive a portable copy of your data in a structured, machine-readable format. To exercise any of these rights, contact us at privacy@fullloadtrailer.com. We will respond within 30 days. We may need to verify your identity before fulfilling a request.',
+      body: 'Depending on your jurisdiction, you may have the right to: access a copy of the personal data we hold about your account; request correction of inaccurate data; request deletion of your data, subject to our retention obligations; restrict or object to certain processing; and receive a portable copy of your data in a structured, machine-readable format. To exercise any of these rights, contact us at privacy@FullTrailerLoad.com. We will respond within 30 days. We may need to verify your identity before fulfilling a request.',
     },
     {
       heading: 'Third-Party Services and Links',
-      body: 'The Platform integrates with the FMCSA SAFER database for carrier verification. We may also link to third-party resources for reference purposes. We are not responsible for the privacy practices of those third parties and encourage you to review their policies directly. Payment processing, where applicable, is handled by a PCI-compliant third-party provider; FullLoadTrailer does not store full payment card numbers.',
+      body: 'The Platform integrates with the FMCSA SAFER database for carrier verification. We may also link to third-party resources for reference purposes. We are not responsible for the privacy practices of those third parties and encourage you to review their policies directly. Payment processing, where applicable, is handled by a PCI-compliant third-party provider; FullTrailerLoad does not store full payment card numbers.',
     },
     {
       heading: "Children's Privacy",
-      body: 'FullLoadTrailer is a business-to-business platform intended exclusively for commercial use by adults aged 18 and over. We do not knowingly collect personal information from individuals under 18. If we become aware that a minor has provided personal information, we will delete it promptly. If you believe we have inadvertently collected such information, please contact us immediately.',
+      body: 'FullTrailerLoad is a business-to-business platform intended exclusively for commercial use by adults aged 18 and over. We do not knowingly collect personal information from individuals under 18. If we become aware that a minor has provided personal information, we will delete it promptly. If you believe we have inadvertently collected such information, please contact us immediately.',
     },
     {
       heading: 'Changes to This Privacy Policy',

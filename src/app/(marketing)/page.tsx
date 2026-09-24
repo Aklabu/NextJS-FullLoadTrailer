@@ -7,9 +7,9 @@ import TrustSection from '@/features/public/homepage/TrustSection';
 import FaqSection from '@/features/public/homepage/FaqSection';
 
 export const metadata: Metadata = {
-  title: 'FullLoadTrailer — Full Trailer Loads. Real Carriers. Zero Friction.',
+  title: 'FullTrailerLoad — Full Trailer Loads. Real Carriers. Zero Friction.',
   description:
-    'Move beyond static bulletin boards. FullLoadTrailer connects verified shippers, brokers, and carriers through transparent bidding, binding rate confirmations, and vetted carrier trust.',
+    'Move beyond static bulletin boards. FullTrailerLoad connects verified shippers, brokers, and carriers through transparent bidding, binding rate confirmations, and vetted carrier trust.',
 };
 
 export default function HomePage() {
