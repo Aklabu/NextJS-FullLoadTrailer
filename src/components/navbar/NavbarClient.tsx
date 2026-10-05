@@ -35,18 +35,21 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
+import Image from 'next/image';
+
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="FullTrailerLoad home">
-      <span
-        className="h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold"
-        style={{ background: '#ff3d03', color: '#1A1953' }}
+    <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="FullTrailerLoad home">
+      <Image
+        src="/images/logo-icon.png"
+        alt=""
+        width={36}
+        height={36}
+        className="rounded-lg"
         aria-hidden="true"
-      >
-        FL
-      </span>
-      <span className="text-base font-semibold tracking-tight text-white">
-        FullTrailer<span style={{ color: '#ff3d03' }}>Load</span>
+      />
+      <span className="text-[15px] font-extrabold tracking-tight" style={{ fontFamily: 'system-ui, sans-serif' }}>
+        <span style={{ color: '#ffffff' }}>FullTrailerLoad</span><span style={{ color: '#ff3d03' }}>.com</span>
       </span>
     </Link>
   );

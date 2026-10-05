@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { footerLinks } from '@/lib/navConfig';
 
 export default function Footer() {
@@ -7,16 +8,22 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
-          <Link href="/" aria-label="FullTrailerLoad home" className="flex items-center gap-2 shrink-0">
-            <span
-              className="h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold"
-              style={{ background: '#ff3d03', color: '#1A1953' }}
+          <Link href="/" aria-label="FullTrailerLoad home" className="flex items-center gap-2.5 shrink-0">
+            <Image
+              src="/images/logo-icon.png"
+              alt=""
+              width={36}
+              height={36}
+              className="rounded-lg"
               aria-hidden="true"
-            >
-              FL
-            </span>
-            <span className="text-base font-semibold tracking-tight text-white">
-              FullTrailer<span style={{ color: '#ff3d03' }}>Load</span>
+            />
+            <span className="flex flex-col leading-none">
+              <span className="text-[15px] font-extrabold tracking-tight" style={{ fontFamily: 'system-ui, sans-serif' }}>
+                <span style={{ color: '#ffffff' }}>FullTrailerLoad</span><span style={{ color: '#ff3d03' }}>.com</span>
+              </span>
+              <span className="text-[9px] font-semibold tracking-widest mt-0.5" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em' }}>
+                LOADS • BIDS • MOVING • TRANSPORTATION
+              </span>
             </span>
           </Link>
 
