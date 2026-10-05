@@ -10,14 +10,14 @@ import { EQUIPMENT_LABELS, POST_TYPE_LABELS } from './types';
 const MOCK_POSTS: BoardPost[] = [
   {
     id: '1', postType: 'load_available', origin: 'Chicago, IL', destination: 'Detroit, MI',
-    equipmentType: 'dry_van', cubicFeet: 1200, pickupDate: '2026-09-25',
+    equipmentType: 'moving_trailer', cubicFeet: 1200, pickupDate: '2026-09-25',
     description: 'Full trailer of household goods. Need reliable carrier with experience in residential moves.',
     postedAt: '2026-09-19T08:30:00Z',
     poster: { id: 'p1', companyName: 'Acme Freight LLC', verificationStatus: 'verified' },
   },
   {
-    id: '2', postType: 'capacity_available', origin: 'Atlanta, GA', destination: 'Nashville, TN',
-    equipmentType: 'flatbed', cubicFeet: 800, pickupDate: '2026-09-26',
+    id: '2', postType: 'truck_trailer_available', origin: 'Atlanta, GA', destination: 'Nashville, TN',
+    equipmentType: 'dry_van_side_door', cubicFeet: 800, pickupDate: '2026-09-26',
     description: 'Return haul capacity available. Flexible on load type.',
     postedAt: '2026-09-19T07:15:00Z',
     poster: { id: 'p2', companyName: 'SouthHaul Carriers', verificationStatus: 'basic' },
@@ -30,23 +30,23 @@ const MOCK_POSTS: BoardPost[] = [
     poster: { id: 'p3', companyName: 'TexasPro Moving', verificationStatus: 'verified' },
   },
   {
-    id: '4', postType: 'capacity_available', origin: 'Phoenix, AZ', destination: 'Los Angeles, CA',
-    equipmentType: 'dry_van', cubicFeet: 1400, pickupDate: '2026-09-27',
+    id: '4', postType: 'truck_trailer_available', origin: 'Phoenix, AZ', destination: 'Los Angeles, CA',
+    equipmentType: 'moving_trailer', cubicFeet: 1400, pickupDate: '2026-09-27',
     description: 'Running empty to LA — looking to fill the trailer. Any load type welcome.',
     postedAt: '2026-09-18T11:45:00Z',
     poster: { id: 'p4', companyName: 'Desert Logistics', verificationStatus: 'verified' },
   },
   {
     id: '5', postType: 'load_available', origin: 'Seattle, WA', destination: 'Portland, OR',
-    equipmentType: 'sprinter', cubicFeet: 350, pickupDate: '2026-09-23',
+    equipmentType: 'box_truck', cubicFeet: 350, pickupDate: '2026-09-23',
     description: 'Small business inventory shipment. Time-sensitive.',
     postedAt: '2026-09-17T09:00:00Z',
     poster: { id: 'p5', companyName: 'Pacific Freight Co.', verificationStatus: 'basic' },
   },
   {
     id: '6', postType: 'load_available', origin: 'Miami, FL', destination: 'Orlando, FL',
-    equipmentType: 'reefer', cubicFeet: 900, pickupDate: '2026-09-28',
-    description: 'Temperature-controlled goods. Must maintain 35°F throughout transit.',
+    equipmentType: 'dry_van_side_door', cubicFeet: 900, pickupDate: '2026-09-28',
+    description: 'Household goods — side door access required at destination.',
     postedAt: '2026-09-17T06:30:00Z',
     poster: { id: 'p6', companyName: 'SunState Shippers', verificationStatus: 'verified' },
   },
@@ -150,7 +150,7 @@ function FilterBar({
           >
             <option value="all">All posts</option>
             <option value="load_available">Load Available</option>
-            <option value="capacity_available">Capacity Available</option>
+            <option value="truck_trailer_available">Truck / Trailer Available</option>
           </select>
         </div>
       </div>

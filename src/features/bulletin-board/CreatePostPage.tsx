@@ -165,7 +165,7 @@ export default function CreatePostPage() {
               Post type <span className="text-red-500" aria-hidden="true">*</span>
             </p>
             <div className="grid grid-cols-2 gap-3">
-              {(['load_available', 'capacity_available'] as PostType[]).map((type) => (
+              {(['load_available', 'truck_trailer_available'] as PostType[]).map((type) => (
                 <button
                   key={type}
                   type="button"

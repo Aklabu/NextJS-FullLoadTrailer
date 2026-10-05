@@ -1,14 +1,10 @@
-export type PostType = 'load_available' | 'capacity_available';
+export type PostType = 'load_available' | 'truck_trailer_available';
 
 export type EquipmentType =
   | 'any'
-  | 'flatbed'
-  | 'dry_van'
-  | 'reefer'
-  | 'step_deck'
-  | 'lowboy'
   | 'box_truck'
-  | 'sprinter';
+  | 'moving_trailer'
+  | 'dry_van_side_door';
 
 export interface BoardPost {
   id: string;
@@ -38,16 +34,12 @@ export interface BoardFilters {
 
 export const EQUIPMENT_LABELS: Record<EquipmentType, string> = {
   any: 'Any equipment',
-  flatbed: 'Flatbed',
-  dry_van: 'Dry Van',
-  reefer: 'Refrigerated',
-  step_deck: 'Step Deck',
-  lowboy: 'Lowboy',
   box_truck: 'Box Truck',
-  sprinter: 'Sprinter / Cargo Van',
+  moving_trailer: 'Moving Trailer',
+  dry_van_side_door: 'Dry Van (Side Door)',
 };
 
 export const POST_TYPE_LABELS: Record<PostType, string> = {
   load_available: 'Load Available',
-  capacity_available: 'Capacity Available',
+  truck_trailer_available: 'Truck / Trailer Available',
 };

@@ -12,7 +12,7 @@ const MOCK_POST: BoardPost = {
   postType: 'load_available',
   origin: 'Chicago, IL',
   destination: 'Detroit, MI',
-  equipmentType: 'dry_van',
+  equipmentType: 'moving_trailer',
   cubicFeet: 1200,
   pickupDate: '2026-09-25',
   description: 'Full trailer of household goods. Need a reliable carrier with experience in residential moves. Pickup from a residential address — no loading dock. Standard furniture, boxes, and appliances.',
