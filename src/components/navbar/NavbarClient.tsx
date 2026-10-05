@@ -19,7 +19,9 @@ interface NavbarClientProps {
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   const pathname = usePathname();
-  const isActive = pathname === href || pathname.startsWith(href + '/');
+  // Strip query string from href before comparing to pathname
+  const hrefPath = href.split('?')[0];
+  const isActive = pathname === hrefPath || pathname.startsWith(hrefPath + '/');
 
   return (
     <Link

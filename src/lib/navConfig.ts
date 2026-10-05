@@ -15,6 +15,7 @@ export const publicNavItems: NavItem[] = [
 // Logged-in centre links
 export const authedNavItems: NavItem[] = [
   { label: 'Board', href: '/board' },
+  { label: 'Community', href: '/community' },
   { label: 'Marketplace', href: '/marketplace' },
   { label: 'Messages', href: '/messages' },
 ];
