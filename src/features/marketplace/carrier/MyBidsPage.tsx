@@ -22,11 +22,11 @@ interface BidSummary {
 }
 
 const MOCK_BIDS: BidSummary[] = [
-  { id: 'b1', loadId: 'l1', jobId: 'FTL-2026-0042', origin: 'Chicago, IL', destination: 'Detroit, MI', pickupDate: '2026-09-25', equipmentType: 'Dry Van', bidAmount: 2400, bidStatus: 'pending', loadStatus: 'bidding', placedAt: '2026-09-18T12:00:00Z' },
+  { id: 'b1', loadId: 'l1', jobId: 'FTL-2026-0042', origin: 'Chicago, IL', destination: 'Detroit, MI', pickupDate: '2026-09-25', equipmentType: 'Dry Van (Side Door)', bidAmount: 2400, bidStatus: 'pending', loadStatus: 'bidding', placedAt: '2026-09-18T12:00:00Z' },
   { id: 'b2', loadId: 'l3', jobId: 'FTL-2026-0040', origin: 'Dallas, TX', destination: 'Houston, TX', pickupDate: '2026-09-24', equipmentType: 'Box Truck', bidAmount: 850, counterAmount: 920, bidStatus: 'countered', loadStatus: 'bidding', placedAt: '2026-09-17T10:00:00Z' },
-  { id: 'b3', loadId: 'l5', jobId: 'FTL-2026-0031', origin: 'Phoenix, AZ', destination: 'Los Angeles, CA', pickupDate: '2026-09-10', equipmentType: 'Dry Van', bidAmount: 3200, bidStatus: 'accepted', loadStatus: 'booked', placedAt: '2026-09-06T09:00:00Z' },
-  { id: 'b4', loadId: 'l6', jobId: 'FTL-2026-0028', origin: 'Seattle, WA', destination: 'Portland, OR', pickupDate: '2026-09-05', equipmentType: 'Refrigerated', bidAmount: 550, bidStatus: 'rejected', loadStatus: 'booked', placedAt: '2026-09-03T08:00:00Z' },
-  { id: 'b5', loadId: 'l7', jobId: 'FTL-2026-0025', origin: 'Miami, FL', destination: 'Tampa, FL', pickupDate: '2026-09-01', equipmentType: 'Flatbed', bidAmount: 700, bidStatus: 'withdrawn', loadStatus: 'booked', placedAt: '2026-08-30T07:00:00Z' },
+  { id: 'b3', loadId: 'l5', jobId: 'FTL-2026-0031', origin: 'Phoenix, AZ', destination: 'Los Angeles, CA', pickupDate: '2026-09-10', equipmentType: 'Moving Trailer', bidAmount: 3200, bidStatus: 'accepted', loadStatus: 'booked', placedAt: '2026-09-06T09:00:00Z' },
+  { id: 'b4', loadId: 'l6', jobId: 'FTL-2026-0028', origin: 'Seattle, WA', destination: 'Portland, OR', pickupDate: '2026-09-05', equipmentType: 'Box Truck', bidAmount: 550, bidStatus: 'rejected', loadStatus: 'booked', placedAt: '2026-09-03T08:00:00Z' },
+  { id: 'b5', loadId: 'l7', jobId: 'FTL-2026-0025', origin: 'Miami, FL', destination: 'Tampa, FL', pickupDate: '2026-09-01', equipmentType: 'Moving Trailer', bidAmount: 700, bidStatus: 'withdrawn', loadStatus: 'booked', placedAt: '2026-08-30T07:00:00Z' },
 ];
 
 const TABS: { key: BidTab; label: string }[] = [

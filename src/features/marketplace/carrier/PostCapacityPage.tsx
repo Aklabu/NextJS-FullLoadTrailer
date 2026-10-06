@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-const EQUIPMENT_OPTIONS = ['Flatbed', 'Dry Van', 'Refrigerated', 'Step Deck', 'Lowboy', 'Box Truck', 'Sprinter / Cargo Van'];
+import { EQUIPMENT_OPTIONS } from '@/lib/equipmentOptions';
 
 interface CapacityForm {
   origin: string;
@@ -19,7 +19,7 @@ interface CapacityForm {
 interface FieldErrors { [k: string]: string }
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
 
-const INITIAL: CapacityForm = { origin: '', destination: '', availableFrom: '', availableTo: '', cubicFeet: '', equipmentType: 'Dry Van', notes: '' };
+const INITIAL: CapacityForm = { origin: '', destination: '', availableFrom: '', availableTo: '', cubicFeet: '', equipmentType: 'Box Truck', notes: '' };
 
 function validate(f: CapacityForm): FieldErrors {
   const e: FieldErrors = {};
@@ -52,10 +52,36 @@ function Field({ id, label, value, onChange, error, type = 'text', placeholder, 
 
 export default function PostCapacityPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('edit');
+  const isEditMode = Boolean(editId);
+
   const [fields, setFields] = useState<CapacityForm>(INITIAL);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [submitError, setSubmitError] = useState('');
+  const [loadingEdit, setLoadingEdit] = useState(isEditMode);
+
+  // Fetch existing posting and pre-fill when in edit mode
+  useEffect(() => {
+    if (!editId) return;
+    setLoadingEdit(true);
+    fetch(`/api/marketplace/capacity/${editId}/`)
+      .then((r) => r.json())
+      .then((data) => {
+        setFields({
+          origin: data.origin ?? '',
+          destination: data.destination ?? '',
+          availableFrom: data.available_from ?? '',
+          availableTo: data.available_to ?? '',
+          cubicFeet: String(data.cubic_feet ?? ''),
+          equipmentType: data.equipment_type ?? 'Box Truck',
+          notes: data.notes ?? '',
+        });
+      })
+      .catch(() => setSubmitError('Failed to load posting. Please go back and try again.'))
+      .finally(() => setLoadingEdit(false));
+  }, [editId]);
 
   function set(key: keyof CapacityForm, val: string) {
     setFields((p) => ({ ...p, [key]: val }));
@@ -68,8 +94,12 @@ export default function PostCapacityPage() {
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setSubmitState('submitting');
     try {
-      const res = await fetch('/api/marketplace/capacity/', {
-        method: 'POST',
+      const url = isEditMode
+        ? `/api/marketplace/capacity/${editId}/`
+        : '/api/marketplace/capacity/';
+      const method = isEditMode ? 'PATCH' : 'POST';
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           origin: fields.origin.trim(), destination: fields.destination.trim(),
@@ -78,11 +108,16 @@ export default function PostCapacityPage() {
           notes: fields.notes.trim() || null,
         }),
       });
-      if (res.ok) { setSubmitState('success'); }
-      else {
+      if (res.ok) {
+        if (isEditMode) {
+          router.push('/marketplace/carrier/my-capacity');
+        } else {
+          setSubmitState('success');
+        }
+      } else {
         const data = await res.json().catch(() => ({}));
         setSubmitState('error');
-        setSubmitError(data?.detail ?? 'Failed to publish. Please try again.');
+        setSubmitError(data?.detail ?? 'Failed to save. Please try again.');
       }
     } catch {
       setSubmitState('error');
@@ -119,8 +154,12 @@ export default function PostCapacityPage() {
         <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
           <span className="h-1 w-1 rounded-full bg-[#fc3f07]" aria-hidden="true" />CARRIER · MARKETPLACE
         </span>
-        <h1 className="mt-2 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Post available capacity</h1>
-        <p className="mt-1 text-sm text-neutral-500">Advertise your empty trailer space so shippers and brokers can find you.</p>
+        <h1 className="mt-2 text-[clamp(22px,3vw,28px)] font-normal text-neutral-900" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+          {isEditMode ? 'Edit capacity posting' : 'Post available capacity'}
+        </h1>
+        <p className="mt-1 text-sm text-neutral-500">
+          {isEditMode ? 'Update your capacity listing details.' : 'Advertise your empty trailer space so shippers and brokers can find you.'}
+        </p>
       </div>
 
       <div className="rounded-2xl border border-[#e8e0d6] bg-white p-7 shadow-sm">
@@ -131,46 +170,54 @@ export default function PostCapacityPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field id="origin" label="Origin" value={fields.origin} onChange={(v) => set('origin', v)} error={errors.origin} placeholder="e.g. Chicago, IL" />
-            <Field id="destination" label="Destination" value={fields.destination} onChange={(v) => set('destination', v)} error={errors.destination} placeholder="e.g. Detroit, MI" />
+        {loadingEdit ? (
+          <div className="space-y-4 animate-pulse">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-12 rounded-xl bg-neutral-100" />
+            ))}
           </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field id="availableFrom" label="Available from" type="date" value={fields.availableFrom} onChange={(v) => set('availableFrom', v)} error={errors.availableFrom} />
-            <Field id="availableTo" label="Available to" type="date" value={fields.availableTo} onChange={(v) => set('availableTo', v)} error={errors.availableTo} />
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field id="cubicFeet" label="Available cubic feet" type="number" value={fields.cubicFeet} onChange={(v) => set('cubicFeet', v)} error={errors.cubicFeet} placeholder="e.g. 1200" />
-            <div>
-              <label htmlFor="equipmentType" className="mb-1.5 block text-sm font-medium text-neutral-700">Equipment type</label>
-              <select id="equipmentType" value={fields.equipmentType} onChange={(e) => set('equipmentType', e.target.value)}
-                className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none focus:border-[#fc3f07] appearance-none">
-                {EQUIPMENT_OPTIONS.map((o) => <option key={o}>{o}</option>)}
-              </select>
+        ) : (
+          <form onSubmit={handleSubmit} noValidate className="space-y-5">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Field id="origin" label="Origin" value={fields.origin} onChange={(v) => set('origin', v)} error={errors.origin} placeholder="e.g. Chicago, IL" />
+              <Field id="destination" label="Destination" value={fields.destination} onChange={(v) => set('destination', v)} error={errors.destination} placeholder="e.g. Detroit, MI" />
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="notes" className="mb-1.5 block text-sm font-medium text-neutral-700">Notes <span className="text-neutral-400 text-xs">(optional)</span></label>
-            <textarea id="notes" value={fields.notes} onChange={(e) => set('notes', e.target.value)} rows={3}
-              placeholder="e.g. Flexible on load type, have straps and tarps, prefer LTL…"
-              className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
-          </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Field id="availableFrom" label="Available from" type="date" value={fields.availableFrom} onChange={(v) => set('availableFrom', v)} error={errors.availableFrom} />
+              <Field id="availableTo" label="Available to" type="date" value={fields.availableTo} onChange={(v) => set('availableTo', v)} error={errors.availableTo} />
+            </div>
 
-          <div className="flex items-center gap-3 pt-1">
-            <button type="submit" disabled={submitState === 'submitting'}
-              className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
-              style={{ background: '#fc3f07' }}>
-              {submitState === 'submitting' ? (
-                <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Publishing…</>
-              ) : 'Publish capacity'}
-            </button>
-            <Link href="/marketplace/carrier/my-capacity" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Cancel</Link>
-          </div>
-        </form>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Field id="cubicFeet" label="Available cubic feet" type="number" value={fields.cubicFeet} onChange={(v) => set('cubicFeet', v)} error={errors.cubicFeet} placeholder="e.g. 1200" />
+              <div>
+                <label htmlFor="equipmentType" className="mb-1.5 block text-sm font-medium text-neutral-700">Equipment type</label>
+                <select id="equipmentType" value={fields.equipmentType} onChange={(e) => set('equipmentType', e.target.value)}
+                  className="w-full rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm text-neutral-900 outline-none focus:border-[#fc3f07] appearance-none">
+                  {EQUIPMENT_OPTIONS.map((o) => <option key={o}>{o}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="notes" className="mb-1.5 block text-sm font-medium text-neutral-700">Notes <span className="text-neutral-400 text-xs">(optional)</span></label>
+              <textarea id="notes" value={fields.notes} onChange={(e) => set('notes', e.target.value)} rows={3}
+                placeholder="e.g. Flexible on load type, have straps and tarps, prefer LTL…"
+                className="w-full resize-none rounded-xl border border-[#e0d5c8] bg-white px-4 py-3 text-sm placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20" />
+            </div>
+
+            <div className="flex items-center gap-3 pt-1">
+              <button type="submit" disabled={submitState === 'submitting'}
+                className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
+                style={{ background: '#fc3f07' }}>
+                {submitState === 'submitting' ? (
+                  <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>{isEditMode ? 'Saving…' : 'Publishing…'}</>
+                ) : isEditMode ? 'Save changes' : 'Publish capacity'}
+              </button>
+              <Link href="/marketplace/carrier/my-capacity" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Cancel</Link>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

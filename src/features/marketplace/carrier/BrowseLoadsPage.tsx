@@ -5,16 +5,15 @@ import Link from 'next/link';
 import VerificationBadge from '@/components/VerificationBadge';
 import type { MarketplaceLoad } from '../types';
 import { LOAD_STATUS_COLORS, PRICING_MODE_LABELS } from '../types';
-
-const EQUIPMENT_OPTIONS = ['Any', 'Flatbed', 'Dry Van', 'Refrigerated', 'Step Deck', 'Lowboy', 'Box Truck'];
+import { EQUIPMENT_OPTIONS } from '@/lib/equipmentOptions';
 
 const MOCK_LOADS: MarketplaceLoad[] = [
-  { id: 'l1', jobId: 'FTL-2026-0042', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public', origin: 'Chicago, IL', destination: 'Detroit, MI', pickupDate: '2026-09-25', deliveryDate: '2026-09-26', cubicFeet: 1200, equipmentType: 'Dry Van', postedAt: '2026-09-18T10:00:00Z', poster: { id: 'p1', companyName: 'Acme Freight LLC', role: 'shipper', verificationStatus: 'verified' }, bids: [{ id: 'b1', carrier: { id: 'c1', companyName: 'FastHaul', role: 'carrier', verificationStatus: 'verified' }, amount: 2400, status: 'pending', placedAt: '2026-09-18T12:00:00Z', updatedAt: '2026-09-18T12:00:00Z' }], auditLog: [] },
-  { id: 'l2', jobId: 'FTL-2026-0041', status: 'open', pricingMode: 'fixed', visibility: 'public', origin: 'Atlanta, GA', destination: 'Nashville, TN', pickupDate: '2026-09-28', deliveryDate: '2026-09-29', cubicFeet: 800, equipmentType: 'Flatbed', fixedPrice: 1800, postedAt: '2026-09-17T09:00:00Z', poster: { id: 'p2', companyName: 'BridgeLogistics', role: 'broker', verificationStatus: 'verified' }, bids: [], auditLog: [] },
+  { id: 'l1', jobId: 'FTL-2026-0042', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public', origin: 'Chicago, IL', destination: 'Detroit, MI', pickupDate: '2026-09-25', deliveryDate: '2026-09-26', cubicFeet: 1200, equipmentType: 'Dry Van (Side Door)', postedAt: '2026-09-18T10:00:00Z', poster: { id: 'p1', companyName: 'Acme Freight LLC', role: 'shipper', verificationStatus: 'verified' }, bids: [{ id: 'b1', carrier: { id: 'c1', companyName: 'FastHaul', role: 'carrier', verificationStatus: 'verified' }, amount: 2400, status: 'pending', placedAt: '2026-09-18T12:00:00Z', updatedAt: '2026-09-18T12:00:00Z' }], auditLog: [] },
+  { id: 'l2', jobId: 'FTL-2026-0041', status: 'open', pricingMode: 'fixed', visibility: 'public', origin: 'Atlanta, GA', destination: 'Nashville, TN', pickupDate: '2026-09-28', deliveryDate: '2026-09-29', cubicFeet: 800, equipmentType: 'Moving Trailer', fixedPrice: 1800, postedAt: '2026-09-17T09:00:00Z', poster: { id: 'p2', companyName: 'BridgeLogistics', role: 'broker', verificationStatus: 'verified' }, bids: [], auditLog: [] },
   { id: 'l3', jobId: 'FTL-2026-0040', status: 'open', pricingMode: 'best_offer', visibility: 'public', origin: 'Dallas, TX', destination: 'Houston, TX', pickupDate: '2026-09-24', deliveryDate: '2026-09-24', cubicFeet: 600, equipmentType: 'Box Truck', postedAt: '2026-09-17T08:00:00Z', poster: { id: 'p3', companyName: 'TexasPro Movers', role: 'shipper', verificationStatus: 'verified' }, bids: [], auditLog: [] },
-  { id: 'l4', jobId: 'FTL-2026-0039', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public', origin: 'Phoenix, AZ', destination: 'Los Angeles, CA', pickupDate: '2026-09-27', deliveryDate: '2026-09-28', cubicFeet: 1400, equipmentType: 'Dry Van', postedAt: '2026-09-16T11:00:00Z', poster: { id: 'p4', companyName: 'Desert Logistics', role: 'shipper', verificationStatus: 'verified' }, bids: [{ id: 'b2', carrier: { id: 'c2', companyName: 'Other', role: 'carrier', verificationStatus: 'verified' }, amount: 3100, status: 'pending', placedAt: '2026-09-16T13:00:00Z', updatedAt: '2026-09-16T13:00:00Z' }], auditLog: [] },
-  { id: 'l5', jobId: 'FTL-2026-0038', status: 'open', pricingMode: 'fixed', visibility: 'public', origin: 'Seattle, WA', destination: 'Portland, OR', pickupDate: '2026-09-23', deliveryDate: '2026-09-23', cubicFeet: 350, equipmentType: 'Refrigerated', fixedPrice: 620, postedAt: '2026-09-15T07:00:00Z', poster: { id: 'p5', companyName: 'Pacific Fresh Co', role: 'shipper', verificationStatus: 'verified' }, bids: [], auditLog: [] },
-  { id: 'l6', jobId: 'FTL-2026-0037', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public', origin: 'Miami, FL', destination: 'Orlando, FL', pickupDate: '2026-09-26', deliveryDate: '2026-09-26', cubicFeet: 900, equipmentType: 'Dry Van', postedAt: '2026-09-15T06:00:00Z', poster: { id: 'p6', companyName: 'SunState Shippers', role: 'shipper', verificationStatus: 'verified' }, bids: [], auditLog: [] },
+  { id: 'l4', jobId: 'FTL-2026-0039', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public', origin: 'Phoenix, AZ', destination: 'Los Angeles, CA', pickupDate: '2026-09-27', deliveryDate: '2026-09-28', cubicFeet: 1400, equipmentType: 'Moving Trailer', postedAt: '2026-09-16T11:00:00Z', poster: { id: 'p4', companyName: 'Desert Logistics', role: 'shipper', verificationStatus: 'verified' }, bids: [{ id: 'b2', carrier: { id: 'c2', companyName: 'Other', role: 'carrier', verificationStatus: 'verified' }, amount: 3100, status: 'pending', placedAt: '2026-09-16T13:00:00Z', updatedAt: '2026-09-16T13:00:00Z' }], auditLog: [] },
+  { id: 'l5', jobId: 'FTL-2026-0038', status: 'open', pricingMode: 'fixed', visibility: 'public', origin: 'Seattle, WA', destination: 'Portland, OR', pickupDate: '2026-09-23', deliveryDate: '2026-09-23', cubicFeet: 350, equipmentType: 'Box Truck', fixedPrice: 620, postedAt: '2026-09-15T07:00:00Z', poster: { id: 'p5', companyName: 'Pacific Fresh Co', role: 'shipper', verificationStatus: 'verified' }, bids: [], auditLog: [] },
+  { id: 'l6', jobId: 'FTL-2026-0037', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public', origin: 'Miami, FL', destination: 'Orlando, FL', pickupDate: '2026-09-26', deliveryDate: '2026-09-26', cubicFeet: 900, equipmentType: 'Dry Van (Side Door)', postedAt: '2026-09-15T06:00:00Z', poster: { id: 'p6', companyName: 'SunState Shippers', role: 'shipper', verificationStatus: 'verified' }, bids: [], auditLog: [] },
 ];
 
 interface Filters {
@@ -27,7 +26,7 @@ interface Filters {
   equipmentType: string;
 }
 
-const EMPTY_FILTERS: Filters = { origin: '', destination: '', dateFrom: '', dateTo: '', minCuft: '', maxCuft: '', equipmentType: 'Any' };
+const EMPTY_FILTERS: Filters = { origin: '', destination: '', dateFrom: '', dateTo: '', minCuft: '', maxCuft: '', equipmentType: 'Any equipment' };
 
 type SortKey = 'newest' | 'pickup_asc' | 'cuft_desc';
 
@@ -43,7 +42,7 @@ function timeAgo(iso: string) {
 }
 
 function FilterBar({ filters, onChange, onReset }: { filters: Filters; onChange: (k: keyof Filters, v: string) => void; onReset: () => void }) {
-  const hasActive = Object.entries(filters).some(([k, v]) => k === 'equipmentType' ? v !== 'Any' : v !== '');
+  const hasActive = Object.entries(filters).some(([k, v]) => k === 'equipmentType' ? v !== 'Any equipment' : v !== '');
   const inputCls = 'w-full rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-3.5 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20';
 
   return (
@@ -154,7 +153,7 @@ export default function BrowseLoadsPage() {
       let r = [...MOCK_LOADS];
       if (filters.origin) r = r.filter((l) => l.origin.toLowerCase().includes(filters.origin.toLowerCase()));
       if (filters.destination) r = r.filter((l) => l.destination.toLowerCase().includes(filters.destination.toLowerCase()));
-      if (filters.equipmentType !== 'Any') r = r.filter((l) => l.equipmentType === filters.equipmentType);
+      if (filters.equipmentType !== 'Any equipment') r = r.filter((l) => l.equipmentType === filters.equipmentType);
       if (filters.dateFrom) r = r.filter((l) => l.pickupDate >= filters.dateFrom);
       if (filters.dateTo) r = r.filter((l) => l.pickupDate <= filters.dateTo);
       if (filters.minCuft) r = r.filter((l) => l.cubicFeet >= Number(filters.minCuft));

@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import type { PricingMode, Visibility } from '../types';
+import type { PricingMode } from '../types';
 import { PRICING_MODE_LABELS } from '../types';
+import { EQUIPMENT_OPTIONS } from '@/lib/equipmentOptions';
 
 interface LoadForm {
   origin: string;
@@ -17,21 +18,16 @@ interface LoadForm {
   pricingMode: PricingMode;
   fixedPrice: string;
   specialRequirements: string;
-  visibility: Visibility;
 }
 
 interface FieldErrors { [k: string]: string }
-type SubmitMode = 'idle' | 'publishing' | 'drafting' | 'error';
-
-const EQUIPMENT_OPTIONS = [
-  'Any', 'Flatbed', 'Dry Van', 'Refrigerated', 'Step Deck', 'Lowboy', 'Box Truck',
-];
+type SubmitMode = 'idle' | 'publishing' | 'error';
 
 const INITIAL: LoadForm = {
   origin: '', destination: '', pickupDate: '', deliveryDate: '',
-  cubicFeet: '', weight: '', equipmentType: 'Any',
+  cubicFeet: '', weight: '', equipmentType: 'Any equipment',
   pricingMode: 'open_bidding', fixedPrice: '',
-  specialRequirements: '', visibility: 'public',
+  specialRequirements: '',
 };
 
 function validate(f: LoadForm): FieldErrors {
@@ -96,19 +92,17 @@ export default function PostLoadPage() {
     setErrors((p) => { const n = { ...p }; delete n[key]; return n; });
   }
 
-  async function submit(draft: boolean) {
-    if (!draft) {
-      const errs = validate(fields);
-      if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    }
-    setSubmitMode(draft ? 'drafting' : 'publishing');
+  async function submit() {
+    const errs = validate(fields);
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    setSubmitMode('publishing');
     setSubmitError('');
     try {
       const res = await fetch('/api/marketplace/loads/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          status: draft ? 'draft' : 'open',
+          status: 'open',
           origin: fields.origin.trim(),
           destination: fields.destination.trim(),
           pickup_date: fields.pickupDate,
@@ -119,12 +113,12 @@ export default function PostLoadPage() {
           pricing_mode: fields.pricingMode,
           fixed_price: fields.pricingMode === 'fixed' ? Number(fields.fixedPrice) : null,
           special_requirements: fields.specialRequirements.trim() || null,
-          visibility: fields.visibility,
+          visibility: 'public',
         }),
       });
       if (res.ok) {
         const data = await res.json().catch(() => ({}));
-        router.push(draft ? '/marketplace/my-loads' : `/marketplace/loads/${data?.id ?? ''}`);
+        router.push(`/marketplace/loads/${data?.id ?? ''}`);
       } else {
         const data = await res.json().catch(() => ({}));
         setSubmitMode('error');
@@ -136,7 +130,7 @@ export default function PostLoadPage() {
     }
   }
 
-  const isbusy = submitMode === 'publishing' || submitMode === 'drafting';
+  const isbusy = submitMode === 'publishing';
 
   return (
     <div className="mx-auto max-w-[640px] px-6 py-10">
@@ -228,39 +222,14 @@ export default function PostLoadPage() {
           )}
         </SectionCard>
 
-        {/* Visibility */}
-        <SectionCard title="Visibility" subtitle="Control who can see and bid on this load.">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {([
-              { val: 'public', icon: '🌐', label: 'Public', desc: 'Visible to all qualified verified carriers.' },
-              { val: 'private', icon: '🔒', label: 'Private / Restricted', desc: 'Only carriers you invite can see this load.' },
-            ] as { val: Visibility; icon: string; label: string; desc: string }[]).map((opt) => (
-              <button key={opt.val} type="button" onClick={() => set('visibility', opt.val)}
-                aria-pressed={fields.visibility === opt.val}
-                className="flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all"
-                style={{ borderColor: fields.visibility === opt.val ? '#fc3f07' : '#e8e0d6', background: fields.visibility === opt.val ? '#fff8f2' : '#fff' }}>
-                <span className="text-xl mt-0.5" aria-hidden="true">{opt.icon}</span>
-                <div>
-                  <p className="text-sm font-semibold text-neutral-800">{opt.label}</p>
-                  <p className="text-xs text-neutral-400">{opt.desc}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </SectionCard>
-
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 pt-1">
-          <button type="button" disabled={isbusy} onClick={() => submit(false)}
+          <button type="button" disabled={isbusy} onClick={() => submit()}
             className="flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60 hover:enabled:bg-[#d93506]"
             style={{ background: '#fc3f07' }}>
             {submitMode === 'publishing' ? (
               <><svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Publishing…</>
             ) : 'Publish Load'}
-          </button>
-          <button type="button" disabled={isbusy} onClick={() => submit(true)}
-            className="rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors disabled:opacity-60 hover:enabled:border-[#fc3f07] hover:enabled:text-[#fc3f07]">
-            {submitMode === 'drafting' ? 'Saving…' : 'Save Draft'}
           </button>
           <Link href="/marketplace/my-loads" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Cancel</Link>
         </div>

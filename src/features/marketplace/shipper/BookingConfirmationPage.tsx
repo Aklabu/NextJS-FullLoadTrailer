@@ -14,7 +14,7 @@ const MOCK_BOOKING = {
     pickupDate: '2026-09-25',
     deliveryDate: '2026-09-26',
     cubicFeet: 1200,
-    equipmentType: 'Dry Van',
+    equipmentType: 'Dry Van (Side Door)',
   },
   shipper: {
     companyName: 'Acme Freight LLC',

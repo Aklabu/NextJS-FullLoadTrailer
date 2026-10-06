@@ -13,10 +13,12 @@ export const publicNavItems: NavItem[] = [
 ];
 
 // Logged-in centre links
+// Note: Marketplace href is role-resolved at render time via getMarketplaceHref(role) in NavbarClient.
+// The href here is a fallback only and should never be used directly.
 export const authedNavItems: NavItem[] = [
   { label: 'Board', href: '/board' },
   { label: 'Community', href: '/community' },
-  { label: 'Marketplace', href: '/marketplace' },
+  { label: 'Marketplace', href: '/marketplace/my-loads' },
   { label: 'Messages', href: '/messages' },
 ];
 
@@ -37,6 +39,6 @@ export const footerLinks: NavItem[] = [
 
 // Resolves the correct marketplace landing URL per role
 export function getMarketplaceHref(role: UserRole): string {
-  if (role === 'carrier') return '/marketplace/loads';
+  if (role === 'carrier') return '/marketplace/carrier/loads';
   return '/marketplace/my-loads';
 }

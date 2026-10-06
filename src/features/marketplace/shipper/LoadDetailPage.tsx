@@ -12,7 +12,7 @@ const MOCK_LOAD: MarketplaceLoad = {
   pricingMode: 'open_bidding', visibility: 'public',
   origin: 'Chicago, IL', destination: 'Detroit, MI',
   pickupDate: '2026-09-25', deliveryDate: '2026-09-26',
-  cubicFeet: 1200, equipmentType: 'Dry Van',
+  cubicFeet: 1200, equipmentType: 'Dry Van (Side Door)',
   specialRequirements: 'Liftgate required at pickup. Fragile electronics — careful handling.',
   postedAt: '2026-09-18T10:00:00Z',
   poster: { id: 'me', companyName: 'Acme Freight', role: 'shipper', verificationStatus: 'verified' },

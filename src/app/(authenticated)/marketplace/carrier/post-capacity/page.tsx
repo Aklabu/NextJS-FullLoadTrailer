@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { PostCapacityPage } from '@/features/marketplace/carrier';
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function PostCapacityRoute() {
-  return <PostCapacityPage />;
+  return (
+    <Suspense>
+      <PostCapacityPage />
+    </Suspense>
+  );
 }

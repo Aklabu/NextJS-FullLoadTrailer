@@ -9,7 +9,7 @@ const MOCK_LOADS: MarketplaceLoad[] = [
   {
     id: 'l1', jobId: 'FTL-2026-0042', status: 'bidding', pricingMode: 'open_bidding', visibility: 'public',
     origin: 'Chicago, IL', destination: 'Detroit, MI', pickupDate: '2026-09-25', deliveryDate: '2026-09-26',
-    cubicFeet: 1200, equipmentType: 'Dry Van', postedAt: '2026-09-18T10:00:00Z',
+    cubicFeet: 1200, equipmentType: 'Dry Van (Side Door)', postedAt: '2026-09-18T10:00:00Z',
     poster: { id: 'me', companyName: 'Acme Broker', role: 'broker', verificationStatus: 'verified' },
     bids: [
       { id: 'b1', carrier: { id: 'c1', companyName: 'FastHaul LLC', role: 'carrier', verificationStatus: 'verified' }, amount: 2400, status: 'pending', placedAt: '2026-09-18T12:00:00Z', updatedAt: '2026-09-18T12:00:00Z' },
@@ -19,14 +19,14 @@ const MOCK_LOADS: MarketplaceLoad[] = [
   {
     id: 'l2', jobId: 'FTL-2026-0041', status: 'open', pricingMode: 'fixed', visibility: 'public',
     origin: 'Atlanta, GA', destination: 'Nashville, TN', pickupDate: '2026-09-28', deliveryDate: '2026-09-29',
-    cubicFeet: 800, equipmentType: 'Flatbed', fixedPrice: 1800, postedAt: '2026-09-17T09:00:00Z',
+    cubicFeet: 800, equipmentType: 'Box Truck', fixedPrice: 1800, postedAt: '2026-09-17T09:00:00Z',
     poster: { id: 'me', companyName: 'Acme Broker', role: 'broker', verificationStatus: 'verified' },
     bids: [], auditLog: [],
   },
   {
     id: 'l3', jobId: 'FTL-2026-0039', status: 'open', pricingMode: 'open_bidding', visibility: 'public',
     origin: 'Miami, FL', destination: 'Orlando, FL', pickupDate: '2026-09-27', deliveryDate: '2026-09-27',
-    cubicFeet: 600, equipmentType: 'Reefer', postedAt: '2026-09-17T08:00:00Z',
+    cubicFeet: 600, equipmentType: 'Box Truck', postedAt: '2026-09-17T08:00:00Z',
     poster: { id: 'me', companyName: 'Acme Broker', role: 'broker', verificationStatus: 'verified' },
     bids: [], auditLog: [],
   },
@@ -41,7 +41,7 @@ const MOCK_LOADS: MarketplaceLoad[] = [
   {
     id: 'l5', jobId: 'FTL-2026-0031', status: 'completed', pricingMode: 'open_bidding', visibility: 'public',
     origin: 'Phoenix, AZ', destination: 'Los Angeles, CA', pickupDate: '2026-09-10', deliveryDate: '2026-09-11',
-    cubicFeet: 1400, equipmentType: 'Dry Van', postedAt: '2026-09-05T07:00:00Z',
+    cubicFeet: 1400, equipmentType: 'Moving Trailer', postedAt: '2026-09-05T07:00:00Z',
     poster: { id: 'me', companyName: 'Acme Broker', role: 'broker', verificationStatus: 'verified' },
     bids: [], auditLog: [],
   },

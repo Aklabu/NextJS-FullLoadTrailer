@@ -20,8 +20,8 @@ interface CapacityPosting {
 }
 
 const MOCK_POSTINGS: CapacityPosting[] = [
-  { id: 'cp1', origin: 'Chicago, IL', destination: 'Detroit, MI', availableFrom: '2026-09-24', availableTo: '2026-09-26', cubicFeet: 1200, equipmentType: 'Dry Van', notes: 'Flexible on load type.', status: 'active', offersReceived: 2, postedAt: '2026-09-18T10:00:00Z' },
-  { id: 'cp2', origin: 'Atlanta, GA', destination: 'Nashville, TN', availableFrom: '2026-09-20', availableTo: '2026-09-22', cubicFeet: 800, equipmentType: 'Flatbed', status: 'expired', offersReceived: 1, postedAt: '2026-09-14T08:00:00Z' },
+  { id: 'cp1', origin: 'Chicago, IL', destination: 'Detroit, MI', availableFrom: '2026-09-24', availableTo: '2026-09-26', cubicFeet: 1200, equipmentType: 'Dry Van (Side Door)', notes: 'Flexible on load type.', status: 'active', offersReceived: 2, postedAt: '2026-09-18T10:00:00Z' },
+  { id: 'cp2', origin: 'Atlanta, GA', destination: 'Nashville, TN', availableFrom: '2026-09-20', availableTo: '2026-09-22', cubicFeet: 800, equipmentType: 'Moving Trailer', status: 'expired', offersReceived: 1, postedAt: '2026-09-14T08:00:00Z' },
   { id: 'cp3', origin: 'Dallas, TX', destination: 'Houston, TX', availableFrom: '2026-09-15', availableTo: '2026-09-17', cubicFeet: 600, equipmentType: 'Box Truck', status: 'deactivated', offersReceived: 0, postedAt: '2026-09-10T07:00:00Z' },
 ];
 
@@ -71,7 +71,7 @@ function PostingCard({ posting, onDeactivate }: { posting: CapacityPosting; onDe
       <div className="flex flex-wrap gap-2">
         {posting.status === 'active' && (
           <>
-            <Link href={`/marketplace/carrier/my-capacity/${posting.id}/edit`}
+            <Link href={`/marketplace/carrier/post-capacity?edit=${posting.id}`}
               className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
               Edit
             </Link>

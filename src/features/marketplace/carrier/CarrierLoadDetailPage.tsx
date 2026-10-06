@@ -12,7 +12,7 @@ const MOCK_LOAD = {
   pricingMode: 'open_bidding' as const, visibility: 'public' as const,
   origin: 'Chicago, IL', destination: 'Detroit, MI',
   pickupDate: '2026-09-25', deliveryDate: '2026-09-26',
-  cubicFeet: 1200, equipmentType: 'Dry Van',
+  cubicFeet: 1200, equipmentType: 'Dry Van (Side Door)',
   specialRequirements: 'Liftgate required at pickup.',
   postedAt: '2026-09-18T10:00:00Z',
   poster: { id: 'p1', companyName: 'Acme Freight LLC', role: 'shipper' as const, verificationStatus: 'verified' as const, avgRating: 4.9 },
