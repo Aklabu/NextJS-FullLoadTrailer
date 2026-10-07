@@ -4,6 +4,11 @@ export const metadata = {
   title: 'Load Detail — FullTrailerLoad',
 };
 
-export default function LoadDetailRoute() {
-  return <LoadDetailPage />;
+interface Props {
+  params: Promise<{ id: string }>;
+}
+
+export default async function LoadDetailRoute({ params }: Props) {
+  const { id } = await params;
+  return <LoadDetailPage id={id} />;
 }

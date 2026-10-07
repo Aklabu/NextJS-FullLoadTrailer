@@ -1,32 +1,14 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { getBooking, type BookingDetail } from '@/features/marketplace/api/bookingApi';
+import { ApiError } from '@/lib/api/client';
 
-// Stub — replace with GET /api/marketplace/bookings/:id/
-const MOCK_BOOKING = {
-  jobId: 'FTL-2026-0042',
-  bookingId: 'BK-2026-00389',
-  confirmedAt: '2026-09-18T16:45:00Z',
-  agreedPrice: 2400,
-  load: {
-    origin: 'Chicago, IL',
-    destination: 'Detroit, MI',
-    pickupDate: '2026-09-25',
-    deliveryDate: '2026-09-26',
-    cubicFeet: 1200,
-    equipmentType: 'Dry Van (Side Door)',
-  },
-  shipper: {
-    companyName: 'Acme Freight LLC',
-    email: 'ops@acmefreight.com',
-    phone: '+1 (312) 555-0100',
-  },
-  carrier: {
-    companyName: 'FastHaul LLC',
-    email: 'dispatch@fasthaul.com',
-    phone: '+1 (773) 555-0200',
-  },
-};
+interface Props {
+  id: string;
+}
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
@@ -36,8 +18,68 @@ function formatTs(iso: string) {
   return new Date(iso).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
 }
 
-export default function BookingConfirmationPage() {
-  const b = MOCK_BOOKING;
+function Skeleton() {
+  return (
+    <div className="animate-pulse space-y-5 mx-auto max-w-[640px] px-6 py-10">
+      <div className="flex flex-col items-center gap-4">
+        <div className="h-16 w-16 rounded-full bg-neutral-100" />
+        <div className="h-6 w-48 rounded bg-neutral-100" />
+        <div className="h-8 w-64 rounded bg-neutral-100" />
+      </div>
+      <div className="h-24 rounded-2xl bg-neutral-100" />
+      <div className="h-20 rounded-2xl bg-neutral-100" />
+      <div className="h-40 rounded-2xl bg-neutral-100" />
+    </div>
+  );
+}
+
+export default function BookingConfirmationPage({ id }: Props) {
+  const router = useRouter();
+  const [booking, setBooking] = useState<BookingDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await getBooking(id);
+        setBooking(res.data);
+      } catch (err) {
+        if (err instanceof ApiError) {
+          if (err.status === 401) { router.push('/auth/login'); return; }
+          if (err.status === 403) { setError('You are not a party to this booking.'); }
+          else if (err.status === 404) { setError('Booking not found.'); }
+          else { setError(err.message || 'Failed to load booking.'); }
+        } else {
+          setError('Unable to connect. Check your internet and try again.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [id, router]);
+
+  if (loading) return <Skeleton />;
+
+  if (error) {
+    return (
+      <div className="mx-auto max-w-[640px] px-6 py-10">
+        <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5">
+          <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <p className="text-sm text-red-700">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!booking) return null;
+
+  const b = booking;
 
   return (
     <div className="mx-auto max-w-[640px] px-6 py-10">
@@ -56,15 +98,15 @@ export default function BookingConfirmationPage() {
           Load booked successfully
         </h1>
         <p className="mt-2 text-sm text-neutral-500">
-          Terms are locked in and both parties have been notified. Confirmed at {formatTs(b.confirmedAt)}.
+          Terms are locked in and both parties have been notified. Confirmed at {formatTs(b.confirmed_at)}.
         </p>
       </div>
 
       {/* Job ID card */}
       <div className="mb-5 rounded-2xl border-2 border-[#fc3f07] bg-white p-5 text-center shadow-sm">
         <p className="text-xs font-semibold uppercase tracking-[1.5px] text-neutral-400">Master Job ID</p>
-        <p className="mt-1 font-mono text-3xl font-bold text-neutral-900">{b.jobId}</p>
-        <p className="mt-0.5 text-xs text-neutral-400">Booking ref: {b.bookingId}</p>
+        <p className="mt-1 font-mono text-3xl font-bold text-neutral-900">{b.job_id}</p>
+        <p className="mt-0.5 text-xs text-neutral-400">Booking ref: {b.booking_ref}</p>
       </div>
 
       {/* Agreed price */}
@@ -72,7 +114,7 @@ export default function BookingConfirmationPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[1px] text-neutral-400">Agreed rate</p>
-            <p className="mt-1 text-3xl font-bold text-neutral-900">${b.agreedPrice.toLocaleString()}</p>
+            <p className="mt-1 text-3xl font-bold text-neutral-900">${Number(b.agreed_price).toLocaleString()}</p>
           </div>
           <div className="flex h-12 w-12 items-center justify-center rounded-xl text-2xl" style={{ background: '#d1fae5' }} aria-hidden="true">
             🤝
@@ -87,7 +129,7 @@ export default function BookingConfirmationPage() {
           <div className="flex items-center gap-3">
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3ede4] text-xs font-bold text-[#fc3f07]" aria-hidden="true">A</div>
             <div>
-              <p className="text-[10px] text-neutral-400">PICKUP · {formatDate(b.load.pickupDate)}</p>
+              <p className="text-[10px] text-neutral-400">PICKUP · {formatDate(b.load.pickup_date)}</p>
               <p className="text-sm font-semibold text-neutral-800">{b.load.origin}</p>
             </div>
           </div>
@@ -95,24 +137,24 @@ export default function BookingConfirmationPage() {
           <div className="flex items-center gap-3">
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#d1fae5] text-xs font-bold text-emerald-700" aria-hidden="true">B</div>
             <div>
-              <p className="text-[10px] text-neutral-400">DELIVERY · {formatDate(b.load.deliveryDate)}</p>
+              <p className="text-[10px] text-neutral-400">DELIVERY · {formatDate(b.load.delivery_date)}</p>
               <p className="text-sm font-semibold text-neutral-800">{b.load.destination}</p>
             </div>
           </div>
           <div className="mt-3 flex flex-wrap gap-4 border-t border-[#f0ece6] pt-3">
             <div>
               <p className="text-[10px] text-neutral-400">CUBIC FEET</p>
-              <p className="text-sm font-medium text-neutral-800">{b.load.cubicFeet.toLocaleString()} cu ft</p>
+              <p className="text-sm font-medium text-neutral-800">{b.load.cubic_feet.toLocaleString()} cu ft</p>
             </div>
             <div>
               <p className="text-[10px] text-neutral-400">EQUIPMENT</p>
-              <p className="text-sm font-medium text-neutral-800">{b.load.equipmentType}</p>
+              <p className="text-sm font-medium text-neutral-800">{b.load.equipment_type}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Both parties */}
+      {/* Both parties — contact info revealed post-booking */}
       <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {[
           { role: 'Shipper', party: b.shipper, icon: '📦' },
@@ -122,7 +164,7 @@ export default function BookingConfirmationPage() {
             <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[1px] text-neutral-400">
               <span aria-hidden="true">{icon}</span> {role}
             </p>
-            <p className="text-sm font-semibold text-neutral-800">{party.companyName}</p>
+            <p className="text-sm font-semibold text-neutral-800">{party.company_name}</p>
             <p className="text-xs text-neutral-500">{party.email}</p>
             <p className="text-xs text-neutral-500">{party.phone}</p>
           </div>
@@ -149,7 +191,7 @@ export default function BookingConfirmationPage() {
 
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
-        <Link href={`/messages?job=${b.jobId}`}
+        <Link href={`/messages?job=${b.job_id}`}
           className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
           style={{ background: '#fc3f07' }}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>

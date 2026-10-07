@@ -1,31 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { getMyCapacity, deactivateCapacity, type CapacityPosting } from '@/features/marketplace/api/capacityBoardApi';
+import { ApiError } from '@/lib/api/client';
+import CarrierSubNav from './CarrierSubNav';
 
-type CapacityStatus = 'active' | 'expired' | 'deactivated';
-
-interface CapacityPosting {
-  id: string;
-  origin: string;
-  destination: string;
-  availableFrom: string;
-  availableTo: string;
-  cubicFeet: number;
-  equipmentType: string;
-  notes?: string;
-  status: CapacityStatus;
-  offersReceived: number;
-  postedAt: string;
-}
-
-const MOCK_POSTINGS: CapacityPosting[] = [
-  { id: 'cp1', origin: 'Chicago, IL', destination: 'Detroit, MI', availableFrom: '2026-09-24', availableTo: '2026-09-26', cubicFeet: 1200, equipmentType: 'Dry Van (Side Door)', notes: 'Flexible on load type.', status: 'active', offersReceived: 2, postedAt: '2026-09-18T10:00:00Z' },
-  { id: 'cp2', origin: 'Atlanta, GA', destination: 'Nashville, TN', availableFrom: '2026-09-20', availableTo: '2026-09-22', cubicFeet: 800, equipmentType: 'Moving Trailer', status: 'expired', offersReceived: 1, postedAt: '2026-09-14T08:00:00Z' },
-  { id: 'cp3', origin: 'Dallas, TX', destination: 'Houston, TX', availableFrom: '2026-09-15', availableTo: '2026-09-17', cubicFeet: 600, equipmentType: 'Box Truck', status: 'deactivated', offersReceived: 0, postedAt: '2026-09-10T07:00:00Z' },
-];
-
-const STATUS_CONFIG: Record<CapacityStatus, { bg: string; text: string; label: string }> = {
+const STATUS_CONFIG: Record<string, { bg: string; text: string; label: string }> = {
   active:      { bg: '#d1fae5', text: '#065f46', label: 'Active' },
   expired:     { bg: '#f5f5f4', text: '#78716c', label: 'Expired' },
   deactivated: { bg: '#fee2e2', text: '#991b1b', label: 'Deactivated' },
@@ -35,8 +17,32 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-function PostingCard({ posting, onDeactivate }: { posting: CapacityPosting; onDeactivate: (id: string) => void }) {
-  const cfg = STATUS_CONFIG[posting.status];
+function Skeleton() {
+  return (
+    <div className="space-y-4">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="animate-pulse rounded-2xl border border-[#e8e0d6] bg-white p-5">
+          <div className="mb-3 flex justify-between">
+            <div className="h-4 w-48 rounded bg-neutral-100" />
+            <div className="h-6 w-16 rounded-full bg-neutral-100" />
+          </div>
+          <div className="mb-3 flex gap-4">
+            <div className="h-4 w-20 rounded bg-neutral-100" />
+            <div className="h-4 w-24 rounded bg-neutral-100" />
+          </div>
+          <div className="flex gap-2">
+            <div className="h-9 w-16 rounded-xl bg-neutral-100" />
+            <div className="h-9 w-24 rounded-xl bg-neutral-100" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PostingCard({ posting, onDeactivate, deactivating }: { posting: CapacityPosting; onDeactivate: (id: string) => void; deactivating: string | null }) {
+  const cfg = STATUS_CONFIG[posting.status] ?? { bg: '#f3f4f6', text: '#6b7280', label: posting.status };
+  const isDeactivating = deactivating === posting.id;
 
   return (
     <div className="rounded-2xl border border-[#e8e0d6] bg-white p-5 shadow-sm transition-all hover:border-[#fc3f07]">
@@ -47,24 +53,23 @@ function PostingCard({ posting, onDeactivate }: { posting: CapacityPosting; onDe
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
             <span className="text-sm font-semibold text-neutral-900">{posting.destination}</span>
           </div>
-          <p className="mt-0.5 text-xs text-neutral-400">Posted {formatDate(posting.postedAt)}</p>
+          <p className="mt-0.5 text-xs text-neutral-400">Posted {formatDate(posting.posted_at)}</p>
         </div>
         <span className="shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]" style={{ background: cfg.bg, color: cfg.text }}>{cfg.label}</span>
       </div>
 
       <div className="mb-3 flex flex-wrap gap-x-4 gap-y-1">
-        <span className="text-xs text-neutral-500">{posting.cubicFeet.toLocaleString()} cu ft</span>
-        <span className="text-xs text-neutral-500">{posting.equipmentType}</span>
-        <span className="text-xs text-neutral-500">{formatDate(posting.availableFrom)} – {formatDate(posting.availableTo)}</span>
+        <span className="text-xs text-neutral-500">{posting.cubic_feet.toLocaleString()} cu ft</span>
+        <span className="text-xs text-neutral-500">{posting.equipment_type}</span>
+        <span className="text-xs text-neutral-500">{formatDate(posting.available_from)} – {formatDate(posting.available_to)}</span>
       </div>
 
       {posting.notes && <p className="mb-3 text-xs italic text-neutral-400">{posting.notes}</p>}
 
-      {/* Offers stat */}
       <div className="mb-4 flex items-center gap-2">
         <div className="flex items-center gap-1.5 rounded-lg bg-[#fff8f2] px-3 py-1.5">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
-          <span className="text-xs font-semibold text-[#fc3f07]">{posting.offersReceived} offer{posting.offersReceived !== 1 ? 's' : ''} received</span>
+          <span className="text-xs font-semibold text-[#fc3f07]">{posting.offers_received} offer{posting.offers_received !== 1 ? 's' : ''} received</span>
         </div>
       </div>
 
@@ -75,17 +80,17 @@ function PostingCard({ posting, onDeactivate }: { posting: CapacityPosting; onDe
               className="rounded-xl border border-[#e0d5c8] px-4 py-2 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
               Edit
             </Link>
-            <button type="button" onClick={() => onDeactivate(posting.id)}
-              className="rounded-xl border border-red-200 px-4 py-2 text-sm font-semibold text-red-500 transition-colors hover:bg-red-50">
-              Deactivate
+            <button type="button" onClick={() => onDeactivate(posting.id)} disabled={isDeactivating}
+              className="rounded-xl border border-red-200 px-4 py-2 text-sm font-semibold text-red-500 transition-colors hover:bg-red-50 disabled:opacity-60">
+              {isDeactivating ? 'Deactivating…' : 'Deactivate'}
             </button>
           </>
         )}
-        {posting.offersReceived > 0 && (
+        {posting.offers_received > 0 && (
           <Link href={`/marketplace/carrier/my-capacity/${posting.id}/offers`}
             className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
             style={{ background: '#fc3f07' }}>
-            View {posting.offersReceived} offer{posting.offersReceived !== 1 ? 's' : ''} →
+            View {posting.offers_received} offer{posting.offers_received !== 1 ? 's' : ''} →
           </Link>
         )}
       </div>
@@ -94,17 +99,57 @@ function PostingCard({ posting, onDeactivate }: { posting: CapacityPosting; onDe
 }
 
 export default function MyCapacityPostingsPage() {
-  const [postings, setPostings] = useState<CapacityPosting[]>(MOCK_POSTINGS);
+  const router = useRouter();
+  const [active, setActive] = useState<CapacityPosting[]>([]);
+  const [past, setPast] = useState<CapacityPosting[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [deactivating, setDeactivating] = useState<string | null>(null);
 
-  function handleDeactivate(id: string) {
-    setPostings((prev) => prev.map((p) => p.id === id ? { ...p, status: 'deactivated' as const } : p));
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await getMyCapacity();
+        setActive(res.data.active);
+        setPast(res.data.past);
+      } catch (err) {
+        if (err instanceof ApiError) {
+          if (err.status === 401) { router.push('/auth/login'); return; }
+          setError(err.message || 'Failed to load postings.');
+        } else {
+          setError('Unable to connect. Check your internet and try again.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [router]);
+
+  async function handleDeactivate(id: string) {
+    setDeactivating(id);
+    try {
+      await deactivateCapacity(id);
+      const posting = active.find((p) => p.id === id);
+      if (posting) {
+        setActive((prev) => prev.filter((p) => p.id !== id));
+        setPast((prev) => [{ ...posting, status: 'deactivated' as const }, ...prev]);
+      }
+    } catch (err) {
+      const msg = err instanceof ApiError ? err.message : 'Unable to deactivate posting. Please try again.';
+      setError(msg);
+    } finally {
+      setDeactivating(null);
+    }
   }
 
-  const active = postings.filter((p) => p.status === 'active');
-  const inactive = postings.filter((p) => p.status !== 'active');
+  const isEmpty = active.length === 0 && past.length === 0;
 
   return (
     <div className="mx-auto max-w-[800px] px-6 py-8">
+      <CarrierSubNav />
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white px-3.5 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
@@ -121,7 +166,18 @@ export default function MyCapacityPostingsPage() {
         </Link>
       </div>
 
-      {postings.length === 0 ? (
+      {error && (
+        <div className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5">
+          <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <p className="text-sm text-red-700">{error}</p>
+        </div>
+      )}
+
+      {loading ? (
+        <Skeleton />
+      ) : isEmpty ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#e0d5c8] bg-white py-16 text-center">
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl text-2xl" style={{ background: '#f3ede4' }} aria-hidden="true">🚚</div>
           <p className="text-base font-medium text-neutral-700">No capacity postings yet</p>
@@ -135,13 +191,17 @@ export default function MyCapacityPostingsPage() {
           {active.length > 0 && (
             <div>
               <h2 className="mb-3 text-sm font-semibold uppercase tracking-[1px] text-neutral-400">Active ({active.length})</h2>
-              <div className="space-y-4">{active.map((p) => <PostingCard key={p.id} posting={p} onDeactivate={handleDeactivate} />)}</div>
+              <div className="space-y-4">
+                {active.map((p) => <PostingCard key={p.id} posting={p} onDeactivate={handleDeactivate} deactivating={deactivating} />)}
+              </div>
             </div>
           )}
-          {inactive.length > 0 && (
+          {past.length > 0 && (
             <div>
-              <h2 className="mb-3 text-sm font-semibold uppercase tracking-[1px] text-neutral-400">Past postings ({inactive.length})</h2>
-              <div className="space-y-4">{inactive.map((p) => <PostingCard key={p.id} posting={p} onDeactivate={handleDeactivate} />)}</div>
+              <h2 className="mb-3 text-sm font-semibold uppercase tracking-[1px] text-neutral-400">Past postings ({past.length})</h2>
+              <div className="space-y-4">
+                {past.map((p) => <PostingCard key={p.id} posting={p} onDeactivate={handleDeactivate} deactivating={deactivating} />)}
+              </div>
             </div>
           )}
         </div>

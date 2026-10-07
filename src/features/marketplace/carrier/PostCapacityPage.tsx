@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-
 import { EQUIPMENT_OPTIONS } from '@/lib/equipmentOptions';
+import { postCapacity, patchCapacity } from '@/features/marketplace/api/capacityBoardApi';
+import { apiFetch, ApiError } from '@/lib/api/client';
 
 interface CapacityForm {
   origin: string;
@@ -66,9 +67,11 @@ export default function PostCapacityPage() {
   useEffect(() => {
     if (!editId) return;
     setLoadingEdit(true);
-    fetch(`/api/marketplace/capacity/${editId}/`)
-      .then((r) => r.json())
-      .then((data) => {
+    apiFetch<{ data: { origin: string; destination: string; available_from: string; available_to: string; cubic_feet: number; equipment_type: string; notes: string } }>(
+      `/api/marketplace/capacity/${editId}/`
+    )
+      .then((res) => {
+        const data = res.data;
         setFields({
           origin: data.origin ?? '',
           destination: data.destination ?? '',
@@ -93,35 +96,31 @@ export default function PostCapacityPage() {
     const errs = validate(fields);
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setSubmitState('submitting');
+    const payload = {
+      origin: fields.origin.trim(),
+      destination: fields.destination.trim(),
+      available_from: fields.availableFrom,
+      available_to: fields.availableTo,
+      cubic_feet: Number(fields.cubicFeet),
+      equipment_type: fields.equipmentType,
+      notes: fields.notes.trim() || undefined,
+    };
     try {
-      const url = isEditMode
-        ? `/api/marketplace/capacity/${editId}/`
-        : '/api/marketplace/capacity/';
-      const method = isEditMode ? 'PATCH' : 'POST';
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          origin: fields.origin.trim(), destination: fields.destination.trim(),
-          available_from: fields.availableFrom, available_to: fields.availableTo,
-          cubic_feet: Number(fields.cubicFeet), equipment_type: fields.equipmentType,
-          notes: fields.notes.trim() || null,
-        }),
-      });
-      if (res.ok) {
-        if (isEditMode) {
-          router.push('/marketplace/carrier/my-capacity');
-        } else {
-          setSubmitState('success');
-        }
+      if (isEditMode && editId) {
+        await patchCapacity(editId, payload);
+        router.push('/marketplace/carrier/my-capacity');
       } else {
-        const data = await res.json().catch(() => ({}));
-        setSubmitState('error');
-        setSubmitError(data?.detail ?? 'Failed to save. Please try again.');
+        await postCapacity(payload);
+        setSubmitState('success');
       }
-    } catch {
+    } catch (err) {
       setSubmitState('error');
-      setSubmitError('Unable to connect. Check your internet and try again.');
+      if (err instanceof ApiError) {
+        const fieldErr = err.errors?.available_to?.[0] ?? err.message;
+        setSubmitError(fieldErr || 'Failed to save. Please try again.');
+      } else {
+        setSubmitError('Unable to connect. Check your internet and try again.');
+      }
     }
   }
 

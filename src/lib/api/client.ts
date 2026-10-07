@@ -31,8 +31,10 @@ async function tryRefreshTokens(): Promise<boolean> {
     });
     if (!res.ok) { clearTokens(); return false; }
     const data = await res.json();
-    if (data.access && data.refresh) {
-      setTokens(data.access, data.refresh);
+    if (data.access) {
+      // Use new refresh token if server rotates, otherwise keep the existing one
+      const newRefresh = data.refresh ?? refresh;
+      setTokens(data.access, newRefresh);
       return true;
     }
     clearTokens();

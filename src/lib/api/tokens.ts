@@ -6,8 +6,8 @@ const ACCESS_TOKEN_KEY = 'ftl_access';
 const REFRESH_TOKEN_KEY = 'ftl_refresh';
 
 // Cookie max-age in seconds
-const ACCESS_MAX_AGE = 60 * 15;        // 15 minutes
-const REFRESH_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
+const ACCESS_MAX_AGE = 60 * 60 * 24;        // 1 day — matches Django ACCESS_TOKEN_LIFETIME
+const REFRESH_MAX_AGE = 60 * 60 * 24 * 15;  // 15 days — matches Django REFRESH_TOKEN_LIFETIME
 
 // Build a secure cookie string for the browser
 function cookieString(name: string, value: string, maxAge: number): string {
