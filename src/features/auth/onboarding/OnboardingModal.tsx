@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { UserRole } from '@/lib/types/auth';
+import { markOnboardingSeen } from '@/features/auth/api/authApi';
 
 // Slide content
 interface Slide {
@@ -213,7 +214,7 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
   async function dismiss() {
     setClosing(true);
     try {
-      await fetch('/api/accounts/me/onboarding-seen/', { method: 'POST' });
+      await markOnboardingSeen();
     } catch {
       // Non-critical — flag is best-effort
     }
@@ -375,7 +376,7 @@ export default function OnboardingModal({ role, onFinish }: OnboardingModalProps
               // On the final slide, offer role-appropriate CTA link + a plain "finish" button
               <div className="flex flex-1 flex-col gap-2">
                 <Link
-                  href={isCarrier ? '/marketplace/loads' : '/board'}
+                  href={isCarrier ? '/marketplace/carrier/loads' : '/board'}
                   onClick={dismiss}
                   className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
                   style={{ background: '#fc3f07' }}

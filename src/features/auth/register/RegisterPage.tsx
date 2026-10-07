@@ -33,7 +33,7 @@ export default function RegisterPage() {
   async function handleFinalSubmit(e: React.FormEvent) {
     e.preventDefault();
     const ok = await form.handleSubmit();
-    if (ok) router.push('/auth/verify-status');
+    if (ok) router.push(`/auth/verify-email?email=${encodeURIComponent(form.company.email)}`);
   }
 
   const isLastStep = form.step === 4;

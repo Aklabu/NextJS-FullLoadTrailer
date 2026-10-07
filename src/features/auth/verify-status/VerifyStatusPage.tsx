@@ -3,14 +3,16 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { getVerificationStatus } from '@/features/auth/api/authApi';
+import { ApiError } from '@/lib/api/client';
 import type { VerificationStatus } from '@/lib/types/auth';
 
 interface VerificationData {
   status: VerificationStatus;
-  rejectionReason?: string;
-  infoRequested?: string;
-  submittedAt?: string;
-  reviewedAt?: string;
+  rejection_reason?: string;
+  info_requested?: string;
+  submitted_at?: string;
+  reviewed_at?: string;
 }
 
 // Status config for banner + icon
@@ -176,32 +178,31 @@ export default function VerifyStatusPage() {
   const [loadError, setLoadError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchStatus() {
-      try {
-        const res = await fetch('/api/accounts/me/verification-status/', {
-          headers: { 'Content-Type': 'application/json' },
-        });
-        if (res.ok) {
-          const json = await res.json();
-          setData(json);
-          // Auto-redirect if approved
-          if (json.status === 'verified') {
-            setTimeout(() => router.push('/dashboard'), 2500);
-          }
-        } else if (res.status === 401) {
-          router.push('/auth/login');
-        } else {
-          setLoadError('Unable to load your verification status. Please refresh the page.');
-        }
-      } catch {
-        setLoadError('Unable to connect. Check your internet and try again.');
-      } finally {
-        setLoading(false);
+  async function fetchStatus() {
+    setLoading(true);
+    setLoadError('');
+    try {
+      const res = await getVerificationStatus();
+      setData(res.data);
+      // Auto-redirect if fully approved
+      if (res.data.status === 'verified') {
+        setTimeout(() => router.push('/dashboard'), 2500);
       }
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 401) {
+        router.push('/auth/login');
+      } else {
+        setLoadError('Unable to load your verification status. Please refresh the page.');
+      }
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     fetchStatus();
-  }, [router]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const cfg = data ? STATUS_CONFIG[data.status] : null;
 
@@ -281,27 +282,27 @@ export default function VerifyStatusPage() {
                 <div className="min-w-0">
                   <p className={`text-base font-semibold ${cfg.headingColor}`}>{cfg.heading}</p>
                   <p className="mt-1 text-sm leading-relaxed text-neutral-600">{cfg.subheading}</p>
-                  {data.submittedAt && (
+                  {data.submitted_at && (
                     <p className="mt-2 text-xs text-neutral-400">
-                      Submitted: {new Date(data.submittedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      Submitted: {new Date(data.submitted_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </p>
                   )}
                 </div>
               </div>
 
               {/* Rejection reason */}
-              {data.status === 'rejected' && data.rejectionReason && (
+              {data.status === 'rejected' && data.rejection_reason && (
                 <div className="mt-5 rounded-xl border border-red-100 bg-red-50 p-4">
                   <p className="mb-1.5 text-xs font-semibold uppercase tracking-[1px] text-red-500">Rejection reason</p>
-                  <p className="text-sm leading-relaxed text-red-800">{data.rejectionReason}</p>
+                  <p className="text-sm leading-relaxed text-red-800">{data.rejection_reason}</p>
                 </div>
               )}
 
               {/* Info requested */}
-              {data.status === 'needs_info' && data.infoRequested && (
+              {data.status === 'needs_info' && data.info_requested && (
                 <div className="mt-5 rounded-xl border border-orange-100 bg-orange-50 p-4">
                   <p className="mb-1.5 text-xs font-semibold uppercase tracking-[1px] text-orange-500">Information requested</p>
-                  <p className="text-sm leading-relaxed text-orange-800">{data.infoRequested}</p>
+                  <p className="text-sm leading-relaxed text-orange-800">{data.info_requested}</p>
                 </div>
               )}
 
@@ -363,14 +364,23 @@ export default function VerifyStatusPage() {
                   </Link>
                 )}
 
-                {/* Refresh status */}
+                {/* Refresh status — for pending accounts */}
                 {data.status === 'pending' && (
                   <button
                     type="button"
-                    onClick={() => { setLoading(true); setData(null); }}
-                    className="text-center text-xs text-neutral-400 underline underline-offset-2 hover:text-neutral-600"
+                    onClick={fetchStatus}
+                    disabled={loading}
+                    className="flex items-center justify-center gap-1.5 text-xs text-neutral-400 underline underline-offset-2 hover:text-neutral-600 disabled:opacity-50 disabled:no-underline"
                   >
-                    Refresh status
+                    {loading ? (
+                      <>
+                        <svg className="h-3 w-3 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Checking…
+                      </>
+                    ) : 'Refresh status'}
                   </button>
                 )}
 

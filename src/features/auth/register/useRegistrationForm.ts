@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { register } from '@/features/auth/api/authApi';
+import { ApiError } from '@/lib/api/client';
 
 export type Role = 'shipper' | 'broker' | 'carrier';
+// tier maps to API values: basic → bulletin, advanced → marketplace
 export type Tier = 'basic' | 'advanced';
 export type Step = 1 | 2 | 3 | 4;
 
@@ -27,10 +30,10 @@ export interface CompanyInfo {
 }
 
 export interface RoleFields {
-  // Carrier
+  // Carrier + marketplace tier
   dotNumber: string;
   mcNumber: string;
-  // Broker / Shipper
+  // Broker / Shipper + marketplace tier
   businessLicenseNumber: string;
   stateOfIncorporation: string;
 }
@@ -68,18 +71,9 @@ function validateCompany(f: CompanyInfo): FieldErrors {
   return e;
 }
 
-function validateRoleFields(role: Role, tier: Tier, f: RoleFields): FieldErrors {
-  const e: FieldErrors = {};
-  if (tier === 'advanced') {
-    if (role === 'carrier') {
-      if (!f.dotNumber.trim()) e.dotNumber = 'DOT number is required for Advanced verification.';
-      if (!f.mcNumber.trim()) e.mcNumber = 'MC number is required for Advanced verification.';
-    } else {
-      if (!f.businessLicenseNumber.trim()) e.businessLicenseNumber = 'Business license number is required.';
-      if (!f.stateOfIncorporation.trim()) e.stateOfIncorporation = 'State of incorporation is required.';
-    }
-  }
-  return e;
+function validateRoleFields(_role: Role, _tier: Tier, _f: RoleFields): FieldErrors {
+  // All compliance fields are optional regardless of role or tier
+  return {};
 }
 
 function validatePassword(f: PasswordFields): FieldErrors {
@@ -133,7 +127,7 @@ export function useRegistrationForm(initialRole: Role) {
     setFieldErrors((prev) => { const n = { ...prev }; delete n[key]; return n; });
   }, []);
 
-  // Add files to upload list
+  // Stage files for upload — sent as document_files[] in the registration FormData
   const addFiles = useCallback((files: File[]) => {
     const newEntries: UploadedFile[] = files.map((file) => ({
       id: `${Date.now()}-${Math.random()}`,
@@ -144,24 +138,20 @@ export function useRegistrationForm(initialRole: Role) {
     setUploadedFiles((prev) => [...prev, ...newEntries]);
   }, []);
 
-  // Remove a file
+  // Remove a staged file
   const removeFile = useCallback((id: string) => {
     setUploadedFiles((prev) => prev.filter((f) => f.id !== id));
   }, []);
 
-  // Advance to next step with validation
+  // Advance to next step after per-step validation
   function nextStep() {
     let errors: FieldErrors = {};
-
     if (step === 1) errors = validateCompany(company);
     if (step === 2) errors = validateRoleFields(role, tier, roleFields);
-    // Step 3 (documents) is optional for basic tier
+    // Step 3 (documents) is skippable for bulletin tier
     if (step === 4) errors = validatePassword(passwordFields);
 
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors);
-      return;
-    }
+    if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
     setFieldErrors({});
     setStep((s) => Math.min(s + 1, 4) as Step);
   }
@@ -171,7 +161,7 @@ export function useRegistrationForm(initialRole: Role) {
     setStep((s) => Math.max(s - 1, 1) as Step);
   }
 
-  // Final submit
+  // Final submit — calls register() which builds FormData with files attached
   async function handleSubmit(): Promise<boolean> {
     const errors = validatePassword(passwordFields);
     if (Object.keys(errors).length > 0) { setFieldErrors(errors); return false; }
@@ -180,45 +170,41 @@ export function useRegistrationForm(initialRole: Role) {
     setSubmitError('');
 
     try {
-      const body = {
+      // Map internal tier value to what the API expects
+      const apiTier = tier === 'advanced' ? 'marketplace' : 'bulletin';
+
+      await register({
         role,
-        tier,
+        tier: apiTier,
         company_name: company.companyName,
         email: company.email,
         phone: company.phone,
-        address: {
-          line1: company.addressLine1,
-          line2: company.addressLine2,
-          city: company.city,
-          state: company.state,
-          zip: company.zip,
-          country: company.country,
-        },
+        address_line1: company.addressLine1,
+        address_line2: company.addressLine2 || undefined,
+        city: company.city,
+        state: company.state,
+        zip_code: company.zip,
+        password: passwordFields.password,
         dot_number: roleFields.dotNumber || undefined,
         mc_number: roleFields.mcNumber || undefined,
-        business_license: roleFields.businessLicenseNumber || undefined,
+        business_license_number: roleFields.businessLicenseNumber || undefined,
         state_of_incorporation: roleFields.stateOfIncorporation || undefined,
-        password: passwordFields.password,
-      };
-
-      const res = await fetch('/api/accounts/register/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        document_files: uploadedFiles.map((u) => u.file),
       });
 
-      if (res.ok) {
-        setSubmitStatus('idle');
-        return true;
+      setSubmitStatus('idle');
+      return true;
+    } catch (err) {
+      setSubmitStatus('error');
+      if (err instanceof ApiError) {
+        // Surface first field-level error if present, otherwise the message
+        const firstFieldError = err.errors
+          ? (Object.values(err.errors).flat()[0] as string)
+          : null;
+        setSubmitError(firstFieldError ?? err.message);
+      } else {
+        setSubmitError('Unable to connect. Check your internet and try again.');
       }
-
-      const data = await res.json().catch(() => ({}));
-      setSubmitStatus('error');
-      setSubmitError(data?.detail ?? data?.email?.[0] ?? 'Registration failed. Please try again.');
-      return false;
-    } catch {
-      setSubmitStatus('error');
-      setSubmitError('Unable to connect. Check your internet and try again.');
       return false;
     }
   }

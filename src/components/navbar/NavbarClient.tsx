@@ -11,6 +11,8 @@ import {
   getMarketplaceHref,
 } from '@/lib/navConfig';
 import type { AuthUser } from '@/lib/types/auth';
+import { logout } from '@/features/auth/api/authApi';
+import { getRefreshToken, clearTokens } from '@/lib/api/tokens';
 
 interface NavbarClientProps {
   user: AuthUser | null;
@@ -267,8 +269,10 @@ function MobileMenu({
 export default function NavbarClient({ user, notificationCount = 0 }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // TODO: call POST /api/accounts/logout/ and clear JWT
-  function handleLogout() {
+  async function handleLogout() {
+    const refresh = getRefreshToken();
+    if (refresh) await logout(refresh);
+    clearTokens();
     window.location.href = '/';
   }
 

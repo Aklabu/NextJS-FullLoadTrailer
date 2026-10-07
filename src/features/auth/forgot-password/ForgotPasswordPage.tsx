@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { forgotPassword, verifyOtp, resetPassword } from '@/features/auth/api/authApi';
+import { ApiError } from '@/lib/api/client';
+import type { PasswordResetOtpData } from '@/features/auth/api/authApi';
 
 // Step 1 — enter email
 // Step 2 — enter 6-digit OTP
@@ -100,9 +103,11 @@ export default function ForgotPasswordPage() {
 
   // Step 1
   const [email, setEmail] = useState('');
+  const [step1SuccessMsg, setStep1SuccessMsg] = useState('');
 
   // Step 2
   const [otp, setOtp] = useState('');
+  const [resetToken, setResetToken] = useState(''); // returned by /otp/verify/ on password_reset
   const [resendCooldown, setResendCooldown] = useState(0);
 
   // Step 3
@@ -129,50 +134,44 @@ export default function ForgotPasswordPage() {
     setStepState('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('/api/accounts/password/forgot/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
-      });
-      if (res.ok) {
-        setStep(2);
-        setStepState('idle');
-        setResendCooldown(60);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setStepState('error');
-        setErrorMsg(data?.detail ?? data?.email?.[0] ?? 'Something went wrong. Please try again.');
-      }
+      const res = await forgotPassword(email.trim());
+      // Always advances — endpoint never reveals whether the email exists
+      setStep1SuccessMsg(res.message || 'If an account with that email exists, a reset code has been sent.');
+      setStep(2);
+      setStepState('idle');
+      setResendCooldown(60);
     } catch {
+      // Only fires on network error — forgotPassword always returns 200
       setStepState('error');
       setErrorMsg('Unable to connect. Check your internet and try again.');
     }
   }
 
-  // Step 2 — verify OTP (move to step 3 on success)
+// Step 2 — verify OTP via unified endpoint, get reset_token on success
   async function handleVerifyOtp(e: React.FormEvent) {
     e.preventDefault();
     if (otp.replace(/\D/g, '').length < 6) return;
     setStepState('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('/api/accounts/password/verify-otp/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), otp }),
-      });
-      if (res.ok) {
-        setStep(3);
-        setStepState('idle');
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setStepState('error');
-        setOtp('');
-        setErrorMsg(data?.detail ?? 'Invalid or expired code. Please try again.');
-      }
-    } catch {
+      const res = await verifyOtp({ email: email.trim(), otp_code: otp, purpose: 'password_reset' });
+      const data = res.data as PasswordResetOtpData;
+      setResetToken(data.reset_token);
+      setStep(3);
+      setStepState('idle');
+    } catch (err) {
       setStepState('error');
-      setErrorMsg('Unable to connect. Check your internet and try again.');
+      setOtp('');
+      if (err instanceof ApiError) {
+        const otpErr = err.errors?.otp_code;
+        setErrorMsg(
+          Array.isArray(otpErr) ? otpErr[0] :
+          typeof otpErr === 'string' ? otpErr :
+          err.message
+        );
+      } else {
+        setErrorMsg('Unable to connect. Check your internet and try again.');
+      }
     }
   }
 
@@ -183,43 +182,42 @@ export default function ForgotPasswordPage() {
     setStepState('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('/api/accounts/password/forgot/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
-      });
-      setStepState(res.ok ? 'idle' : 'error');
-      if (!res.ok) setErrorMsg('Failed to resend. Please try again.');
-      else setResendCooldown(60);
+      await forgotPassword(email.trim());
+      setStepState('idle');
+      setResendCooldown(60);
     } catch {
       setStepState('error');
-      setErrorMsg('Unable to connect.');
+      setErrorMsg('Failed to resend. Please try again.');
     }
   }
 
-  // Step 3 — reset password
+  // Step 3 — reset password using reset_token from step 2
   async function handleResetPassword(e: React.FormEvent) {
     e.preventDefault();
     if (!password || password !== confirmPassword) return;
     if (password.length < 8) { setStepState('error'); setErrorMsg('Password must be at least 8 characters.'); return; }
     setStepState('loading');
     setErrorMsg('');
+    // Temporary debug — remove after confirming token flow
+    console.log('[reset] sending reset_token:', resetToken);
     try {
-      const res = await fetch('/api/accounts/password/reset/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), otp, new_password: password }),
-      });
-      if (res.ok) {
-        setStepState('success');
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setStepState('error');
-        setErrorMsg(data?.detail ?? data?.new_password?.[0] ?? 'Reset failed. Please try again.');
-      }
-    } catch {
+      await resetPassword({ reset_token: resetToken, new_password: password, confirm_password: confirmPassword });
+      setStepState('success');
+    } catch (err) {
       setStepState('error');
-      setErrorMsg('Unable to connect. Check your internet and try again.');
+      if (err instanceof ApiError) {
+        const resetErr = err.errors?.reset_token;
+        const newPwErr = err.errors?.new_password;
+        const confirmErr = err.errors?.confirm_password;
+        const msg =
+          (Array.isArray(resetErr) ? resetErr[0] : resetErr as string) ||
+          (Array.isArray(newPwErr) ? newPwErr[0] : newPwErr as string) ||
+          (Array.isArray(confirmErr) ? confirmErr[0] : confirmErr as string) ||
+          err.message;
+        setErrorMsg(msg);
+      } else {
+        setErrorMsg('Unable to connect. Check your internet and try again.');
+      }
     }
   }
 
@@ -352,6 +350,16 @@ export default function ForgotPasswordPage() {
               );
             })}
           </div>
+
+          {/* Step 1 success info — shown at top of step 2 */}
+          {step === 2 && step1SuccessMsg && (
+            <div className="mb-5 flex items-start gap-3 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3.5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-sky-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              <p className="text-sm text-sky-700">{step1SuccessMsg}</p>
+            </div>
+          )}
 
           {/* Error banner */}
           {stepState === 'error' && (

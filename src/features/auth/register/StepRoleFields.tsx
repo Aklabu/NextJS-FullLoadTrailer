@@ -18,7 +18,7 @@ function Field({
   return (
     <div>
       <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-neutral-700">
-        {label} <span className="text-red-500" aria-hidden="true">*</span>
+        {label}
       </label>
       {hint && <p className="mb-2 text-xs text-neutral-400">{hint}</p>}
       <input
@@ -44,6 +44,9 @@ const ROLE_LABELS: Record<Role, string> = {
 };
 
 export default function StepRoleFields({ role, tier, fields, errors, onTierChange, onFieldChange }: Props) {
+  // Advanced tier makes compliance fields required; basic keeps them optional
+  const isAdvanced = tier === 'advanced';
+
   return (
     <div className="space-y-6">
       <div>
@@ -129,59 +132,63 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
         </div>
       </div>
 
-      {/* Role-specific fields — only shown for advanced tier */}
-      {tier === 'advanced' && (
-        <div className="space-y-5 rounded-xl border border-[#f0c896] bg-[#fffbf5] p-5">
-          <div className="flex items-start gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            <p className="text-xs leading-relaxed text-[#7a4a1a]">
-              Advanced verification requires compliance credentials. These will be reviewed by our team before marketplace access is granted.
-            </p>
-          </div>
-
-          {role === 'carrier' ? (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <Field
-                id="dotNumber" label="DOT Number"
-                value={fields.dotNumber} onChange={(v) => onFieldChange('dotNumber', v)}
-                error={errors.dotNumber} placeholder="e.g. 1234567"
-                hint="FMCSA-issued USDOT number"
-              />
-              <Field
-                id="mcNumber" label="MC Number"
-                value={fields.mcNumber} onChange={(v) => onFieldChange('mcNumber', v)}
-                error={errors.mcNumber} placeholder="e.g. MC-8765432"
-                hint="FMCSA Motor Carrier authority"
-              />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <Field
-                id="businessLicenseNumber" label="Business License Number"
-                value={fields.businessLicenseNumber} onChange={(v) => onFieldChange('businessLicenseNumber', v)}
-                error={errors.businessLicenseNumber} placeholder="e.g. BL-2024-00123"
-                hint="State-issued business license"
-              />
-              <Field
-                id="stateOfIncorporation" label="State of Incorporation"
-                value={fields.stateOfIncorporation} onChange={(v) => onFieldChange('stateOfIncorporation', v)}
-                error={errors.stateOfIncorporation} placeholder="e.g. Delaware"
-                hint="Where your entity is registered"
-              />
-            </div>
-          )}
+      {/* Compliance fields — always visible, always optional */}
+      <div className="space-y-5 rounded-xl border border-[#e8e0d6] bg-[#fafaf8] p-5">
+        <div className="flex items-start gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+          </svg>
+          <p className="text-xs leading-relaxed text-neutral-500">
+            {isAdvanced
+              ? 'Providing compliance credentials speeds up your marketplace verification review.'
+              : 'Compliance fields are optional. You can add them now or later from your account settings.'}
+          </p>
         </div>
-      )}
 
-      {/* Basic tier note */}
-      {tier === 'basic' && (
-        <p className="rounded-xl border border-[#e8e0d6] bg-[#fafaf8] p-4 text-xs leading-relaxed text-neutral-500">
-          You can upgrade to Advanced verification anytime from your account settings.
-          Advanced unlocks bidding, counteroffers, and booking confirmations.
-        </p>
-      )}
+        {/* DOT + MC — always visible for all roles */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <Field
+            id="dotNumber"
+            label="DOT Number"
+            value={fields.dotNumber}
+            onChange={(v) => onFieldChange('dotNumber', v)}
+            error={errors.dotNumber}
+            placeholder="e.g. 1234567"
+            hint="FMCSA-issued USDOT number"
+          />
+          <Field
+            id="mcNumber"
+            label="MC Number"
+            value={fields.mcNumber}
+            onChange={(v) => onFieldChange('mcNumber', v)}
+            error={errors.mcNumber}
+            placeholder="e.g. MC-987654"
+            hint="FMCSA Motor Carrier authority"
+          />
+        </div>
+
+        {/* Business License + State of Incorporation — always visible for all roles */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <Field
+            id="businessLicenseNumber"
+            label="Business License Number"
+            value={fields.businessLicenseNumber}
+            onChange={(v) => onFieldChange('businessLicenseNumber', v)}
+            error={errors.businessLicenseNumber}
+            placeholder="e.g. BL-2024-00123"
+            hint="State-issued business license"
+          />
+          <Field
+            id="stateOfIncorporation"
+            label="State of Incorporation"
+            value={fields.stateOfIncorporation}
+            onChange={(v) => onFieldChange('stateOfIncorporation', v)}
+            error={errors.stateOfIncorporation}
+            placeholder="e.g. Delaware"
+            hint="Where your entity is registered"
+          />
+        </div>
+      </div>
     </div>
   );
 }
