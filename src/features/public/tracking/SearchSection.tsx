@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import type { TrackingStatus, TrackingResult } from './types';
-import { inTransitResult, deliveredResult } from './mockData';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import type { TrackingResult, TrackingStatus } from './types';
+import { inTransitResult, deliveredResult, notPickedResult } from './mockData';
 
+// Quick-pick samples shown below the search bar
 const SAMPLES = [
   { id: 'FTL-9482-1LTX', label: 'FTL-9482-1LTX (In Transit)' },
-  { id: 'FTL-8820-CHI', label: 'FTL-8820-CHI (Delivered)' },
-  { id: 'MW-55104-UNK', label: 'MW-55104-UNK (Unknown ID)' },
+  { id: 'FTL-8820-CHI',  label: 'FTL-8820-CHI (Delivered)' },
+  { id: 'FTL-7710-ATL',  label: 'FTL-7710-ATL (Not Picked Up)' },
+  { id: 'MW-55104-UNK',  label: 'MW-55104-UNK (Unknown)' },
 ];
 
 interface Props {
@@ -15,23 +18,62 @@ interface Props {
 }
 
 export default function SearchSection({ onResult }: Props) {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function handleSearch(id?: string) {
-    const jobId = (id ?? query).trim().toUpperCase();
-    if (!jobId) return;
-    setLoading(true);
-    // TODO: GET /api/tracking/search/?job_id=...
-    await new Promise((r) => setTimeout(r, 700));
-    setLoading(false);
-    if (jobId === 'FTL-9482-1LTX') {
-      onResult(inTransitResult, 'in_transit');
-    } else if (jobId === 'FTL-8820-CHI') {
-      onResult(deliveredResult, 'delivered');
-    } else {
-      onResult(null, 'not_found');
+  // Auto-search if ?job_id= is present in the URL on mount
+  useEffect(() => {
+    const prefilledId = searchParams.get('job_id');
+    if (prefilledId) {
+      setQuery(prefilledId.toUpperCase());
+      runSearch(prefilledId.toUpperCase());
     }
+    // Only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function runSearch(jobId: string) {
+    const id = jobId.trim().toUpperCase();
+    if (!id) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`https://movingwyze.com/api/tracking/search/?job_id=${encodeURIComponent(id)}`);
+      if (res.status === 404 || res.status === 400) {
+        onResult(null, 'not_found');
+        return;
+      }
+      const json = await res.json();
+      // Real API wraps data in { status, message, data: { task, loadsheet } }
+      // Map to our TrackingResult shape using only the safe public fields
+      const task = json?.data?.task;
+      const loadsheet = json?.data?.loadsheet;
+      if (!task) { onResult(null, 'not_found'); return; }
+      const result: TrackingResult = {
+        job_id:        task.job_id,
+        status:        task.status,
+        from_location: task.from_location,
+        to_location:   task.to_location,
+        driver_name:   loadsheet?.driver_name ?? 'Assigned driver',
+        date:          loadsheet?.date ?? '',
+      };
+      onResult(result, result.status as TrackingStatus);
+    } catch {
+      // Network error — fall through to not_found
+      onResult(null, 'not_found');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Used by the quick-pick sample buttons
+  function handleSample(id: string) {
+    setQuery(id);
+    // Dev-only mock responses while real API isn't wired
+    if (id === 'FTL-9482-1LTX') { onResult(inTransitResult, 'in_transit'); return; }
+    if (id === 'FTL-8820-CHI')  { onResult(deliveredResult,  'complete');   return; }
+    if (id === 'FTL-7710-ATL')  { onResult(notPickedResult,  'not_picked'); return; }
+    onResult(null, 'not_found');
   }
 
   return (
@@ -53,7 +95,7 @@ export default function SearchSection({ onResult }: Props) {
           marginBottom: 24,
         }}
       >
-        🛰 PUBLIC FREIGHT TELEMETRY &amp; TRACKING
+        🛰 PUBLIC SHIPMENT TRACKING
       </div>
 
       {/* Headline */}
@@ -62,24 +104,18 @@ export default function SearchSection({ onResult }: Props) {
           fontFamily: 'Georgia, "Times New Roman", serif',
           fontSize: 'clamp(32px, 5vw, 48px)',
           fontWeight: 400, lineHeight: 1.2, color: '#1a1a1a',
-          maxWidth: 640, marginBottom: 24,
+          maxWidth: 640, marginBottom: 16,
         }}
       >
-        Track Shipment by Job ID.
+        Track your shipment.
         <br />
-        <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>Real-Time Corridor Telemetry.</span>
+        <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>No login required.</span>
       </h1>
 
-      <p style={{ maxWidth: 560, color: '#6b7280', fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
-        Instant dispatch status and milestone checkpoints for active and completed freight corridors. Zero login required, built privacy-first with zero customer PII exposed.
+      <p style={{ maxWidth: 520, color: '#6b7280', fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
+        Enter your Job ID to see the current status, route, and driver for your shipment.
+        Your personal information is never exposed.
       </p>
-
-      {/* Feature flags */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 24px', fontSize: 14, color: '#4b5563', marginBottom: 40 }}>
-        <span>✅ MovingWyze Compatible API</span>
-        <span>🔀 Live Corridor Ping Telemetry</span>
-        <span>🔒 100% Cryptographic Job ID Validation</span>
-      </div>
 
       {/* Search bar */}
       <div
@@ -100,8 +136,8 @@ export default function SearchSection({ onResult }: Props) {
             <input
               type="text"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              onChange={(e) => setQuery(e.target.value.toUpperCase())}
+              onKeyDown={(e) => e.key === 'Enter' && runSearch(query)}
               placeholder="Enter Job ID e.g. FTL-9482-1LTX"
               style={{
                 flex: 1, background: 'transparent',
@@ -115,6 +151,7 @@ export default function SearchSection({ onResult }: Props) {
                 type="button"
                 onClick={() => setQuery('')}
                 style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14 }}
+                aria-label="Clear search"
               >
                 ✕
               </button>
@@ -122,8 +159,8 @@ export default function SearchSection({ onResult }: Props) {
           </div>
           <button
             type="button"
-            onClick={() => handleSearch()}
-            disabled={loading}
+            onClick={() => runSearch(query)}
+            disabled={loading || !query.trim()}
             style={{
               background: loading ? '#e5a87a' : '#fc3f07',
               color: '#fff', fontWeight: 600, fontSize: 14,
@@ -131,6 +168,7 @@ export default function SearchSection({ onResult }: Props) {
               border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
               whiteSpace: 'nowrap', transition: 'background 0.2s',
               display: 'flex', alignItems: 'center', gap: 8,
+              opacity: !query.trim() ? 0.6 : 1,
             }}
           >
             {loading ? 'Searching…' : 'Track Shipment →'}
@@ -139,12 +177,12 @@ export default function SearchSection({ onResult }: Props) {
 
         {/* Sample IDs */}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginTop: 12, padding: '0 4px' }}>
-          <span style={{ fontSize: 12, color: '#9ca3af' }}>Quick Sample Jobs:</span>
+          <span style={{ fontSize: 12, color: '#9ca3af' }}>Try a sample:</span>
           {SAMPLES.map((s) => (
             <button
               key={s.id}
               type="button"
-              onClick={() => { setQuery(s.id); handleSearch(s.id); }}
+              onClick={() => handleSample(s.id)}
               style={{
                 fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
                 fontSize: 12, background: '#f7ece0', border: 'none',

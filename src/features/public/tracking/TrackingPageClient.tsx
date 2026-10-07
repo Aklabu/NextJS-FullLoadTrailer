@@ -1,15 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import type { TrackingStatus, TrackingResult } from './types';
+import { useState, Suspense } from 'react';
+import type { TrackingResult, TrackingStatus } from './types';
 import SearchSection from './SearchSection';
 import ResultCard from './ResultCard';
 import MilestoneSection from './MilestoneSection';
-import EquipmentSection from './EquipmentSection';
 import NotFoundState from './NotFoundState';
 import TrackingSupportBanner from './SupportBanner';
 
-export default function TrackingPageClient() {
+// Inner component uses useSearchParams via SearchSection — must be inside Suspense
+function TrackingContent() {
   const [result, setResult] = useState<TrackingResult | null>(null);
   const [status, setStatus] = useState<TrackingStatus>('idle');
   const [lastQuery, setLastQuery] = useState('');
@@ -17,7 +17,7 @@ export default function TrackingPageClient() {
   function handleResult(r: TrackingResult | null, s: TrackingStatus) {
     setResult(r);
     setStatus(s);
-    if (r) setLastQuery(r.jobId);
+    if (r) setLastQuery(r.job_id);
   }
 
   return (
@@ -26,15 +26,23 @@ export default function TrackingPageClient() {
 
       {status === 'not_found' && <NotFoundState jobId={lastQuery} />}
 
-      {result && (status === 'in_transit' || status === 'delivered') && (
+      {result && (status === 'in_transit' || status === 'complete' || status === 'not_picked') && (
         <>
           <ResultCard result={result} />
           <MilestoneSection result={result} />
-          <EquipmentSection result={result} />
         </>
       )}
 
       <TrackingSupportBanner />
     </div>
+  );
+}
+
+// Suspense boundary required because SearchSection reads useSearchParams on mount
+export default function TrackingPageClient() {
+  return (
+    <Suspense fallback={<div style={{ background: '#fdf6ee', minHeight: '100vh' }} />}>
+      <TrackingContent />
+    </Suspense>
   );
 }

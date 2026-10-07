@@ -1,35 +1,12 @@
-export type TrackingStatus = 'in_transit' | 'delivered' | 'not_picked' | 'not_found' | 'idle';
+// Status values returned by GET /api/tracking/search/?job_id=
+export type TrackingStatus = 'not_picked' | 'in_transit' | 'complete' | 'not_found' | 'idle';
 
+// Minimal safe fields returned by the public tracking endpoint
 export interface TrackingResult {
-  jobId: string;
+  job_id: string;
   status: TrackingStatus;
-  routeName: string;
-  lastPing: string;
-  waypoint: string;
-  origin: string;
-  originCode: string;
-  destination: string;
-  destinationCode: string;
-  distance: string;
-  eta: string;
-  scheduleNote: string;
-  progressPercent: number;
-  progressLabel: string;
-  milestones: Milestone[];
-  equipment: EquipmentField[];
-}
-
-export interface Milestone {
-  icon: string;
-  timestamp: string;
-  title: string;
-  description: string;
-  active?: boolean;
-}
-
-export interface EquipmentField {
-  label: string;
-  value: string;
-  sub: string;
-  mono?: boolean;
+  from_location: string;
+  to_location: string;
+  driver_name: string;
+  date: string; // ISO date string e.g. "2026-10-07"
 }
