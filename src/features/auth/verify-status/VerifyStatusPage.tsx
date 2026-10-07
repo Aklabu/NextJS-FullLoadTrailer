@@ -11,8 +11,8 @@ interface VerificationData {
   status: VerificationStatus;
   rejection_reason?: string;
   info_requested?: string;
-  submitted_at?: string;
-  reviewed_at?: string;
+  submitted_at?: string | null;
+  reviewed_at?: string | null;
 }
 
 // Status config for banner + icon
