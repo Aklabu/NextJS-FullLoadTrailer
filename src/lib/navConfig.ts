@@ -16,7 +16,7 @@ export const publicNavItems: NavItem[] = [
 // Note: Marketplace href is role-resolved at render time via getMarketplaceHref(role) in NavbarClient.
 // The href here is a fallback only and should never be used directly.
 export const authedNavItems: NavItem[] = [
-  { label: 'Board', href: '/board' },
+  { label: 'Dashboard', href: '/dashboard' },
   { label: 'Community', href: '/community' },
   { label: 'Marketplace', href: '/marketplace/my-loads' },
   { label: 'Messages', href: '/messages' },
