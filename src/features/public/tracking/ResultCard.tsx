@@ -98,7 +98,7 @@ export default function ResultCard({ result }: Props) {
                 SCHEDULED DATE
               </p>
               <p style={{ fontSize: 15, fontWeight: 600, color: '#1a1a1a' }}>
-                {formatDate(result.date)}
+                {formatDate(result.scheduled_date)}
               </p>
             </div>
           </div>
