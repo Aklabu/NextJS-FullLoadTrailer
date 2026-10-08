@@ -21,12 +21,26 @@ export interface NotificationTarget {
   id: string;
 }
 
-export interface NotificationMeta {
+// Meta field varies by notification type
+export interface BidNotificationMeta {
+  bid_id?: string;
   amount?: string;
-  job_id?: string;
-  rating?: number;
-  [key: string]: string | number | undefined;
+  carrier_name?: string;
+  load_id?: string;
 }
+
+export interface MessageNotificationMeta {
+  sender_name?: string;
+  conversation_id?: string;
+  count?: number;
+}
+
+export interface ReviewNotificationMeta {
+  rating?: number;
+  review_id?: string;
+}
+
+export type NotificationMeta = BidNotificationMeta | MessageNotificationMeta | ReviewNotificationMeta | Record<string, string | number | undefined>;
 
 export interface Notification {
   id: string;

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { getNotifications, markNotificationRead, markAllRead, deleteNotification } from './api/notificationsApi';
+import { useNotifications } from './NotificationContext';
 import type { Notification, NotificationCategory } from './types';
 import { ApiError } from '@/lib/api/client';
 
@@ -38,7 +39,7 @@ function getNotificationIcon(type: string): string {
 }
 
 function getNotificationLink(notification: Notification): string {
-  const { target, meta } = notification;
+  const { target, meta, type } = notification;
   
   switch (target.kind) {
     case 'load':
@@ -48,7 +49,11 @@ function getNotificationLink(notification: Notification): string {
     case 'review':
       return `/profiles/${notification.actor?.id ?? ''}`;
     case 'bid':
-      return meta?.job_id ? `/marketplace/loads/${target.id}` : '#';
+      // For bid notifications, meta might contain load_id
+      if (meta && 'load_id' in meta && meta.load_id) {
+        return `/marketplace/loads/${meta.load_id}`;
+      }
+      return `/marketplace/loads/${target.id}`;
     default:
       return '#';
   }
@@ -181,6 +186,7 @@ function LoadingSkeleton() {
 // ─── Main Panel ──────────────────────────────────────────────────────────────
 
 export default function NotificationPanel() {
+  const { unreadCounts, setUnreadCounts } = useNotifications();
   const [activeTab, setActiveTab] = useState<NotificationCategory | 'all'>('all');
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
@@ -190,16 +196,17 @@ export default function NotificationPanel() {
   const loadNotifications = useCallback(async (category: NotificationCategory | 'all', pageNum: number) => {
     setLoading(true);
     try {
-      const data = await getNotifications({
+      const response = await getNotifications({
         category: category === 'all' ? undefined : category,
         page: pageNum,
       });
+      
       if (pageNum === 1) {
-        setNotifications(data.notifications);
+        setNotifications(response.results);
       } else {
-        setNotifications((prev) => [...prev, ...data.notifications]);
+        setNotifications((prev) => [...prev, ...response.results]);
       }
-      setHasMore(data.has_more);
+      setHasMore(response.next !== null);
     } catch (err) {
       // API not available yet or auth error - show empty state
       console.debug('Failed to load notifications:', err instanceof ApiError ? err.message : err);
@@ -217,8 +224,11 @@ export default function NotificationPanel() {
 
   const handleMarkRead = async (id: string) => {
     try {
-      await markNotificationRead(id);
+      const result = await markNotificationRead(id);
+      // Update notification state
       setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)));
+      // Update unread counts from server response
+      setUnreadCounts(result.unread_counts);
     } catch (err) {
       console.error('Failed to mark as read:', err);
     }
@@ -226,19 +236,42 @@ export default function NotificationPanel() {
 
   const handleMarkAllRead = async () => {
     try {
-      await markAllRead(activeTab === 'all' ? undefined : activeTab);
+      const result = await markAllRead(activeTab === 'all' ? undefined : activeTab);
+      // Update local notification state
       setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+      // Update unread counts from server response
+      setUnreadCounts(result.unread_counts);
     } catch (err) {
       console.error('Failed to mark all as read:', err);
     }
   };
 
   const handleDelete = async (id: string) => {
+    // Find the notification to check if it was unread
+    const notification = notifications.find((n) => n.id === id);
+    const wasUnread = notification && !notification.is_read;
+    
     try {
       await deleteNotification(id);
+      // Remove from local state
       setNotifications((prev) => prev.filter((n) => n.id !== id));
+      
+      // Update unread counts if the deleted notification was unread
+      if (wasUnread && notification) {
+        setUnreadCounts((prev) => {
+          const category = notification.category;
+          return {
+            ...prev,
+            total: Math.max(0, prev.total - 1),
+            bids: category === 'bids' ? Math.max(0, prev.bids - 1) : prev.bids,
+            messages: category === 'messages' ? Math.max(0, prev.messages - 1) : prev.messages,
+            reviews: category === 'reviews' ? Math.max(0, prev.reviews - 1) : prev.reviews,
+          };
+        });
+      }
     } catch (err) {
       console.error('Failed to delete notification:', err);
+      // Could show a toast/error message to user here
     }
   };
 
@@ -248,7 +281,7 @@ export default function NotificationPanel() {
     loadNotifications(activeTab, nextPage);
   };
 
-  const unreadCount = notifications.filter((n) => !n.is_read).length;
+  const unreadCount = unreadCounts.total;
   const tabs: Array<{ key: NotificationCategory | 'all'; label: string }> = [
     { key: 'all', label: 'All' },
     { key: 'bids', label: 'Bids' },
@@ -324,16 +357,6 @@ export default function NotificationPanel() {
             )}
           </>
         )}
-      </div>
-
-      {/* Footer */}
-      <div className="shrink-0 border-t border-[#e8e0d6] px-3 sm:px-4 py-2 text-center">
-        <Link
-          href="/notifications/preferences"
-          className="text-[11px] sm:text-xs text-neutral-500 transition-colors hover:text-[#fc3f07]"
-        >
-          Notification settings →
-        </Link>
       </div>
     </div>
   );

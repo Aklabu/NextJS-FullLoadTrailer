@@ -2,37 +2,22 @@
 
 import { useState, useEffect, useRef } from 'react';
 import NotificationPanel from './NotificationPanel';
-import { getUnreadCount } from './api/notificationsApi';
+import { useNotifications } from './NotificationContext';
 
 // ─── Bell Icon with Badge ────────────────────────────────────────────────────
 
 export default function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const { unreadCounts, refreshUnreadCounts } = useNotifications();
   const panelRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Poll unread count every 30 seconds
+  // Refresh counts when panel opens
   useEffect(() => {
-    async function fetchCount() {
-      try {
-        const counts = await getUnreadCount();
-        setUnreadCount(counts.total);
-      } catch (err) {
-        // Silently fail — API not yet available or auth error
-        // Don't show error to user, just keep count at 0
-        console.debug('Notifications API not available:', err);
-      }
+    if (isOpen) {
+      refreshUnreadCounts();
     }
-
-    // Only fetch if user is authenticated (has token)
-    const hasToken = typeof window !== 'undefined' && localStorage.getItem('accessToken');
-    if (!hasToken) return;
-
-    fetchCount();
-    const interval = setInterval(fetchCount, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  }, [isOpen, refreshUnreadCounts]);
 
   // Close panel when clicking outside
   useEffect(() => {
@@ -74,8 +59,9 @@ export default function NotificationBell() {
         onClick={() => setIsOpen(!isOpen)}
         className="relative rounded-md p-1.5 transition-colors hover:bg-white/10"
         style={{ color: 'rgba(255,255,255,0.9)' }}
-        aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
+        aria-label={`Notifications${unreadCounts.total > 0 ? ` (${unreadCounts.total} unread)` : ''}`}
         aria-expanded={isOpen}
+        title={`Notifications (${unreadCounts.total} unread)`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -94,13 +80,13 @@ export default function NotificationBell() {
         </svg>
 
         {/* Badge */}
-        {unreadCount > 0 && (
+        {unreadCounts.total > 0 && (
           <span
-            className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold text-white"
-            style={{ background: '#d13100' }}
+            className="absolute -right-0.5 -top-0.5 flex min-w-[18px] h-[18px] items-center justify-center rounded-full px-1 text-[10px] font-bold text-white shadow-sm"
+            style={{ backgroundColor: '#fc3f07' }}
             aria-hidden="true"
           >
-            {unreadCount > 9 ? '9+' : unreadCount}
+            {unreadCounts.total > 99 ? '99+' : unreadCounts.total}
           </span>
         )}
       </button>
