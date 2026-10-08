@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import VerificationBadge from '@/components/VerificationBadge';
+import { NotificationBell } from '@/features/notifications';
 import {
   publicNavItems,
   authedNavItems,
@@ -16,7 +17,6 @@ import { getRefreshToken, clearTokens } from '@/lib/api/tokens';
 
 interface NavbarClientProps {
   user: AuthUser | null;
-  notificationCount?: number;
 }
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -59,41 +59,6 @@ function Logo() {
   );
 }
 
-function NotificationBell({ count = 0 }: { count: number }) {
-  return (
-    <button
-      type="button"
-      aria-label={count > 0 ? `${count} unread notifications` : 'Notifications'}
-      className="relative p-1.5 rounded-md transition-colors hover:bg-white/10"
-      style={{ color: 'rgba(255,255,255,0.9)' }}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.8}
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-        />
-      </svg>
-      {count > 0 && (
-        <span
-          className="absolute top-0.5 right-0.5 h-4 w-4 rounded-full text-[10px] font-bold text-white flex items-center justify-center"
-          style={{ background: '#d13100' }}
-          aria-hidden="true"
-        >
-          {count > 9 ? '9+' : count}
-        </span>
-      )}
-    </button>
-  );
-}
 
 function ProfileDropdown({ user, onLogout }: { user: AuthUser; onLogout: () => void }) {
   const [open, setOpen] = useState(false);
@@ -266,7 +231,7 @@ function MobileMenu({
   );
 }
 
-export default function NavbarClient({ user, notificationCount = 0 }: NavbarClientProps) {
+export default function NavbarClient({ user }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   async function handleLogout() {
@@ -296,7 +261,7 @@ export default function NavbarClient({ user, notificationCount = 0 }: NavbarClie
         <div className="flex items-center gap-2">
           {user ? (
             <>
-              <NotificationBell count={notificationCount} />
+              <NotificationBell />
               <ProfileDropdown user={user} onLogout={handleLogout} />
             </>
           ) : (
