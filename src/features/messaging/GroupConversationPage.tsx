@@ -5,8 +5,17 @@ import Image from 'next/image';
 import { ROLE_COLORS, ROLE_LABELS } from './groupTypes';
 import { getCommunityHistory, sendCommunityMessage } from './api/groupMessagingAPI';
 import type { CommunityMessage, CommunityAttachment } from './api/groupMessagingAPI';
+import { createCommunitySocket } from './api/wsMessagingAPI';
+import type { WsStatus } from './api/wsMessagingAPI';
 import { getMe } from '@/features/auth/api/authApi';
 import { ApiError } from '@/lib/api/client';
+
+const WS_STATUS_STYLES: Record<WsStatus, { color: string; label: string }> = {
+  connecting: { color: '#f59e0b', label: 'Connecting…' },
+  open:       { color: '#22c55e', label: 'Live' },
+  closed:     { color: '#9ca3af', label: 'Disconnected' },
+  error:      { color: '#ef4444', label: 'Connection error' },
+};
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -186,11 +195,14 @@ export default function GroupConversationPage() {
   const [input, setInput] = useState('');
   const [stagedFiles, setStagedFiles] = useState<File[]>([]);
   const [sending, setSending] = useState(false);
+  const [wsStatus, setWsStatus] = useState<WsStatus>('connecting');
 
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  const socketRef = useRef<ReturnType<typeof createCommunitySocket> | null>(null);
+  const messageIdsRef = useRef<Set<string>>(new Set());
 
   // Load history + current user in parallel on mount
   const loadHistory = useCallback(async () => {
@@ -213,6 +225,41 @@ export default function GroupConversationPage() {
   }, []);
 
   useEffect(() => { loadHistory(); }, [loadHistory]);
+
+  // Open WS once REST history is loaded
+  useEffect(() => {
+    if (loading) return;
+    setWsStatus('connecting');
+    const socket = createCommunitySocket({
+      onOpen:  () => setWsStatus('open'),
+      onClose: () => setWsStatus('closed'),
+      onError: () => setWsStatus('error'),
+      onMessage: (msg) => {
+        if (messageIdsRef.current.has(msg.id)) return;
+        messageIdsRef.current.add(msg.id);
+        setMessages((prev) => [...prev, {
+          id: msg.id,
+          sender_id: msg.sender_id,
+          sender_name: msg.sender_name,
+          sender_role: msg.sender_role,
+          body: msg.body,
+          attachments: msg.attachments,
+          sent_at: msg.sent_at,
+          status: 'sent',
+        }]);
+      },
+    });
+    socketRef.current = socket;
+    return () => {
+      socket.close();
+      socketRef.current = null;
+    };
+  }, [loading]);
+
+  // Keep dedup set in sync
+  useEffect(() => {
+    messageIdsRef.current = new Set(messages.map((m) => m.id));
+  }, [messages]);
 
   // Scroll to bottom on initial load
   useEffect(() => {
@@ -269,13 +316,12 @@ export default function GroupConversationPage() {
     e.preventDefault();
     if (!input.trim() && stagedFiles.length === 0) return;
 
-    // Optimistic message
     const tempId = `temp-${Date.now()}`;
     const optimistic: CommunityMessage = {
       id: tempId,
       sender_id: 'me',
       sender_name: currentUserName ?? 'You',
-      sender_role: 'carrier', // placeholder — replaced by confirmed server message
+      sender_role: 'carrier',
       body: input.trim(),
       attachments: stagedFiles.map((f, i) => ({
         id: `att-${tempId}-${i}`,
@@ -295,17 +341,34 @@ export default function GroupConversationPage() {
     setStagedFiles([]);
     setSending(true);
 
-    try {
-      const confirmed = await sendCommunityMessage({
-        body: sentBody || undefined,
-        attachments: sentFiles.length ? sentFiles : undefined,
-      });
-      // Replace optimistic entry with confirmed server message
-      setMessages((prev) => prev.map((m) => m.id === tempId ? confirmed : m));
-    } catch {
-      setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' as const } : m));
-    } finally {
-      setSending(false);
+    // Text-only + WS open → send over WS (no round-trip)
+    // Files always use REST — WS cannot carry binary payloads
+    const useWs = sentFiles.length === 0 && socketRef.current?.getStatus() === 'open';
+
+    if (useWs) {
+      try {
+        socketRef.current!.send(sentBody);
+        // Server broadcasts back; WS onMessage will dedup. Mark optimistic sent for UX.
+        setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'sent' as const } : m));
+      } catch {
+        setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' as const } : m));
+      } finally {
+        setSending(false);
+      }
+    } else {
+      try {
+        const confirmed = await sendCommunityMessage({
+          body: sentBody || undefined,
+          attachments: sentFiles.length ? sentFiles : undefined,
+        });
+        // Pre-register confirmed id before WS broadcast arrives
+        messageIdsRef.current.add(confirmed.id);
+        setMessages((prev) => prev.map((m) => m.id === tempId ? confirmed : m));
+      } catch {
+        setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' as const } : m));
+      } finally {
+        setSending(false);
+      }
     }
   }
 
@@ -317,6 +380,7 @@ export default function GroupConversationPage() {
   }
 
   const grouped = groupByDay(messages);
+  const wsStyle = WS_STATUS_STYLES[wsStatus];
 
   return (
     <div className="mx-auto flex max-w-[860px] flex-col px-4 sm:px-6" style={{ height: 'calc(100vh - 80px)', minHeight: 560 }}>
@@ -349,6 +413,12 @@ export default function GroupConversationPage() {
                 {label}
               </span>
             ))}
+            {/* WS connection indicator */}
+            {!loading && (
+              <span className="flex items-center border-l border-[#e8e0d6] pl-3" title={wsStyle.label}>
+                <span className={`h-2 w-2 rounded-full ${wsStatus === 'open' ? 'animate-pulse' : ''}`} style={{ background: wsStyle.color }} aria-label={wsStyle.label} />
+              </span>
+            )}
           </div>
         </div>
       </div>

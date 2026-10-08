@@ -172,7 +172,7 @@ export default function LoadDetailPage({ id }: Props) {
   }, [id, router]);
 
   async function handleBidAction(bidId: string, action: 'accept' | 'reject' | 'counter', amount?: number) {
-    if (!load) return;
+    if (!load || !load.bids) return;
     // Optimistic update first — revert on error
     const prevLoad = load;
     const updatedBids = load.bids.map((b) => {
@@ -290,7 +290,7 @@ export default function LoadDetailPage({ id }: Props) {
               )}
             </div>
 
-            {load.bids.length === 0 ? (
+            {!load.bids || load.bids.length === 0 ? (
               <div className="rounded-xl border border-dashed border-[#e0d5c8] py-10 text-center">
                 <p className="text-sm text-neutral-400">No bids yet. Carriers will see this load and submit bids.</p>
               </div>

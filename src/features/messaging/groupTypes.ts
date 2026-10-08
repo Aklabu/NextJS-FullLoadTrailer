@@ -19,9 +19,9 @@ export type GroupMessage = {
 };
 
 export const ROLE_COLORS: Record<string, string> = {
-  shipper: '#0369a1',
-  broker: '#7c3aed',
-  carrier: '#15803d',
+  shipper: '#a855f7',   // purple
+  broker: '#f97316',    // orange
+  carrier: '#e879f9',   // magenta
 };
 
 export const ROLE_LABELS: Record<string, string> = {

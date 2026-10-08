@@ -4,9 +4,11 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { getConversationThread, markConversationRead } from './api/conversationAPI';
 import { sendMessage } from './api/messagingAPI';
+import { createDirectMessageSocket } from './api/wsMessagingAPI';
 import { ApiError } from '@/lib/api/client';
 import { getMe } from '@/features/auth/api/authApi';
 import type { ThreadMessage, ConversationDetail } from './api/conversationAPI';
+import type { WsStatus } from './api/wsMessagingAPI';
 
 const JOB_STATUS_STYLES: Record<string, { bg: string; text: string }> = {
   bidding:   { bg: '#fff7ed', text: '#d93506' },
@@ -14,6 +16,13 @@ const JOB_STATUS_STYLES: Record<string, { bg: string; text: string }> = {
   completed: { bg: '#f0fdf4', text: '#15803d' },
   open:      { bg: '#e0f2fe', text: '#0369a1' },
   active:    { bg: '#e0f2fe', text: '#0369a1' },
+};
+
+const WS_STATUS_STYLES: Record<WsStatus, { color: string; label: string }> = {
+  connecting: { color: '#f59e0b', label: 'Connecting…' },
+  open:       { color: '#22c55e', label: 'Live' },
+  closed:     { color: '#9ca3af', label: 'Disconnected' },
+  error:      { color: '#ef4444', label: 'Connection error' },
 };
 
 function formatTime(iso: string) {
@@ -35,7 +44,6 @@ function groupByDay(messages: ThreadMessage[]) {
   return groups;
 }
 
-// Skeleton shown while the thread first loads
 function ThreadSkeleton() {
   return (
     <div className="flex-1 overflow-y-auto rounded-2xl border border-[#e8e0d6] bg-white p-4 space-y-4 animate-pulse" aria-busy="true" aria-label="Loading messages">
@@ -59,10 +67,10 @@ export default function ConversationPage({ conversationId }: Props) {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
-  // oldest message id for cursor pagination
   const [oldestMessageId, setOldestMessageId] = useState<string | undefined>(undefined);
   const [hasMore, setHasMore] = useState(false);
   const [loadingOlder, setLoadingOlder] = useState(false);
+  const [wsStatus, setWsStatus] = useState<WsStatus>('connecting');
 
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
@@ -72,8 +80,12 @@ export default function ConversationPage({ conversationId }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  // Stored socket handle so handleSend can call socket.send() for text-only messages
+  const socketRef = useRef<ReturnType<typeof createDirectMessageSocket> | null>(null);
+  // Dedup set — prevents WS broadcast of own REST-sent messages from duplicating
+  const messageIdsRef = useRef<Set<string>>(new Set());
 
-  // Load the initial thread page
+  // Load thread + current user in parallel
   const loadThread = useCallback(async () => {
     setLoading(true);
     setLoadError(null);
@@ -98,12 +110,46 @@ export default function ConversationPage({ conversationId }: Props) {
 
   useEffect(() => { loadThread(); }, [loadThread]);
 
-  // Scroll to bottom on initial load and after new messages
+  // Open WS once REST history is loaded
+  useEffect(() => {
+    if (loading) return;
+    setWsStatus('connecting');
+    const socket = createDirectMessageSocket(conversationId, {
+      onOpen:  () => setWsStatus('open'),
+      onClose: () => setWsStatus('closed'),
+      onError: () => setWsStatus('error'),
+      onMessage: (msg) => {
+        // Skip if already in state (REST confirm broadcast dedup)
+        if (messageIdsRef.current.has(msg.id)) return;
+        messageIdsRef.current.add(msg.id);
+        setMessages((prev) => [...prev, {
+          id: msg.id,
+          sender_id: msg.sender_id,
+          sender_name: msg.sender_name,
+          body: msg.body,
+          attachments: msg.attachments,
+          sent_at: msg.sent_at,
+          status: 'sent',
+        }]);
+      },
+    });
+    socketRef.current = socket;
+    return () => {
+      socket.close();
+      socketRef.current = null;
+    };
+  }, [conversationId, loading]);
+
+  // Keep dedup set in sync with messages state
+  useEffect(() => {
+    messageIdsRef.current = new Set(messages.map((m) => m.id));
+  }, [messages]);
+
+  // Scroll to bottom on initial load and on new messages
   useEffect(() => {
     if (!loading) bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [loading, messages.length]);
 
-  // Load older messages (cursor paginate backwards)
   async function loadOlderMessages() {
     if (!oldestMessageId || loadingOlder) return;
     setLoadingOlder(true);
@@ -113,14 +159,13 @@ export default function ConversationPage({ conversationId }: Props) {
       setMessages((prev) => [...data.messages, ...prev]);
       setHasMore(data.messages.length === 30);
       setOldestMessageId(data.messages[0]?.id);
-      // Restore scroll position so the user stays at the same spot
       requestAnimationFrame(() => {
         if (threadRef.current) {
           threadRef.current.scrollTop = threadRef.current.scrollHeight - prevScrollHeight;
         }
       });
     } catch {
-      // Silently fail — user can retry by scrolling up again
+      // Silently fail — user can retry
     } finally {
       setLoadingOlder(false);
     }
@@ -131,7 +176,6 @@ export default function ConversationPage({ conversationId }: Props) {
     if (!input.trim() && attachments.length === 0) return;
     setSendError(null);
 
-    // Optimistic message
     const tempId = `temp-${Date.now()}`;
     const optimistic: ThreadMessage = {
       id: tempId,
@@ -150,33 +194,49 @@ export default function ConversationPage({ conversationId }: Props) {
     setAttachments([]);
     setSending(true);
 
-    try {
-      const result = await sendMessage({
-        conversation_id: conversationId,
-        body: sentBody || undefined,
-        attachments: sentFiles.length ? sentFiles : undefined,
-      });
-      // Replace optimistic entry with confirmed message from server
-      const confirmed: ThreadMessage = {
-        ...result.message,
-        status: 'sent',
-      };
-      setMessages((prev) => prev.map((m) => m.id === tempId ? confirmed : m));
-    } catch (err) {
-      setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' } : m));
-      setSendError(err instanceof ApiError ? err.message : 'Failed to send message.');
-    } finally {
-      setSending(false);
+    // Text-only + WS open → send over WS (faster, no round-trip)
+    // Files always go via REST (WS cannot carry binary payloads)
+    const useWs = sentFiles.length === 0 && socketRef.current?.getStatus() === 'open';
+
+    if (useWs) {
+      try {
+        socketRef.current!.send(sentBody);
+        // The server will broadcast back confirming; WS onMessage replaces temp with confirmed.
+        // Mark optimistic as sent immediately for UX — WS onMessage dedup will handle the rest.
+        setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'sent' } : m));
+      } catch {
+        setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' } : m));
+        setSendError('Failed to send. Check your connection.');
+      } finally {
+        setSending(false);
+      }
+    } else {
+      // REST path — used for files, or when WS is not open
+      try {
+        const result = await sendMessage({
+          conversation_id: conversationId,
+          body: sentBody || undefined,
+          attachments: sentFiles.length ? sentFiles : undefined,
+        });
+        const confirmed: ThreadMessage = { ...result.message, status: 'sent' };
+        // Pre-register the confirmed id so the WS broadcast doesn't duplicate it
+        messageIdsRef.current.add(confirmed.id);
+        setMessages((prev) => prev.map((m) => m.id === tempId ? confirmed : m));
+      } catch (err) {
+        setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' } : m));
+        setSendError(err instanceof ApiError ? err.message : 'Failed to send message.');
+      } finally {
+        setSending(false);
+      }
     }
   }
 
-  // ─── Derived ───────────────────────────────────────────────────────────────
   const job = conversation?.job ?? null;
   const counterparty = conversation?.counterparty;
   const jobStyle = job?.status ? (JOB_STATUS_STYLES[job.status] ?? { bg: '#f5f5f5', text: '#737373' }) : null;
   const grouped = groupByDay(messages);
+  const wsStyle = WS_STATUS_STYLES[wsStatus];
 
-  // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="mx-auto flex max-w-[800px] flex-col px-6 py-8" style={{ height: 'calc(100vh - 120px)', minHeight: 600 }}>
 
@@ -209,22 +269,14 @@ export default function ConversationPage({ conversationId }: Props) {
                 <p className="text-xs capitalize text-neutral-400">{counterparty?.role}</p>
               </div>
             </div>
-            {job && (
-              <div className="flex flex-wrap items-center gap-3">
-                <div>
-                  <p className="text-xs font-mono text-neutral-400">{job.job_id}</p>
-                  <p className="text-xs text-neutral-600">{job.origin} → {job.destination}</p>
-                </div>
-                {jobStyle && (
-                  <span className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]" style={{ background: jobStyle.bg, color: jobStyle.text }}>
-                    {job.status}
-                  </span>
-                )}
-                <Link href={`/marketplace/loads/${job.load_id}`} className="text-xs font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">
-                  View job →
-                </Link>
-              </div>
-            )}
+            <div className="flex flex-wrap items-center gap-3">
+              {/* WS connection indicator */}
+              {!loading && (
+                <span className="flex items-center" title={wsStyle.label}>
+                  <span className={`h-2 w-2 rounded-full ${wsStatus === 'open' ? 'animate-pulse' : ''}`} style={{ background: wsStyle.color }} aria-label={wsStyle.label} />
+                </span>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -234,21 +286,16 @@ export default function ConversationPage({ conversationId }: Props) {
         <ThreadSkeleton />
       ) : (
         <div ref={threadRef} className="flex-1 overflow-y-auto rounded-2xl border border-[#e8e0d6] bg-white p-4" aria-live="polite" aria-label="Message thread">
-          {/* Load older messages */}
           {hasMore && (
             <div className="mb-4 flex justify-center">
-              <button
-                type="button"
-                onClick={loadOlderMessages}
-                disabled={loadingOlder}
-                className="rounded-full border border-[#e0d5c8] bg-white px-4 py-1.5 text-xs text-neutral-500 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-50"
-              >
+              <button type="button" onClick={loadOlderMessages} disabled={loadingOlder}
+                className="rounded-full border border-[#e0d5c8] bg-white px-4 py-1.5 text-xs text-neutral-500 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-50">
                 {loadingOlder ? 'Loading…' : 'Load older messages'}
               </button>
             </div>
           )}
 
-          {messages.length === 0 && !loading && (
+          {messages.length === 0 && (
             <div className="flex h-full flex-col items-center justify-center text-center">
               <p className="text-sm text-neutral-400">No messages yet. Send the first one below.</p>
             </div>
@@ -256,13 +303,11 @@ export default function ConversationPage({ conversationId }: Props) {
 
           {grouped.map((group) => (
             <div key={group.day}>
-              {/* Day separator */}
               <div className="my-4 flex items-center gap-3">
                 <div className="h-px flex-1 bg-[#f0ece6]" />
                 <span className="text-[11px] text-neutral-400">{formatDay(group.messages[0].sent_at)}</span>
                 <div className="h-px flex-1 bg-[#f0ece6]" />
               </div>
-
               {group.messages.map((m) => {
                 const isMe = (currentUserName !== null && m.sender_name === currentUserName) || m.status === 'sending' || m.status === 'error';
                 return (
@@ -321,42 +366,26 @@ export default function ConversationPage({ conversationId }: Props) {
           </div>
         )}
         <form onSubmit={handleSend} className="flex items-end gap-2">
-          <input
-            type="file"
-            ref={fileRef}
-            multiple
-            accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
-            className="sr-only"
-            aria-hidden="true"
-            onChange={(e) => { if (e.target.files) setAttachments((p) => [...p, ...Array.from(e.target.files!)]); e.target.value = ''; }}
-          />
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
+          <input type="file" ref={fileRef} multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
+            className="sr-only" aria-hidden="true"
+            onChange={(e) => { if (e.target.files) setAttachments((p) => [...p, ...Array.from(e.target.files!)]); e.target.value = ''; }} />
+          <button type="button" onClick={() => fileRef.current?.click()}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#e0d5c8] text-neutral-400 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]"
-            aria-label="Attach file"
-          >
+            aria-label="Attach file">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
             </svg>
           </button>
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+          <textarea value={input} onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(e as unknown as React.FormEvent); } }}
             placeholder="Type a message… (Enter to send, Shift+Enter for new line)"
             rows={1}
             className="flex-1 resize-none rounded-xl border border-[#e0d5c8] bg-[#fafaf8] px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#fc3f07] focus:ring-2 focus:ring-[#fc3f07]/20"
             style={{ maxHeight: 120, overflowY: 'auto' }}
-            aria-label="Message input"
-          />
-          <button
-            type="submit"
-            disabled={sending || (!input.trim() && attachments.length === 0)}
+            aria-label="Message input" />
+          <button type="submit" disabled={sending || (!input.trim() && attachments.length === 0)}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition-colors disabled:opacity-50 hover:enabled:bg-[#d93506]"
-            style={{ background: '#fc3f07' }}
-            aria-label="Send message"
-          >
+            style={{ background: '#fc3f07' }} aria-label="Send message">
             {sending
               ? <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
               : <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>}

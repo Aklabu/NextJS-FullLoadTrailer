@@ -164,7 +164,7 @@ export interface LoadOwnerDetail {
   visibility: string;
   posted_at: string;
   bid_count: number;
-  bids: BidDetail[];
+  bids?: BidDetail[]; // optional — may be undefined or empty
   audit_log: AuditLogEntry[];
   booking_id: string | null; // present when status === 'booked'
 }
