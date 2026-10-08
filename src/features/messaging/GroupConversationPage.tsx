@@ -2,41 +2,13 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import type { GroupMessage, GroupMessageAttachment } from './groupTypes';
 import { ROLE_COLORS, ROLE_LABELS } from './groupTypes';
+import { getCommunityHistory, sendCommunityMessage } from './api/groupMessagingAPI';
+import type { CommunityMessage, CommunityAttachment } from './api/groupMessagingAPI';
+import { getMe } from '@/features/auth/api/authApi';
+import { ApiError } from '@/lib/api/client';
 
-// Mock current user — replace with real AuthUser from session context
-const MOCK_ME = { id: 'me', companyName: 'FastHaul LLC', role: 'carrier' as const };
-
-const MOCK_MESSAGES: GroupMessage[] = [
-  {
-    id: 'gm1', senderId: 'u1', senderName: 'Acme Freight LLC', senderRole: 'shipper',
-    body: 'Hey everyone! Anyone have a dry van available Chicago to Detroit next Thursday? ~800 cu ft.',
-    attachments: [], sentAt: '2026-09-24T09:00:00Z', status: 'sent',
-  },
-  {
-    id: 'gm2', senderId: 'u2', senderName: 'BridgeLogistics', senderRole: 'broker',
-    body: 'We have a carrier partner who might be able to help. What\'s the weight?',
-    attachments: [], sentAt: '2026-09-24T09:05:00Z', status: 'sent',
-  },
-  {
-    id: 'gm3', senderId: 'u3', senderName: 'MidWest Movers', senderRole: 'carrier',
-    body: 'We run that lane weekly. DM me for details.',
-    attachments: [{ id: 'a1', name: 'lane-schedule.pdf', url: '#', type: 'file', size: 124000 }],
-    sentAt: '2026-09-24T09:12:00Z', status: 'sent',
-  },
-  {
-    id: 'gm4', senderId: 'u4', senderName: 'Desert Logistics', senderRole: 'shipper',
-    body: 'Anyone dealt with a damage claim on electronics recently? This is taking forever.',
-    attachments: [{ id: 'a2', name: 'damage-photo.jpg', url: '/images/homepage/homepage-truck.png', type: 'image', size: 340000 }],
-    sentAt: '2026-09-24T10:30:00Z', status: 'sent',
-  },
-  {
-    id: 'gm5', senderId: 'u5', senderName: 'Atlas Freight Partners', senderRole: 'broker',
-    body: 'Unfortunately normal. Usually 30-45 days with standard carriers.',
-    attachments: [], sentAt: '2026-09-24T10:35:00Z', status: 'sent',
-  },
-];
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
@@ -52,10 +24,10 @@ function formatDay(iso: string) {
   return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
-function groupByDay(messages: GroupMessage[]) {
-  const groups: { day: string; messages: GroupMessage[] }[] = [];
+function groupByDay(messages: CommunityMessage[]) {
+  const groups: { day: string; messages: CommunityMessage[] }[] = [];
   messages.forEach((m) => {
-    const day = new Date(m.sentAt).toDateString();
+    const day = new Date(m.sent_at).toDateString();
     const last = groups[groups.length - 1];
     if (last && last.day === day) last.messages.push(m);
     else groups.push({ day, messages: [m] });
@@ -63,12 +35,13 @@ function groupByDay(messages: GroupMessage[]) {
   return groups;
 }
 
-function formatFileSize(bytes?: number) {
-  if (!bytes) return '';
+function formatFileSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
+
+// ─── Sub-components ──────────────────────────────────────────────────────────
 
 function Avatar({ name, role }: { name: string; role: string }) {
   const initials = name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
@@ -106,12 +79,7 @@ function StagedFile({ file, onRemove }: { file: File; onRemove: () => void }) {
       )}
       <span className="max-w-[100px] truncate text-neutral-600">{file.name}</span>
       <span className="text-neutral-400">{formatFileSize(file.size)}</span>
-      <button
-        type="button"
-        onClick={onRemove}
-        className="ml-1 text-neutral-400 transition-colors hover:text-red-500"
-        aria-label={`Remove ${file.name}`}
-      >
+      <button type="button" onClick={onRemove} className="ml-1 text-neutral-400 transition-colors hover:text-red-500" aria-label={`Remove ${file.name}`}>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
@@ -120,103 +88,143 @@ function StagedFile({ file, onRemove }: { file: File; onRemove: () => void }) {
   );
 }
 
-function MessageBubble({ message, isMe }: { message: GroupMessage; isMe: boolean }) {
+function AttachmentView({ att, isMe }: { att: CommunityAttachment; isMe: boolean }) {
+  if (att.type === 'image') {
+    return (
+      <a key={att.id} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
+        <Image src={att.url} alt={att.name} width={220} height={148} className="rounded-lg object-cover" style={{ maxWidth: 220 }} />
+        <span className={`mt-1 block text-[10px] ${isMe ? 'text-white/70' : 'text-neutral-400'}`}>{att.name}</span>
+      </a>
+    );
+  }
+  return (
+    <a
+      href={att.url}
+      className={`flex items-center gap-1.5 text-xs underline underline-offset-2 ${isMe ? 'text-white/80 hover:text-white' : 'text-[#fc3f07] hover:text-[#d93506]'}`}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+      </svg>
+      {att.name}
+      <span className={`${isMe ? 'text-white/50' : 'text-neutral-400'}`}>({formatFileSize(att.size)})</span>
+    </a>
+  );
+}
+
+function MessageBubble({ message, isMe }: { message: CommunityMessage; isMe: boolean }) {
   return (
     <div className={`mb-4 flex gap-2.5 ${isMe ? 'flex-row-reverse' : 'flex-row'}`}>
-      {!isMe && <Avatar name={message.senderName} role={message.senderRole} />}
+      {!isMe && <Avatar name={message.sender_name} role={message.sender_role} />}
 
       <div className={`flex max-w-[78%] flex-col gap-1 ${isMe ? 'items-end' : 'items-start'}`}>
-        {/* Sender label — only on other people's messages */}
         {!isMe && (
           <div className="flex items-baseline gap-2">
-            <span className="text-[12px] font-semibold text-neutral-700">{message.senderName}</span>
-            <span
-              className="rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white"
-              style={{ background: ROLE_COLORS[message.senderRole] ?? '#6b7280' }}
-            >
-              {ROLE_LABELS[message.senderRole]}
+            <span className="text-[12px] font-semibold text-neutral-700">{message.sender_name}</span>
+            <span className="rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white" style={{ background: ROLE_COLORS[message.sender_role] ?? '#6b7280' }}>
+              {ROLE_LABELS[message.sender_role]}
             </span>
           </div>
         )}
 
-        {/* Bubble */}
         <div
-          className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-            isMe
-              ? 'rounded-tr-sm text-white'
-              : 'rounded-tl-sm border border-[#f0ece6] bg-[#fafaf8] text-neutral-800'
-          }`}
+          className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${isMe ? 'rounded-tr-sm text-white' : 'rounded-tl-sm border border-[#f0ece6] bg-[#fafaf8] text-neutral-800'}`}
           style={{ background: isMe ? '#fc3f07' : undefined }}
         >
           {message.body && <p>{message.body}</p>}
 
           {message.attachments.length > 0 && (
             <div className={`${message.body ? 'mt-2' : ''} space-y-2`}>
-              {message.attachments.map((att) => {
-                if (att.type === 'image') {
-                  return (
-                    <a key={att.id} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
-                      <Image
-                        src={att.url}
-                        alt={att.name}
-                        width={220}
-                        height={148}
-                        className="rounded-lg object-cover"
-                        style={{ maxWidth: 220 }}
-                      />
-                      <span className={`mt-1 block text-[10px] ${isMe ? 'text-white/70' : 'text-neutral-400'}`}>
-                        {att.name}
-                      </span>
-                    </a>
-                  );
-                }
-                return (
-                  <a
-                    key={att.id}
-                    href={att.url}
-                    className={`flex items-center gap-1.5 text-xs underline underline-offset-2 ${
-                      isMe ? 'text-white/80 hover:text-white' : 'text-[#fc3f07] hover:text-[#d93506]'
-                    }`}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                    </svg>
-                    {att.name}
-                    {att.size && (
-                      <span className={`${isMe ? 'text-white/50' : 'text-neutral-400'}`}>
-                        ({formatFileSize(att.size)})
-                      </span>
-                    )}
-                  </a>
-                );
-              })}
+              {message.attachments.map((att) => (
+                <AttachmentView key={att.id} att={att} isMe={isMe} />
+              ))}
             </div>
           )}
 
           {message.status === 'error' && (
-            <p className="mt-1 text-[10px] text-red-300">Failed to send · Tap to retry</p>
+            <p className="mt-1 text-[10px] text-red-300">Failed to send</p>
           )}
         </div>
 
-        <span className="text-[10px] text-neutral-400">{formatTime(message.sentAt)}</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] text-neutral-400">{formatTime(message.sent_at)}</span>
+          {isMe && message.status === 'sending' && <span className="text-[10px] text-neutral-400">Sending…</span>}
+        </div>
       </div>
     </div>
   );
 }
 
+function ThreadSkeleton() {
+  return (
+    <div className="space-y-4 animate-pulse p-4" aria-busy="true" aria-label="Loading messages">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div key={i} className={`flex gap-2.5 ${i % 3 === 0 ? 'flex-row-reverse' : ''}`}>
+          <div className="h-8 w-8 shrink-0 rounded-full bg-neutral-200" />
+          <div className={`space-y-1.5 ${i % 3 === 0 ? 'items-end flex flex-col' : ''}`}>
+            <div className="h-3 w-24 rounded bg-neutral-200" />
+            <div className={`h-10 rounded-2xl bg-neutral-100 ${i % 2 === 0 ? 'w-56' : 'w-72'}`} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Main page ────────────────────────────────────────────────────────────────
+
 export default function GroupConversationPage() {
-  const [messages, setMessages] = useState<GroupMessage[]>(MOCK_MESSAGES);
+  const [messages, setMessages] = useState<CommunityMessage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [oldestId, setOldestId] = useState<string | null>(null);
+  const [loadingOlder, setLoadingOlder] = useState(false);
+
+  // Current user's company name — used for isMe check (same approach as ConversationPage)
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
+
   const [input, setInput] = useState('');
   const [stagedFiles, setStagedFiles] = useState<File[]>([]);
   const [sending, setSending] = useState(false);
+
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const threadRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom on new messages
+  // Load history + current user in parallel on mount
+  const loadHistory = useCallback(async () => {
+    setLoading(true);
+    setLoadError(null);
+    try {
+      const [data, me] = await Promise.all([
+        getCommunityHistory(),
+        getMe(),
+      ]);
+      setMessages(data.messages);
+      setHasMore(data.has_more);
+      setOldestId(data.oldest_id);
+      setCurrentUserName(me.data.name);
+    } catch (err) {
+      setLoadError(err instanceof ApiError ? err.message : 'Failed to load community chat.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { loadHistory(); }, [loadHistory]);
+
+  // Scroll to bottom on initial load
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (!loading) bottomRef.current?.scrollIntoView({ behavior: 'instant' });
+  }, [loading]);
+
+  // Scroll to bottom when new messages arrive (but not when loading older ones)
+  useEffect(() => {
+    if (!loading && !loadingOlder) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages.length, loading, loadingOlder]);
 
   // Auto-grow textarea
   useEffect(() => {
@@ -225,6 +233,27 @@ export default function GroupConversationPage() {
     el.style.height = 'auto';
     el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
   }, [input]);
+
+  async function loadOlderMessages() {
+    if (!oldestId || loadingOlder) return;
+    setLoadingOlder(true);
+    try {
+      const prevScrollHeight = threadRef.current?.scrollHeight ?? 0;
+      const data = await getCommunityHistory({ beforeMessageId: oldestId });
+      setMessages((prev) => [...data.messages, ...prev]);
+      setHasMore(data.has_more);
+      setOldestId(data.oldest_id);
+      requestAnimationFrame(() => {
+        if (threadRef.current) {
+          threadRef.current.scrollTop = threadRef.current.scrollHeight - prevScrollHeight;
+        }
+      });
+    } catch {
+      // Non-critical — user can scroll up again to retry
+    } finally {
+      setLoadingOlder(false);
+    }
+  }
 
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
@@ -240,41 +269,41 @@ export default function GroupConversationPage() {
     e.preventDefault();
     if (!input.trim() && stagedFiles.length === 0) return;
 
+    // Optimistic message
     const tempId = `temp-${Date.now()}`;
-    const attachments: GroupMessageAttachment[] = stagedFiles.map((f, i) => ({
-      id: `att-${tempId}-${i}`,
-      name: f.name,
-      url: URL.createObjectURL(f),
-      type: f.type.startsWith('image/') ? 'image' : 'file',
-      size: f.size,
-    }));
-
-    const newMsg: GroupMessage = {
+    const optimistic: CommunityMessage = {
       id: tempId,
-      senderId: MOCK_ME.id,
-      senderName: MOCK_ME.companyName,
-      senderRole: MOCK_ME.role,
+      sender_id: 'me',
+      sender_name: currentUserName ?? 'You',
+      sender_role: 'carrier', // placeholder — replaced by confirmed server message
       body: input.trim(),
-      attachments,
-      sentAt: new Date().toISOString(),
+      attachments: stagedFiles.map((f, i) => ({
+        id: `att-${tempId}-${i}`,
+        name: f.name,
+        url: URL.createObjectURL(f),
+        size: f.size,
+        type: f.type.startsWith('image/') ? 'image' as const : 'file' as const,
+      })),
+      sent_at: new Date().toISOString(),
       status: 'sending',
     };
 
-    setMessages((prev) => [...prev, newMsg]);
+    setMessages((prev) => [...prev, optimistic]);
+    const sentBody = input.trim();
+    const sentFiles = stagedFiles;
     setInput('');
     setStagedFiles([]);
     setSending(true);
 
     try {
-      // TODO: POST /api/community/messages/ with FormData { body, attachments[] }
-      await new Promise((r) => setTimeout(r, 500));
-      setMessages((prev) =>
-        prev.map((m) => (m.id === tempId ? { ...m, status: 'sent' } : m))
-      );
+      const confirmed = await sendCommunityMessage({
+        body: sentBody || undefined,
+        attachments: sentFiles.length ? sentFiles : undefined,
+      });
+      // Replace optimistic entry with confirmed server message
+      setMessages((prev) => prev.map((m) => m.id === tempId ? confirmed : m));
     } catch {
-      setMessages((prev) =>
-        prev.map((m) => (m.id === tempId ? { ...m, status: 'error' } : m))
-      );
+      setMessages((prev) => prev.map((m) => m.id === tempId ? { ...m, status: 'error' as const } : m));
     } finally {
       setSending(false);
     }
@@ -290,10 +319,8 @@ export default function GroupConversationPage() {
   const grouped = groupByDay(messages);
 
   return (
-    <div
-      className="mx-auto flex max-w-[860px] flex-col px-4 sm:px-6"
-      style={{ height: 'calc(100vh - 80px)', minHeight: 560 }}
-    >
+    <div className="mx-auto flex max-w-[860px] flex-col px-4 sm:px-6" style={{ height: 'calc(100vh - 80px)', minHeight: 560 }}>
+
       {/* Header */}
       <div className="shrink-0 py-4">
         <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#e8e0d6] bg-white px-4 py-3 shadow-sm">
@@ -315,7 +342,6 @@ export default function GroupConversationPage() {
               </p>
             </div>
           </div>
-          {/* Role legend */}
           <div className="hidden sm:flex items-center gap-3 shrink-0">
             {Object.entries(ROLE_LABELS).map(([role, label]) => (
               <span key={role} className="flex items-center gap-1 text-[10px] text-neutral-500">
@@ -327,26 +353,62 @@ export default function GroupConversationPage() {
         </div>
       </div>
 
-      {/* Message thread */}
-      <div
-        className="flex-1 overflow-y-auto rounded-2xl border border-[#e8e0d6] bg-white p-4"
-        aria-live="polite"
-        aria-label="Community chat messages"
-      >
-        {grouped.map((group) => (
-          <div key={group.day}>
-            <div className="my-4 flex items-center gap-3">
-              <div className="h-px flex-1 bg-[#f0ece6]" />
-              <span className="text-[11px] text-neutral-400">{formatDay(group.messages[0].sentAt)}</span>
-              <div className="h-px flex-1 bg-[#f0ece6]" />
-            </div>
-            {group.messages.map((m) => (
-              <MessageBubble key={m.id} message={m} isMe={m.senderId === MOCK_ME.id} />
-            ))}
+      {/* Thread */}
+      {loading ? (
+        <div className="flex-1 overflow-hidden rounded-2xl border border-[#e8e0d6] bg-white">
+          <ThreadSkeleton />
+        </div>
+      ) : loadError ? (
+        <div className="flex-1 flex items-center justify-center rounded-2xl border border-red-100 bg-red-50">
+          <div className="text-center px-6 py-10">
+            <p className="text-sm text-red-600">{loadError}</p>
+            <button onClick={loadHistory} className="mt-3 text-sm font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]">Retry</button>
           </div>
-        ))}
-        <div ref={bottomRef} />
-      </div>
+        </div>
+      ) : (
+        <div ref={threadRef} className="flex-1 overflow-y-auto rounded-2xl border border-[#e8e0d6] bg-white p-4" aria-live="polite" aria-label="Community chat messages">
+
+          {/* Load older messages */}
+          {hasMore && (
+            <div className="mb-4 flex justify-center">
+              <button
+                type="button"
+                onClick={loadOlderMessages}
+                disabled={loadingOlder}
+                className="rounded-full border border-[#e0d5c8] bg-white px-4 py-1.5 text-xs text-neutral-500 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07] disabled:opacity-50"
+              >
+                {loadingOlder ? 'Loading…' : 'Load older messages'}
+              </button>
+            </div>
+          )}
+
+          {messages.length === 0 && (
+            <div className="flex h-full flex-col items-center justify-center text-center py-16">
+              <span className="mb-3 text-4xl" aria-hidden="true">💬</span>
+              <p className="text-sm font-medium text-neutral-600">No messages yet.</p>
+              <p className="mt-1 text-xs text-neutral-400">Be the first to say something to the community!</p>
+            </div>
+          )}
+
+          {grouped.map((group) => (
+            <div key={group.day}>
+              <div className="my-4 flex items-center gap-3">
+                <div className="h-px flex-1 bg-[#f0ece6]" />
+                <span className="text-[11px] text-neutral-400">{formatDay(group.messages[0].sent_at)}</span>
+                <div className="h-px flex-1 bg-[#f0ece6]" />
+              </div>
+              {group.messages.map((m) => (
+                <MessageBubble
+                  key={m.id}
+                  message={m}
+                  isMe={currentUserName !== null && m.sender_name === currentUserName}
+                />
+              ))}
+            </div>
+          ))}
+          <div ref={bottomRef} />
+        </div>
+      )}
 
       {/* Staged file previews */}
       {stagedFiles.length > 0 && (
@@ -360,30 +422,18 @@ export default function GroupConversationPage() {
       {/* Compose bar */}
       <form onSubmit={handleSend} className="shrink-0 pb-4 pt-3" aria-label="Send a message">
         <div className="flex items-end gap-2 rounded-2xl border border-[#e0d5c8] bg-white px-3 py-2.5 shadow-sm focus-within:border-[#fc3f07] focus-within:ring-2 focus-within:ring-[#fc3f07]/20 transition-all">
-          {/* Attach */}
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
             className="mb-0.5 shrink-0 rounded-lg p-1.5 text-neutral-400 transition-colors hover:bg-[#fff7ed] hover:text-[#fc3f07]"
             aria-label="Attach file or image"
-            title="Attach file or image"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
             </svg>
           </button>
-          <input
-            ref={fileRef}
-            type="file"
-            multiple
-            accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
-            className="hidden"
-            onChange={handleFileChange}
-            aria-hidden="true"
-            tabIndex={-1}
-          />
+          <input ref={fileRef} type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" className="hidden" onChange={handleFileChange} aria-hidden="true" tabIndex={-1} />
 
-          {/* Text */}
           <textarea
             ref={textareaRef}
             value={input}
@@ -396,7 +446,6 @@ export default function GroupConversationPage() {
             aria-label="Message input"
           />
 
-          {/* Send */}
           <button
             type="submit"
             disabled={sending || (!input.trim() && stagedFiles.length === 0)}
@@ -416,9 +465,7 @@ export default function GroupConversationPage() {
             )}
           </button>
         </div>
-        <p className="mt-1.5 text-center text-[10px] text-neutral-400">
-          Be respectful · No spam · Keep it industry-related
-        </p>
+        <p className="mt-1.5 text-center text-[10px] text-neutral-400">Be respectful · No spam · Keep it industry-related</p>
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ export const metadata = {
   title: 'Conversation — FullTrailerLoad',
 };
 
-export default function ConversationRoute() {
-  return <ConversationPage />;
+export default async function ConversationRoute({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return <ConversationPage conversationId={id} />;
 }

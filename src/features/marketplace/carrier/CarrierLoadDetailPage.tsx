@@ -306,7 +306,7 @@ export default function CarrierLoadDetailPage({ id }: Props) {
                 className="w-full rounded-xl border border-red-200 py-2.5 text-sm font-semibold text-red-500 transition-colors hover:bg-red-50 disabled:opacity-60">
                 {submitting ? 'Withdrawing…' : 'Withdraw bid'}
               </button>
-              <Link href={`/messages?job=${load.id}`}
+              <Link href={`/messages/new?recipient_id=${load.poster.id}&recipient_name=${encodeURIComponent(load.poster.company_name)}&recipient_role=shipper&load_id=${load.id}`}
                 className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#e0d5c8] py-2.5 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
                 Message shipper
               </Link>

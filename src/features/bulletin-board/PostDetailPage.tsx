@@ -118,8 +118,6 @@ export default function PostDetailPage() {
   const post = MOCK_POST;
   const isLoad = post.postType === 'load_available';
 
-  // Contact disclosure — TBD per business rule, showing as button that reveals message flow
-  const [contactRevealed, setContactRevealed] = useState(false);
   const [reportState, setReportState] = useState<ReportState>('idle');
 
   async function handleReport(reason: string) {
@@ -213,41 +211,21 @@ export default function PostDetailPage() {
           {/* Contact section */}
           <div id="contact" className="rounded-xl border border-[#e8e0d6] p-5">
             <p className="mb-3 text-sm font-semibold text-neutral-800">Contact the poster</p>
-            {!contactRevealed ? (
-              <>
-                <p className="mb-4 text-xs leading-relaxed text-neutral-500">
-                  Send a message through the platform to connect with this poster.
-                  Contact details are kept private until both parties agree.{' '}
-                  <span className="italic text-neutral-400">(Disclosure policy TBD)</span>
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setContactRevealed(true)}
-                  className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
-                  style={{ background: '#fc3f07' }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  Contact Poster
-                </button>
-              </>
-            ) : (
-              <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <div>
-                  <p className="text-sm font-semibold text-emerald-800">Message thread opened</p>
-                  <p className="mt-0.5 text-xs text-emerald-700">
-                    Your conversation with {post.poster.companyName} has been started.{' '}
-                    <Link href="/messages" className="font-semibold underline underline-offset-2 hover:text-emerald-900">
-                      Go to Messages →
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            )}
+            <p className="mb-4 text-xs leading-relaxed text-neutral-500">
+              Send a message through the platform to connect with this poster.
+              Contact details are kept private until both parties agree.{' '}
+              <span className="italic text-neutral-400">(Disclosure policy TBD)</span>
+            </p>
+            <Link
+              href={`/messages/new?recipient_id=${post.poster.id}&recipient_name=${encodeURIComponent(post.poster.companyName)}&board_post_id=${post.id}`}
+              className="flex w-fit items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+              style={{ background: '#fc3f07' }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Contact Poster
+            </Link>
           </div>
         </div>
 

@@ -6,6 +6,7 @@
 import { apiFetch } from '@/lib/api/client';
 
 export interface BookingParty {
+  id: string;
   company_name: string;
   email: string;
   phone: string;

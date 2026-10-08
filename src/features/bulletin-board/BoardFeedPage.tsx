@@ -258,7 +258,7 @@ function PostCard({ post }: { post: BoardPost }) {
             View
           </Link>
           <Link
-            href={`/board/${post.id}#contact`}
+            href={`/messages/new?recipient_id=${post.poster.id}&recipient_name=${encodeURIComponent(post.poster.companyName)}&board_post_id=${post.id}`}
             className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#d93506]"
             style={{ background: '#fc3f07' }}
           >

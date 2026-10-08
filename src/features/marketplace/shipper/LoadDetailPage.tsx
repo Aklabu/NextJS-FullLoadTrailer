@@ -128,7 +128,7 @@ function BidRow({
             className="rounded-xl border border-red-200 px-4 py-2 text-xs font-semibold text-red-500 transition-colors hover:bg-red-50">
             Reject
           </button>
-          <Link href={`/messages?job=${loadId}&carrier=${bid.carrier.id}`}
+          <Link href={`/messages/new?recipient_id=${bid.carrier.id}&recipient_name=${encodeURIComponent(bid.carrier.company_name)}&recipient_role=carrier&load_id=${loadId}`}
             className="ml-auto flex items-center gap-1 rounded-xl border border-[#e0d5c8] px-3 py-2 text-xs font-medium text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
