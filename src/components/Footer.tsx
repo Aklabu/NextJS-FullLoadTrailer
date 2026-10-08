@@ -1,14 +1,23 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { footerLinks } from '@/lib/navConfig';
 
-export default function Footer() {
+interface FooterProps {
+  isLoggedIn?: boolean;
+}
+
+export default function Footer({ isLoggedIn = false }: FooterProps) {
+  const logoHref = isLoggedIn ? '/dashboard' : '/';
+  const logoAriaLabel = isLoggedIn ? 'Go to dashboard' : 'FullTrailerLoad home';
+  
   return (
     <footer className="w-full" style={{ background: '#1B211A', borderTop: '2px solid #ff3d03' }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
-          <Link href="/" aria-label="FullTrailerLoad home" className="flex items-center gap-2.5 shrink-0">
+          <Link href={logoHref} aria-label={logoAriaLabel} className="flex items-center gap-2.5 shrink-0">
             <Image
               src="/images/logo-icon.png"
               alt=""

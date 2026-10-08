@@ -41,9 +41,12 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
 
 import Image from 'next/image';
 
-function Logo() {
+function Logo({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const href = isLoggedIn ? '/dashboard' : '/';
+  const ariaLabel = isLoggedIn ? 'Go to dashboard' : 'FullTrailerLoad home';
+  
   return (
-    <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="FullTrailerLoad home">
+    <Link href={href} className="flex items-center gap-2.5 shrink-0" aria-label={ariaLabel}>
       <Image
         src="/images/logo-icon.png"
         alt=""
@@ -245,7 +248,7 @@ export default function NavbarClient({ user }: NavbarClientProps) {
     <header className="sticky top-0 z-40 w-full" style={{ background: '#1B211A', borderBottom: '2px solid #ff3d03' }}>
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-        <Logo />
+        <Logo isLoggedIn={!!user} />
 
         <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6">
           {user
