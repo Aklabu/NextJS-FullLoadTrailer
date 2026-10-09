@@ -98,7 +98,10 @@ export default function CarrierLoadDetailPage({ id }: Props) {
           setBidState(myBid.status as BidState);
           setMyAmount(Number(myBid.amount));
           if (myBid.counter_amount) setCounterAmount(Number(myBid.counter_amount));
-          if (myBid.booking_id) setBookingId(myBid.booking_id);
+          // Ensure booking_id is set if present
+          if (myBid.booking_id) {
+            setBookingId(myBid.booking_id);
+          }
         }
         // 404 on bid means no bid yet — leave bidState as 'none'
       } finally {
@@ -107,6 +110,50 @@ export default function CarrierLoadDetailPage({ id }: Props) {
     }
     load();
   }, [id, router]);
+
+  // Poll for booking ID if bid is accepted but booking ID is missing
+  useEffect(() => {
+    if (bidState !== 'accepted' || bookingId) return;
+
+    let pollCount = 0;
+    const maxPolls = 10; // Stop after 10 attempts (20 seconds)
+
+    const pollInterval = setInterval(async () => {
+      pollCount++;
+      
+      if (pollCount >= maxPolls) {
+        clearInterval(pollInterval);
+        // If we still don't have booking_id after 20s, set an error
+        setBidError('Unable to load booking details. The booking may not be finalized yet. Please refresh the page.');
+        return;
+      }
+
+      try {
+        // Try both endpoints to find booking_id
+        const [bidRes, loadRes] = await Promise.allSettled([
+          getMyBid(id),
+          getLoad(id)
+        ]);
+        
+        if (bidRes.status === 'fulfilled' && bidRes.value.data.booking_id) {
+          setBookingId(bidRes.value.data.booking_id);
+          clearInterval(pollInterval);
+        } else if (loadRes.status === 'fulfilled') {
+          const loadData = loadRes.value.data as LoadCarrierDetail;
+          if (loadData.booking_id) {
+            setBookingId(loadData.booking_id);
+            clearInterval(pollInterval);
+          }
+        }
+      } catch {
+        // Ignore polling errors
+      }
+    }, 2000); // Poll every 2 seconds
+
+    return () => {
+      clearInterval(pollInterval);
+    };
+  }, [bidState, bookingId, id]);
 
   async function handlePlaceBid() {
     if (!bidInput || Number(bidInput) <= 0) { setBidError('Enter a valid bid amount.'); return; }
@@ -343,11 +390,29 @@ export default function CarrierLoadDetailPage({ id }: Props) {
                 <p className="text-sm font-semibold text-emerald-800">Bid accepted!</p>
                 <p className="mt-0.5 text-xs text-emerald-700">Agreed rate: ${myAmount.toLocaleString()}</p>
               </div>
-              <Link href={bookingId ? `/marketplace/booking/${bookingId}` : `/marketplace/carrier/loads/${load.id}`}
-                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
-                style={{ background: '#fc3f07' }}>
-                View Booking Confirmation →
-              </Link>
+              {bookingId ? (
+                <Link href={`/marketplace/booking/${bookingId}`}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+                  style={{ background: '#fc3f07' }}>
+                  View Booking Confirmation →
+                </Link>
+              ) : (
+                <div className="space-y-2">
+                  <button type="button" disabled
+                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white opacity-60"
+                    style={{ background: '#fc3f07' }}>
+                    <Spinner />
+                    Loading booking details…
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.location.reload()}
+                    className="w-full text-xs text-neutral-500 hover:text-neutral-700 underline underline-offset-2"
+                  >
+                    Click here to refresh if this takes too long
+                  </button>
+                </div>
+              )}
             </div>
           )}
 

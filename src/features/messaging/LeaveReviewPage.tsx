@@ -109,19 +109,36 @@ export default function LeaveReviewPage() {
     if (overallRating === 0) { setFormError('Please select an overall star rating.'); return; }
     if (!statusData) return;
 
+    const payload = {
+      overall_rating: overallRating,
+      sub_ratings: Object.keys(subRatingValues).length > 0
+        ? (subRatingValues as SubRatings)
+        : undefined,
+      review_text: reviewText.trim() || null,
+    };
+
+    console.log('Review payload:', JSON.stringify(payload, null, 2));
+
     setSubmitting(true); setFormError('');
     try {
-      await postReview(jobId, {
-        overall_rating: overallRating,
-        sub_ratings: Object.keys(subRatingValues).length > 0
-          ? (subRatingValues as SubRatings)
-          : undefined,
-        review_text: reviewText.trim() || null,
-      });
+      await postReview(jobId, payload);
       setSubmitted(true);
     } catch (err: unknown) {
-      const apiErr = err as { message?: string };
-      setFormError(apiErr?.message ?? 'Failed to submit review. Please try again.');
+      // Enhanced error handling to show backend validation errors
+      console.error('Review submission error:', err);
+      const apiErr = err as { message?: string; errors?: Record<string, string[]> };
+      if (apiErr.errors) {
+        // Show first validation error
+        const firstError = Object.entries(apiErr.errors)[0];
+        if (firstError) {
+          const [field, messages] = firstError;
+          setFormError(`${field}: ${Array.isArray(messages) ? messages[0] : messages}`);
+        } else {
+          setFormError(apiErr.message ?? 'Failed to submit review. Please try again.');
+        }
+      } else {
+        setFormError(apiErr.message ?? 'Failed to submit review. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }

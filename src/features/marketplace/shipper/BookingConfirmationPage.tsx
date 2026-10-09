@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { getBooking, type BookingDetail } from '@/features/marketplace/api/bookingApi';
+import { getBooking, completeBooking, type BookingDetail } from '@/features/marketplace/api/bookingApi';
 import { ApiError } from '@/lib/api/client';
 
 interface Props {
@@ -38,6 +38,8 @@ export default function BookingConfirmationPage({ id }: Props) {
   const [booking, setBooking] = useState<BookingDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [completing, setCompleting] = useState(false);
+  const [completionError, setCompletionError] = useState('');
 
   useEffect(() => {
     async function load() {
@@ -61,6 +63,38 @@ export default function BookingConfirmationPage({ id }: Props) {
     }
     load();
   }, [id, router]);
+
+  async function handleComplete() {
+    if (!booking) return;
+    setCompleting(true);
+    setCompletionError('');
+    try {
+      const res = await completeBooking(id);
+      // Update booking state with completion status from backend response
+      setBooking({
+        ...booking,
+        completed_by_shipper: res.data.completed_by_shipper,
+        completed_by_carrier: res.data.completed_by_carrier,
+        status: res.data.both_completed ? 'completed' : booking.status,
+        completed_at: res.data.completed_at,
+      });
+    } catch (err) {
+      const apiErr = err as ApiError;
+      // If already marked complete (400), just refresh the booking data
+      if (apiErr?.status === 400) {
+        try {
+          const refreshed = await getBooking(id);
+          setBooking(refreshed.data);
+        } catch {
+          setCompletionError('You have already marked this booking as completed.');
+        }
+      } else {
+        setCompletionError(apiErr?.message ?? 'Failed to mark as completed. Please try again.');
+      }
+    } finally {
+      setCompleting(false);
+    }
+  }
 
   if (loading) return <Skeleton />;
 
@@ -189,18 +223,100 @@ export default function BookingConfirmationPage({ id }: Props) {
         </ul>
       </div>
 
+      {/* Completion status */}
+      {b.status === 'completed' ? (
+        <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+          <div className="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-emerald-800">Job completed</p>
+              <p className="mt-0.5 text-xs text-emerald-700">
+                Both parties have confirmed delivery completion. You can now leave a review.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (b.completed_by_shipper || b.completed_by_carrier) ? (
+        <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+          <div className="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-amber-800">Waiting for confirmation</p>
+              <p className="mt-0.5 text-xs text-amber-700">
+                {b.completed_by_shipper 
+                  ? 'You have confirmed completion. Waiting for carrier to confirm.'
+                  : 'Carrier has confirmed completion. Please confirm delivery below.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {completionError && (
+        <div className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5" role="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <p className="text-sm text-red-700">{completionError}</p>
+        </div>
+      )}
+
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
+        {/* Mark as Completed button - show if job not fully completed and user hasn't marked it yet */}
+        {b.status !== 'completed' && (
+          <button
+            type="button"
+            onClick={handleComplete}
+            disabled={completing}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-emerald-500 bg-emerald-50 py-3 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {completing ? (
+              <>
+                <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Marking complete…
+              </>
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Mark as Completed
+              </>
+            )}
+          </button>
+        )}
+
+        {/* Leave Review button - only show if job is completed */}
+        {b.status === 'completed' && (
+          <Link
+            href={`/jobs/${encodeURIComponent(b.job_id)}/review`}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+            style={{ background: '#fc3f07' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            Leave a Review
+          </Link>
+        )}
+
         <Link href={`/messages/new?recipient_id=${b.carrier.id}&recipient_name=${encodeURIComponent(b.carrier.company_name)}&recipient_role=carrier&job_id=${encodeURIComponent(b.job_id)}`}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
-          style={{ background: '#fc3f07' }}>
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[#e0d5c8] py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-          Message carrier
+          Message
         </Link>
         <button type="button" onClick={() => window.print()}
           className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-          Print / Download
+          Print
         </button>
         <Link href="/marketplace/my-loads"
           className="flex items-center gap-2 rounded-xl border border-[#e0d5c8] px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:border-[#fc3f07] hover:text-[#fc3f07]">

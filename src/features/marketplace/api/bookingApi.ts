@@ -27,6 +27,10 @@ export interface BookingDetail {
   job_id: string;
   confirmed_at: string;
   agreed_price: string;
+  status: 'booked' | 'in_transit' | 'completed';
+  completed_by_shipper: boolean;
+  completed_by_carrier: boolean;
+  completed_at: string | null;
   load: BookingLoad;
   shipper: BookingParty;
   carrier: BookingParty;
@@ -40,4 +44,26 @@ export interface GetBookingResponse {
 
 export async function getBooking(bookingId: string): Promise<GetBookingResponse> {
   return apiFetch<GetBookingResponse>(`/api/marketplace/bookings/${bookingId}/`);
+}
+
+// POST /marketplace/bookings/{booking_id}/complete/
+// Mark the booking as completed from the caller's perspective.
+// Both parties must call this before reviews can be submitted.
+
+export interface CompleteBookingResponse {
+  success: true;
+  message: string;
+  data: {
+    booking_id: string;
+    both_completed: boolean;
+    completed_by_shipper: boolean;
+    completed_by_carrier: boolean;
+    completed_at: string | null;
+  };
+}
+
+export async function completeBooking(bookingId: string): Promise<CompleteBookingResponse> {
+  return apiFetch<CompleteBookingResponse>(`/api/marketplace/bookings/${bookingId}/complete/`, {
+    method: 'POST',
+  });
 }
