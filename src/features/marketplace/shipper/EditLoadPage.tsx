@@ -123,7 +123,7 @@ export default function EditLoadPage({ id }: Props) {
           setLoadState('error');
           return;
         }
-        if (d.bids.length > 0) {
+        if (d.bids && d.bids.length > 0) {
           setLoadError('Cannot edit a load that has active bids.');
           setLoadState('error');
           return;

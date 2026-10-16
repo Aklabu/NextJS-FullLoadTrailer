@@ -17,6 +17,7 @@ import { getRefreshToken, clearTokens } from '@/lib/api/tokens';
 
 interface NavbarClientProps {
   user: AuthUser | null;
+  notificationCount: number;
 }
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -234,7 +235,7 @@ function MobileMenu({
   );
 }
 
-export default function NavbarClient({ user }: NavbarClientProps) {
+export default function NavbarClient({ user, notificationCount }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   async function handleLogout() {
