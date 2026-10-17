@@ -1,4 +1,4 @@
-// Public shipment tracking API — GET /services/tracking/search/
+// Public shipment tracking API — GET /api/tracking/search/
 // No authentication required.
 
 import { API_BASE } from '@/lib/api/client';
@@ -57,7 +57,7 @@ export async function searchTracking(jobId: string): Promise<TrackingData> {
   if (!trimmed) throw new TrackingApiError('Job ID is required.', 'invalid');
   if (trimmed.length > 15) throw new TrackingApiError('Job ID must not exceed 15 characters.', 'invalid');
 
-  const url = `${API_BASE}/services/tracking/search/?job_id=${encodeURIComponent(trimmed)}`;
+  const url = `${API_BASE}/api/tracking/search/?job_id=${encodeURIComponent(trimmed)}`;
   let res: Response;
 
   try {

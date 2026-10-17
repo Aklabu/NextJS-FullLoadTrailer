@@ -1,4 +1,4 @@
-// Contact / support form API — POST /services/support/contact/
+// Contact / support form API — POST /api/support/contact/
 // Public endpoint, no auth required, multipart/form-data.
 
 import { API_BASE } from '@/lib/api/client';
@@ -44,7 +44,7 @@ export async function submitContactForm(payload: ContactPayload): Promise<Contac
   body.append('message', payload.message);
   payload.attachments?.forEach((file) => body.append('attachments', file));
 
-  const res = await fetch(`${API_BASE}/services/support/contact/`, {
+  const res = await fetch(`${API_BASE}/api/support/contact/`, {
     method: 'POST',
     // No Content-Type header — browser sets multipart boundary automatically
     body,
