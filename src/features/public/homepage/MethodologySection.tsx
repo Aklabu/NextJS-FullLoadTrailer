@@ -1,117 +1,91 @@
-const steps = [
-  {
-    num: '01',
-    tag: 'INITIATION',
-    tagColor: 'text-[#7a7168] bg-[#f3ede4]',
-    title: 'Post or Discover',
-    body: 'Broadcast available truck capacity in seconds, or publish structured, biddable household goods move specs with origin, destination, cubic footage, and equipment details.',
-    bullets: [
-      { color: 'text-[#fc3f07]', text: 'Moving companies: Post jobs or fixed-price moves' },
-      { color: 'text-[#fc3f07]', text: 'Carriers: Browse available moves & return capacity' },
-    ],
-    numBg: 'bg-[#f3ede4] text-[#d93506]',
-    active: false,
-  },
-  {
-    num: '02',
-    tag: 'NEGOTIATION',
-    tagColor: 'text-[#d93506] bg-[#ffe4cc]',
-    title: 'Verified Vetting & Counter-Bidding',
-    body: 'Real-time FMCSA/DOT authority checks, cargo insurance verification, and structured multi-round counteroffer negotiation — all in-platform, with zero phone tag.',
-    bullets: [
-      { color: 'text-[#fc3f07]', text: 'USDOT number & active authority verification' },
-      { color: 'text-[#fc3f07]', text: 'Sub-14 min average counter-acceptance' },
-    ],
-    numBg: 'bg-[#fc3f07] text-white',
-    active: true,
-  },
-  {
-    num: '03',
-    tag: 'EXECUTION',
-    tagColor: 'text-[#1e6b5e] bg-[#d4f0ea]',
-    title: 'Binding Lock-In & Move Tracking',
-    body: 'Digital move confirmation handshake, automated document dispatch, and direct job-linked in-platform messaging with real-time move milestone updates.',
-    bullets: [
-      { color: 'text-[#fc3f07]', text: 'Automated doc generation & legal binding' },
-      { color: 'text-[#fc3f07]', text: 'Anti-disintermediation encrypted chat' },
-    ],
-    numBg: 'bg-[#f3ede4] text-[#d93506]',
-    active: false,
-  },
-];
+// "How It Works" — 3-step process section
+
+function StepCard({ number, icon, title, description }: {
+  number: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex flex-1 flex-col items-center text-center sm:max-w-[220px]">
+      {/* Number badge + icon row */}
+      <div className="mb-3 flex items-center gap-3">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#dbeafe] text-base font-bold text-[#1a2e5a]">
+          {number}
+        </div>
+        <div className="text-[#1a2e5a]">{icon}</div>
+      </div>
+      <p className="text-base font-bold text-[#1a2e5a]">{title}</p>
+      <p className="mt-1.5 text-sm leading-snug text-neutral-500">{description}</p>
+    </div>
+  );
+}
+
+function Arrow() {
+  return (
+    <div className="hidden shrink-0 pb-8 sm:flex sm:items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </div>
+  );
+}
 
 export default function MethodologySection() {
   return (
-    <section className="bg-[#fdf6ee] px-6 py-16">
-      <div className="mx-auto max-w-[1100px]">
+    <section className="mx-auto max-w-[1100px] px-6 py-12">
+      {/* Header */}
+      <div className="mb-10 text-center">
+        <h2
+          className="text-[clamp(28px,3.5vw,40px)] font-bold text-[#1a2e5a]"
+          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+        >
+          How It Works
+        </h2>
+        <p className="mt-2 text-sm text-neutral-500">
+          A simple process for moving companies, carriers, and brokers.
+        </p>
+      </div>
 
-        {/* Section header */}
-        <div className="mb-12 text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#ece1d3] bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
-            ⇄ OPERATIONAL METHODOLOGY
-          </span>
-          <h2
-            className="mt-4 text-[clamp(28px,4vw,42px)] font-normal leading-tight text-neutral-900"
-            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-          >
-            From Bulletin to Binding Move Confirmation
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#fc3f07]">
-            Three streamlined milestones bridging informal community capacity posts with verified digital marketplace bidding and legally binding move confirmations.
-          </p>
-        </div>
+      {/* Steps row */}
+      <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-center sm:gap-4">
 
-        {/* Step cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {steps.map((step) => (
-            <div
-              key={step.num}
-              className={`flex flex-col rounded-2xl border p-7 ${
-                step.active
-                  ? 'border-[#f0c896] bg-white shadow-md'
-                  : 'border-[#ece1d3] bg-white/70'
-              }`}
-            >
-              {/* Top row */}
-              <div className="mb-5 flex items-center justify-between">
-                <span
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl text-sm font-bold ${step.numBg}`}
-                  style={{ fontFamily: 'Georgia, serif' }}
-                >
-                  {step.num}
-                </span>
-                <span className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[1px] ${step.tagColor}`}>
-                  {step.tag}
-                </span>
-              </div>
+        <StepCard
+          number="1"
+          icon={
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className="h-10 w-10" aria-hidden="true">
+              <path d="M12 44q-1.65 0-2.825-1.175Q8 41.65 8 40V8q0-1.65 1.175-2.825Q10.35 4 12 4h18.05L40 13.95V40q0 1.65-1.175 2.825Q37.65 44 36 44Zm0-3h24q.2 0 .4-.2.2-.2.2-.8V15.3h-8.3V7H12q-.2 0-.4.2-.2.2-.2.8v32q0 .6.2.8.2.2.4.2Zm6-7h12v-3H18Zm0-7h12v-3H18Zm0-7h7v-3h-7ZM11.6 41V7v34Z" />
+            </svg>
+          }
+          title="Post or Search"
+          description="Post a move, post available space, or search for opportunities."
+        />
 
-              {/* Title */}
-              <h3
-                className="mb-3 text-xl font-normal leading-snug text-neutral-900"
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-              >
-                {step.title}
-              </h3>
+        <Arrow />
 
-              {/* Body */}
-              <p className="mb-6 flex-1 text-sm leading-relaxed text-[#7a7168]">
-                {step.body}
-              </p>
+        <StepCard
+          number="2"
+          icon={
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className="h-10 w-10" aria-hidden="true">
+              <path d="M4 34.75V10q0-1.25.875-2.125T7 7h34q1.25 0 2.125.875T44 10v22q0 1.25-.875 2.125T41 35H10ZM9.25 32H41V10H7v24.75ZM4 41v-3h20v-4H7q-1.25 0-2.125-.875T4 31v-3h3v3h34V28h3v3q0 1.25-.875 2.125T41 34h-1v4H20v3Z" />
+            </svg>
+          }
+          title="Connect & Negotiate"
+          description="Discuss details, submit bids or counteroffers."
+        />
 
-              {/* Bullets */}
-              <ul className="space-y-2">
-                {step.bullets.map((b, i) => (
-                  <li key={i} className={`flex items-center gap-2 text-xs font-semibold ${b.color}`}>
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#fff0e4] text-[10px] text-[#fc3f07]">
-                      ✓
-                    </span>
-                    {b.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <Arrow />
+
+        <StepCard
+          number="3"
+          icon={
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className="h-10 w-10" aria-hidden="true">
+              <path d="M18 42q-1.25 0-2.125-.875T15 39V9q0-1.25.875-2.125T18 6h3.05q.45-1.3 1.575-2.15T25.15 3q1.5 0 2.625.85T29.35 6H32q1.25 0 2.125.875T35 9v30q0 1.25-.875 2.125T32 42Zm0-3h14V9h-3v4.5H19V9h-1v30Zm7-28.25q.65 0 1.075-.425.425-.425.425-1.075 0-.65-.425-1.075-.425-.425-1.075-.425-.65 0-1.075.425Q23.5 8.6 23.5 9.25q0 .65.425 1.075.425.425 1.075.425ZM21.5 30.5l8-8-2.1-2.1-5.9 5.9-2.4-2.4-2.1 2.1ZM18 39V9v30Z" />
+            </svg>
+          }
+          title="Confirm & Manage"
+          description="Finalize the move and keep all details, documents and tracking together."
+        />
 
       </div>
     </section>

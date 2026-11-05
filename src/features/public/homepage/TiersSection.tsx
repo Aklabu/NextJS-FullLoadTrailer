@@ -1,75 +1,66 @@
 import Link from 'next/link';
 
-const tier1Features = [
-  'Post move or capacity listings',
-  'Browse community board',
-  'Verified badge display',
-  'Basic contact reveal',
-];
+// Blue checkmark for Tier 1A and 1B
+function BlueCheck() {
+  return (
+    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2563eb]" aria-hidden="true">
+      <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
+        <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
 
-const tier2Features = [
-  'Everything in Bulletin Board',
-  'Structured bidding & counteroffers',
-  'Move confirmations with job IDs',
-  'In-platform messaging per job',
-  'Carrier capacity postings',
-  'Broker pipeline dashboard',
-];
+// Orange checkmark for Tier 2
+function OrangeCheck() {
+  return (
+    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#fc3f07]" aria-hidden="true">
+      <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
+        <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
 
 export default function TiersSection() {
   return (
-    <section
-      className="px-6 py-20"
-      style={{
-        background:
-          'radial-gradient(ellipse 80% 60% at 50% 0%, #f5d9be 0%, #fdf6ee 65%)',
-      }}
-    >
+    <section className="px-6 py-16" style={{ background: '#eef2fb' }}>
       <div className="mx-auto max-w-[1100px]">
 
         {/* Header */}
-        <div className="mb-12 text-center">
-          <span className="mb-4 inline-flex items-center rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#d93506]">
-            TWO TIERS, ONE PLATFORM
-          </span>
-          <h2
-            className="mt-4 text-[clamp(28px,4vw,40px)] font-normal text-neutral-900"
-            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-          >
-            Start free. Upgrade when ready.
+        <div className="mb-10 text-center">
+          <h2 className="text-[clamp(22px,3vw,34px)] font-bold text-[#1a2e5a]">
+            Choose the access that fits your business.
           </h2>
           <p className="mt-2 text-sm text-neutral-500">
-            Begin with the bulletin board — no commitment, no card.
+            Three levels designed for movers, carriers, and moving brokers.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 
-          {/* Tier 1 — Bulletin Board */}
-          <div className="flex flex-col rounded-2xl border border-[#e8e0d6] bg-white/80 p-8">
-            <div className="mb-4">
-              <span className="rounded-full border border-[#e0d5c8] bg-[#f3ede4] px-3 py-1 text-[10px] font-bold uppercase tracking-[1px] text-[#7a7168]">
-                FREE — ALWAYS
-              </span>
+          {/* Tier 1A — Free Bulletin Board */}
+          <div className="flex flex-col rounded-2xl bg-white p-6 shadow-sm">
+            {/* Badge */}
+            <span className="mb-4 inline-flex w-fit items-center rounded-full bg-[#9ca3af] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              TIER 1A
+            </span>
+            <h3 className="text-xl font-bold text-[#1a2e5a]">Free Bulletin Board</h3>
+            <div className="mt-1 flex items-baseline gap-2">
+              <span className="text-3xl font-bold text-[#1a2e5a]">$0</span>
+              <span className="text-sm text-neutral-500">Get started free</span>
             </div>
 
-            <h3
-              className="mb-2 text-2xl font-normal text-neutral-900"
-              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-            >
-              Bulletin Board
-            </h3>
-            <p className="mb-6 text-sm leading-relaxed text-neutral-500">
-              Post and browse informal household goods listings. Connect directly with verified movers and moving companies.
-            </p>
-
-            <ul className="mb-8 flex-1 space-y-3">
-              {tier1Features.map((f) => (
-                <li key={f} className="flex items-center gap-3 text-sm text-neutral-700">
-                  <svg className="h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+            <ul className="mb-8 mt-5 flex-1 space-y-3">
+              {[
+                'Limited listings and access',
+                'Basic load and capacity announcements',
+                'Browse opportunities',
+                'Entry point to the community',
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm text-neutral-700">
+                  <BlueCheck />
                   {f}
                 </li>
               ))}
@@ -77,46 +68,72 @@ export default function TiersSection() {
 
             <Link
               href="/auth/signup"
-              className="block w-full rounded-xl border border-[#e0d5c8] bg-[#f3ede4]/60 py-3 text-center text-sm font-semibold text-neutral-600 transition-colors hover:bg-[#ece2d6]"
+              className="mt-auto block w-full rounded-xl border-2 border-[#1a2e5a] py-3 text-center text-sm font-bold text-[#1a2e5a] transition-colors hover:bg-[#1a2e5a] hover:text-white"
             >
-              Start for free
+              Get Started Free →
             </Link>
           </div>
 
-          {/* Tier 2 — Marketplace */}
-          <div className="flex flex-col rounded-2xl border-2 border-[#fc3f07] bg-white p-8 shadow-sm">
-            <div className="mb-4">
-              <span className="rounded-full border border-[#f0c896] bg-[#fff0e0] px-3 py-1 text-[10px] font-bold uppercase tracking-[1px] text-[#d93506]">
-                TIER 2
-              </span>
-            </div>
+          {/* Tier 1B — Bulletin Plus */}
+          <div className="flex flex-col rounded-2xl bg-white p-6 shadow-sm">
+            {/* Badge */}
+            <span className="mb-4 inline-flex w-fit items-center rounded-full bg-[#2563eb] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              TIER 1B
+            </span>
+            <h3 className="text-xl font-bold text-[#1a2e5a]">Bulletin Plus</h3>
+            <p className="mt-1 text-sm text-neutral-500">Low monthly fee</p>
 
-            <h3
-              className="mb-2 text-2xl font-normal text-neutral-900"
-              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-            >
-              Marketplace
-            </h3>
-            <p className="mb-6 text-sm leading-relaxed text-neutral-500">
-              Full bidding marketplace with structured pricing, counteroffers, and binding move confirmations.
-            </p>
-
-            <ul className="mb-8 flex-1 space-y-3">
-              {tier2Features.map((f) => (
-                <li key={f} className="flex items-center gap-3 text-sm text-neutral-700">
-                  <svg className="h-4 w-4 shrink-0 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+            <ul className="mb-8 mt-5 flex-1 space-y-3">
+              {[
+                'Higher listing and browsing limits',
+                'More opportunities to connect',
+                'Post both loads and available capacity',
+                'Priority placement',
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm text-neutral-700">
+                  <BlueCheck />
                   {f}
                 </li>
               ))}
             </ul>
 
             <Link
-              href="/pricing"
-              className="block w-full rounded-xl bg-[#fc3f07] py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#d93506]"
+              href="/auth/signup?tier=1b"
+              className="mt-auto block w-full rounded-xl bg-[#2563eb] py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#1d4ed8]"
             >
-              See pricing
+              Upgrade to Bulletin Plus →
+            </Link>
+          </div>
+
+          {/* Tier 2 — Full Marketplace */}
+          <div className="flex flex-col rounded-2xl bg-white p-6 shadow-sm">
+            {/* Badge */}
+            <span className="mb-4 inline-flex w-fit items-center rounded-full bg-[#fc3f07] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              TIER 2
+            </span>
+            <h3 className="text-xl font-bold text-[#1a2e5a]">Full Marketplace</h3>
+            <p className="mt-1 text-sm text-neutral-500">Premium access</p>
+
+            <ul className="mb-8 mt-5 flex-1 space-y-3">
+              {[
+                'All Bulletin Plus features',
+                'Structured load listings and matching',
+                'Bids and counteroffers',
+                'Messaging and job confirmations',
+                'Additional business tools',
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm text-neutral-700">
+                  <OrangeCheck />
+                  {f}
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              href="/auth/signup?tier=2"
+              className="mt-auto block w-full rounded-xl bg-[#fc3f07] py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#d93506]"
+            >
+              Upgrade to Tier 2 →
             </Link>
           </div>
 
