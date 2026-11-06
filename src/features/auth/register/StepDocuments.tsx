@@ -91,10 +91,12 @@ export default function StepDocuments({ tier, files, onAdd, onRemove }: Props) {
     handleFiles(e.dataTransfer.files);
   }
 
+  const isAdvanced = tier === 'bulletin_plus' || tier === 'full_marketplace';
+
   const advancedDocs = [
     'Certificate of Insurance (COI) — $1M auto liability minimum',
     'Operating Authority letter or MC certificate',
-    ...(tier === 'advanced' ? ['FMCSA Safety Rating document (if available)'] : []),
+    ...(isAdvanced ? ['FMCSA Safety Rating document (if available)'] : []),
   ];
 
   return (
@@ -107,14 +109,14 @@ export default function StepDocuments({ tier, files, onAdd, onRemove }: Props) {
           Verification documents
         </h2>
         <p className="text-sm text-neutral-500">
-          {tier === 'basic'
+          {!isAdvanced
             ? 'Documents are optional for Basic tier but help speed up approval.'
             : 'Required for Advanced verification. Our team reviews these before granting marketplace access.'}
         </p>
       </div>
 
       {/* What to upload */}
-      {tier === 'advanced' && (
+      {isAdvanced && (
         <div className="rounded-xl border border-[#f0c896] bg-[#fffbf5] p-4">
           <p className="mb-2 text-xs font-semibold uppercase tracking-[1px] text-[#d93506]">Required documents</p>
           <ul className="space-y-1.5">
@@ -178,7 +180,7 @@ export default function StepDocuments({ tier, files, onAdd, onRemove }: Props) {
       )}
 
       {/* Skip note for basic */}
-      {tier === 'basic' && (
+      {!isAdvanced && (
         <p className="text-center text-xs text-neutral-400">
           You can add documents later from your account settings.
         </p>

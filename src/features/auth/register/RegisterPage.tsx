@@ -206,7 +206,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Step 3 skip link for basic tier */}
-        {form.step === 3 && form.tier === 'basic' && (
+        {form.step === 3 && form.tier === 'bulletin_board' && (
           <div className="mt-4 text-center">
             <button
               type="button"
