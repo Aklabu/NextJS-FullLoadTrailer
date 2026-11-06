@@ -5,8 +5,8 @@ import { register } from '@/features/auth/api/authApi';
 import { ApiError } from '@/lib/api/client';
 
 export type Role = 'shipper' | 'broker' | 'carrier';
-// tier maps to API values: basic → bulletin, advanced → marketplace
-export type Tier = 'basic' | 'advanced';
+// tier maps directly to the API values the backend accepts
+export type Tier = 'bulletin_board' | 'bulletin_plus' | 'full_marketplace';
 export type Step = 1 | 2 | 3 | 4;
 
 export interface UploadedFile {
@@ -98,7 +98,7 @@ export type SubmitStatus = 'idle' | 'submitting' | 'error';
 export function useRegistrationForm(initialRole: Role) {
   const [step, setStep] = useState<Step>(1);
   const [role, setRole] = useState<Role>(initialRole);
-  const [tier, setTier] = useState<Tier>('basic');
+  const [tier, setTier] = useState<Tier>('bulletin_board');
 
   const [company, setCompany] = useState<CompanyInfo>(emptyCompany);
   const [roleFields, setRoleFields] = useState<RoleFields>(emptyRole);
@@ -170,12 +170,10 @@ export function useRegistrationForm(initialRole: Role) {
     setSubmitError('');
 
     try {
-      // Map internal tier value to what the API expects
-      const apiTier = tier === 'advanced' ? 'marketplace' : 'bulletin';
-
+      // Tier value maps directly to the API — no transformation needed
       await register({
         role,
-        tier: apiTier,
+        tier,
         company_name: company.companyName,
         email: company.email,
         phone: company.phone,

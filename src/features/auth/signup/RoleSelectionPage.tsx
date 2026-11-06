@@ -5,51 +5,86 @@ import { useRouter } from 'next/navigation';
 
 type Role = 'shipper' | 'broker' | 'carrier';
 
+// Icon: building (moving company)
+function BuildingIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M6 42V14l18-8 18 8v28H30V28h-12v14H6zm6-6h6v-6h-6v6zm0-12h6v-6h-6v6zm12 0h6v-6h-6v6zm12 12h6v-6h-6v6zm0-12h6v-6h-6v6z" />
+    </svg>
+  );
+}
+
+// Icon: truck (carrier)
+function TruckIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M4 34v-4h2V14h24v16h2v4H4zm6-4h16V18H10v12zm22 4v-4h2V20l-5-6h-5v-2h6.5L36 19.5V30h2v4h-6zm-24 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm28 0a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+    </svg>
+  );
+}
+
+// Icon: handshake (broker)
+function HandshakeIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M27.9 40 16 28.1l2.15-2.15 9.75 9.7 14-14L44 23.7 27.9 40zM4 26.25 14.05 16.2l4.2 4.2-9.8 9.8L4 26.25zm10.4 1.5-2.15-2.15 9.8-9.8L27.2 8H44v16.55l-7.25 7.25-2.15-2.1 6.4-6.4V11h-12.5l-4.1 7.75-10 8.8v.2z" />
+    </svg>
+  );
+}
+
 interface RoleCard {
   role: Role;
-  icon: string;
+  preLabel: string | null;
   title: string;
+  subtitle: string;
   badge: string;
-  description: string;
-  detail: string;
-  accentColor: string;
+  bg: string;
+  iconColor: string;
+  textColor: string;
   badgeBg: string;
   badgeText: string;
+  Icon: React.ComponentType<{ className?: string }>;
 }
 
 const roles: RoleCard[] = [
   {
     role: 'shipper',
-    icon: '📦',
-    title: 'Shipper / Moving Company',
+    preLabel: "I'm a",
+    title: 'Moving Company',
+    subtitle: 'Post a move or\nfind a carrier',
     badge: 'DEMAND',
-    description: 'Post full trailer loads and receive competitive bids from verified carriers.',
-    detail: 'Moving companies, warehouses, and direct shippers looking to book freight capacity.',
-    accentColor: '#fc3f07',
-    badgeBg: '#fff0e0',
-    badgeText: '#d93506',
-  },
-  {
-    role: 'broker',
-    icon: '🤝',
-    title: 'Freight Broker',
-    badge: 'INTERMEDIARY',
-    description: 'Manage multiple loads across your carrier network from a single dashboard.',
-    detail: 'Licensed freight brokers handling loads on behalf of multiple shipper clients.',
-    accentColor: '#224248',
-    badgeBg: '#e6f0f2',
-    badgeText: '#224248',
+    bg: '#1a3a8f',
+    iconColor: 'text-white',
+    textColor: 'text-white',
+    badgeBg: 'rgba(255,255,255,0.15)',
+    badgeText: '#fff',
+    Icon: BuildingIcon,
   },
   {
     role: 'carrier',
-    icon: '🚚',
-    title: 'Carrier / Owner-Operator',
+    preLabel: null,
+    title: "I'm a Carrier",
+    subtitle: 'Find loads or post\nempty space',
     badge: 'SUPPLY',
-    description: 'Browse verified loads, place bids, and post your available trailer capacity.',
-    detail: 'Trucking companies, independent owner-operators, and fleet managers with capacity to fill.',
-    accentColor: '#2b1508',
-    badgeBg: '#f3ede4',
-    badgeText: '#7a7168',
+    bg: '#fc3f07',
+    iconColor: 'text-white',
+    textColor: 'text-white',
+    badgeBg: 'rgba(255,255,255,0.15)',
+    badgeText: '#fff',
+    Icon: TruckIcon,
+  },
+  {
+    role: 'broker',
+    preLabel: "I'm a",
+    title: 'Moving Broker',
+    subtitle: 'Find moves\nto cover.',
+    badge: 'INTERMEDIARY',
+    bg: '#ffffff',
+    iconColor: 'text-[#1a2e5a]',
+    textColor: 'text-[#1a2e5a]',
+    badgeBg: 'rgba(26,46,90,0.10)',
+    badgeText: '#1a2e5a',
+    Icon: HandshakeIcon,
   },
 ];
 
@@ -121,25 +156,18 @@ export default function RoleSelectionPage() {
         </div>
 
         {/* Role cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mx-auto grid w-full max-w-[820px] grid-cols-1 gap-4 md:grid-cols-3">
           {roles.map((card) => (
             <button
               key={card.role}
               type="button"
               onClick={() => handleSelect(card.role)}
-              className="group flex flex-col rounded-2xl border border-[#e8e0d6] bg-white p-8 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fc3f07]"
-              style={{ cursor: 'pointer' }}
+              className="group flex aspect-square flex-col rounded-2xl p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fc3f07]"
+              style={{ background: card.bg, cursor: 'pointer' }}
               aria-label={`Sign up as ${card.title}`}
             >
-              {/* Icon + badge row */}
-              <div className="mb-5 flex items-start justify-between">
-                <span
-                  className="flex h-14 w-14 items-center justify-center rounded-xl text-2xl"
-                  style={{ background: card.badgeBg }}
-                  aria-hidden="true"
-                >
-                  {card.icon}
-                </span>
+              {/* Badge row */}
+              <div className="mb-auto flex justify-end">
                 <span
                   className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
                   style={{ background: card.badgeBg, color: card.badgeText }}
@@ -148,43 +176,48 @@ export default function RoleSelectionPage() {
                 </span>
               </div>
 
+              {/* Icon */}
+              <div className={`mb-4 ${card.iconColor}`}>
+                <card.Icon className="h-12 w-12 opacity-90" />
+              </div>
+
+              {/* Pre-label */}
+              {card.preLabel && (
+                <p className={`text-xs font-bold leading-tight opacity-75 ${card.textColor}`}>
+                  {card.preLabel}
+                </p>
+              )}
+
               {/* Title */}
               <h2
-                className="mb-2 text-xl font-normal text-neutral-900"
+                className={`text-xl font-bold leading-tight ${card.textColor}`}
                 style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
               >
                 {card.title}
               </h2>
 
-              {/* Primary description */}
-              <p className="mb-3 text-sm font-medium leading-relaxed text-neutral-700">
-                {card.description}
+              {/* Subtitle */}
+              <p className={`mt-2 text-sm leading-snug opacity-80 ${card.textColor}`}>
+                {card.subtitle.split('\n').map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    {i < card.subtitle.split('\n').length - 1 && <br />}
+                  </span>
+                ))}
               </p>
 
-              {/* Detail line */}
-              <p className="mb-8 flex-1 text-[13px] leading-relaxed text-neutral-400">
-                {card.detail}
-              </p>
-
-              {/* CTA row */}
-              <div
-                className="flex items-center gap-2 text-sm font-semibold transition-colors group-hover:text-[#d93506]"
-                style={{ color: card.accentColor }}
-              >
-                Select &amp; Continue
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+              {/* CTA arrow */}
+              <div className="mt-6 flex items-center">
+                <div
+                  className={`flex h-8 w-8 items-center justify-center rounded-full border-2 transition-transform group-hover:translate-x-1 ${card.role === 'broker' ? 'border-[#1a2e5a]/40 text-[#1a2e5a]' : 'border-white/50 text-white'}`}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className={`ml-2.5 text-sm font-semibold opacity-90 ${card.textColor}`}>
+                  Select &amp; Continue
+                </span>
               </div>
             </button>
           ))}

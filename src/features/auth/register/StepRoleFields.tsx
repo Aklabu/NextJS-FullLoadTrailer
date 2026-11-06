@@ -44,8 +44,8 @@ const ROLE_LABELS: Record<Role, string> = {
 };
 
 export default function StepRoleFields({ role, tier, fields, errors, onTierChange, onFieldChange }: Props) {
-  // Advanced tier makes compliance fields required; basic keeps them optional
-  const isAdvanced = tier === 'advanced';
+  // Compliance notice text depends on whether a paid tier is selected
+  const isPaid = tier === 'bulletin_plus' || tier === 'full_marketplace';
 
   return (
     <div className="space-y-6">
@@ -64,26 +64,27 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
       {/* Tier selector */}
       <div>
         <p className="mb-3 text-sm font-medium text-neutral-700">Choose your verification level</p>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {/* Basic */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+
+          {/* Bulletin Board */}
           <button
             type="button"
-            onClick={() => onTierChange('basic')}
+            onClick={() => onTierChange('bulletin_board')}
             className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
             style={{
-              borderColor: tier === 'basic' ? '#fc3f07' : '#e8e0d6',
-              background: tier === 'basic' ? '#fff8f2' : '#fff',
+              borderColor: tier === 'bulletin_board' ? '#fc3f07' : '#e8e0d6',
+              background: tier === 'bulletin_board' ? '#fff8f2' : '#fff',
             }}
-            aria-pressed={tier === 'basic'}
+            aria-pressed={tier === 'bulletin_board'}
           >
             <div className="mb-3 flex items-center justify-between">
               <span
                 className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
                 style={{ background: '#f3ede4', color: '#7a7168' }}
               >
-                FREE — ALWAYS
+                FREE
               </span>
-              {tier === 'basic' && (
+              {tier === 'bulletin_board' && (
                 <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#fc3f07' }} aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -91,31 +92,31 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
                 </span>
               )}
             </div>
-            <p className="mb-1 text-sm font-semibold text-neutral-800">Basic — Bulletin Board</p>
-            <p className="text-xs leading-relaxed text-neutral-500">
-              Post and browse community listings. No pricing or bidding — great for getting started.
+            <p className="mb-1 text-sm font-semibold text-neutral-800">Bulletin Board</p>
+            <p className="text-[11px] leading-relaxed text-neutral-500">
+              Post and browse community listings. No pricing or bidding.
             </p>
           </button>
 
-          {/* Advanced */}
+          {/* Bulletin Plus */}
           <button
             type="button"
-            onClick={() => onTierChange('advanced')}
+            onClick={() => onTierChange('bulletin_plus')}
             className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
             style={{
-              borderColor: tier === 'advanced' ? '#fc3f07' : '#e8e0d6',
-              background: tier === 'advanced' ? '#fff8f2' : '#fff',
+              borderColor: tier === 'bulletin_plus' ? '#fc3f07' : '#e8e0d6',
+              background: tier === 'bulletin_plus' ? '#fff8f2' : '#fff',
             }}
-            aria-pressed={tier === 'advanced'}
+            aria-pressed={tier === 'bulletin_plus'}
           >
             <div className="mb-3 flex items-center justify-between">
               <span
                 className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
                 style={{ background: '#fff0e0', color: '#d93506' }}
               >
-                TIER 2
+                TIER 1+
               </span>
-              {tier === 'advanced' && (
+              {tier === 'bulletin_plus' && (
                 <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#fc3f07' }} aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -123,12 +124,44 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
                 </span>
               )}
             </div>
-            <p className="mb-1 text-sm font-semibold text-neutral-800">Advanced — Marketplace</p>
-            <p className="text-xs leading-relaxed text-neutral-500">
-              Full bidding, counteroffers, booking confirmations, and in-platform messaging.
-              Requires compliance docs.
+            <p className="mb-1 text-sm font-semibold text-neutral-800">Bulletin Plus</p>
+            <p className="text-[11px] leading-relaxed text-neutral-500">
+              Everything in Bulletin Board plus enhanced visibility and priority listing.
             </p>
           </button>
+
+          {/* Full Marketplace */}
+          <button
+            type="button"
+            onClick={() => onTierChange('full_marketplace')}
+            className="flex flex-col rounded-xl border-2 p-5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[#fc3f07]"
+            style={{
+              borderColor: tier === 'full_marketplace' ? '#fc3f07' : '#e8e0d6',
+              background: tier === 'full_marketplace' ? '#fff8f2' : '#fff',
+            }}
+            aria-pressed={tier === 'full_marketplace'}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <span
+                className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
+                style={{ background: '#e6f0f2', color: '#224248' }}
+              >
+                TIER 2
+              </span>
+              {tier === 'full_marketplace' && (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ background: '#fc3f07' }} aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              )}
+            </div>
+            <p className="mb-1 text-sm font-semibold text-neutral-800">Full Marketplace</p>
+            <p className="text-[11px] leading-relaxed text-neutral-500">
+              Full bidding, counteroffers, booking confirmations, and in-platform messaging.
+            </p>
+          </button>
+
         </div>
       </div>
 
@@ -139,7 +172,7 @@ export default function StepRoleFields({ role, tier, fields, errors, onTierChang
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
           </svg>
           <p className="text-xs leading-relaxed text-neutral-500">
-            {isAdvanced
+            {isPaid
               ? 'Providing compliance credentials speeds up your marketplace verification review.'
               : 'Compliance fields are optional. You can add them now or later from your account settings.'}
           </p>

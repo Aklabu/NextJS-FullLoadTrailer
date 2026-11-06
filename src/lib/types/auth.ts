@@ -8,7 +8,7 @@ export type VerificationStatus =
   | 'needs_info'
   | 'unverified';
 
-export type UserTier = 'bulletin' | 'marketplace';
+export type UserTier = 'bulletin_board' | 'bulletin_plus' | 'full_marketplace';
 
 export interface AuthUser {
   id: string;
