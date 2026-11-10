@@ -1,110 +1,151 @@
-const testimonials = [
-  {
-    initials: 'MK',
-    stars: 5,
-    quote:
-      '"The difference between traditional static boards and FullTrailerLoad Tier 2 is night and day. We trimmed our time-to-cover from 2.5 hours down to 18 minutes, and every counteroffer is locked with vetted paperwork."',
-    name: 'Marcus Keller',
-    role: 'Operations Manager · Apex Moving & Storage',
-  },
-  {
-    initials: 'DR',
-    stars: 5,
-    quote:
-      '"As an owner-operator running Midwest-to-Southwest routes, I can post my return capacity straight from the cab. No mystery brokers, no ghost jobs. When a moving company counters, we agree and book right on the screen."',
-    name: 'Darren Reynolds',
-    role: 'Owner-Operator · Red Rock Moving LLC (3 Trucks)',
-  },
-];
+import Image from 'next/image';
+import Link from 'next/link';
+
+// Trust & Safety icon helpers
+function TrustItem({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1.5 text-center">
+      <div className="text-[#1a2e5a]">{icon}</div>
+      <span className="text-xs font-semibold text-[#1a2e5a] leading-tight">{label}</span>
+    </div>
+  );
+}
 
 export default function TrustSection() {
   return (
     <section className="bg-[#fdf6ee] px-6 pb-20 pt-4">
-      <div className="mx-auto max-w-[1100px] space-y-6">
+      <div className="mx-auto max-w-[1100px]">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
-        {/* FMCSA validation banner */}
-        <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl border border-[#ece1d3] bg-white px-6 py-5">
-          <div className="flex items-start gap-4">
-            {/* Icon */}
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#fc3f07] text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
+          {/* Left panel — Mobile App for Drivers */}
+          <div className="flex items-center gap-6 rounded-2xl border border-[#dce8f7] bg-[#edf4fc] px-6 py-6">
+            {/* Phone mockup image */}
+            <div className="shrink-0">
+              <Image
+                src="/images/homepage/ftl-app.jpeg"
+                alt="FTL mobile app showing My Jobs screen"
+                width={130}
+                height={160}
+                className="rounded-xl object-cover"
+              />
             </div>
+
+            {/* Text + CTA */}
             <div>
-              <div className="mb-1 flex flex-wrap items-center gap-3">
-                <span className="text-base font-semibold text-neutral-900">
-                  FMCSA &amp; USDOT Authority Verification
-                </span>
-                <span className="rounded-full bg-[#d4f0ea] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[1px] text-[#1e6b5e]">
-                  REAL-TIME VETTING
-                </span>
-              </div>
-              <p className="max-w-md text-sm leading-relaxed text-neutral-500">
-                Every mover must maintain valid USDOT operating authority, cargo insurance, and liability coverage minimums before bidding on Tier 2 jobs.
+              <h3 className="text-lg font-extrabold text-[#1a2e5a] leading-tight mb-2">
+                Mobile App for Drivers
+              </h3>
+              <p className="text-sm text-neutral-600 leading-relaxed mb-4">
+                Drivers can see their assigned jobs, get directions, update status, upload photos, and provide signatures — all from their phone.
               </p>
+              {/* App store buttons */}
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-2 rounded-lg bg-black px-4 py-2 text-white hover:bg-neutral-800 transition-colors"
+                  aria-label="Download on the App Store"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 shrink-0" aria-hidden="true">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-[9px] leading-none opacity-80">Download on the</div>
+                    <div className="text-xs font-semibold leading-tight">App Store</div>
+                  </div>
+                </a>
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-2 rounded-lg bg-black px-4 py-2 text-white hover:bg-neutral-800 transition-colors"
+                  aria-label="Get it on Google Play"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 shrink-0" aria-hidden="true">
+                    <path d="M3.18 23.76c.3.17.64.24.99.2l12.6-7.27-2.72-2.72zm16.3-10.03L16.76 12l2.72-1.73L22 12zm-3.56-2.05L3.18.24A1.14 1.14 0 0 0 2.2.44L14.17 12zm-12.74 1.1L14.17 12 2.2 23.56a1.14 1.14 0 0 1-.98-.2 1.14 1.14 0 0 1-.5-.97V12.78z"/>
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-[9px] leading-none opacity-80">GET IT ON</div>
+                    <div className="text-xs font-semibold leading-tight">Google Play</div>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Verification pills */}
-          <div className="flex flex-wrap gap-2">
-            {[
-              { dot: 'bg-green-500', label: 'USDOT Verified' },
-              { dot: 'bg-[#fc3f07]', label: 'Authority Validated' },
-              { dot: 'bg-[#d93506]', label: 'COI Checked' },
-            ].map((p) => (
-              <span
-                key={p.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#ece1d3] bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700"
-              >
-                <span className={`h-2 w-2 rounded-full ${p.dot}`} />
-                {p.label}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {testimonials.map((t) => (
-            <div
-              key={t.name}
-              className="flex flex-col justify-between rounded-2xl border border-[#ece1d3] bg-white p-7"
-            >
-              {/* Stars */}
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#f0d9a8] bg-[#fef9ec] px-3 py-1.5">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: t.stars }).map((_, i) => (
-                    <svg key={i} className="h-3.5 w-3.5 text-[#fc3f07]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <span className="text-[11px] font-bold text-[#d93506]">{t.stars}.0 Verified</span>
+          {/* Right panel — Trust & Safety */}
+          <div className="flex flex-col justify-between rounded-2xl border border-[#dce8f7] bg-[#edf4fc] px-6 py-6">
+            {/* Header */}
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                {/* Shield icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1a2e5a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <h3 className="text-lg font-extrabold text-[#1a2e5a]">Trust &amp; Safety</h3>
               </div>
-
-              {/* Quote */}
-              <p
-                className="mb-6 flex-1 text-[15px] italic leading-relaxed text-neutral-700"
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-              >
-                {t.quote}
+              <p className="text-sm text-neutral-600 mb-6">
+                A safer, more reliable marketplace for household moving.
               </p>
 
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#fc3f07] text-xs font-bold text-white">
-                  {t.initials}
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-neutral-900">{t.name}</div>
-                  <div className="text-xs text-[#fc3f07]">{t.role}</div>
-                </div>
+              {/* 4 trust icons */}
+              <div className="grid grid-cols-4 gap-3">
+                <TrustItem
+                  label="Verified Companies"
+                  icon={
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1a2e5a]">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-6 w-6" aria-hidden="true">
+                        <path fillRule="evenodd" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  }
+                />
+                <TrustItem
+                  label="Identity & DOT Checks"
+                  icon={
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1a2e5a]">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-6 w-6" aria-hidden="true">
+                        <path fillRule="evenodd" d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  }
+                />
+                <TrustItem
+                  label="Secure Transactions"
+                  icon={
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1a2e5a]">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-6 w-6" aria-hidden="true">
+                        <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  }
+                />
+                <TrustItem
+                  label="Report an Issue"
+                  icon={
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1a2e5a]">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-6 w-6" aria-hidden="true">
+                        <path fillRule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  }
+                />
               </div>
             </div>
-          ))}
-        </div>
 
+            {/* CTA */}
+            <div className="mt-5">
+              <Link
+                href="/how-it-works"
+                className="inline-flex items-center gap-1.5 rounded-lg border-2 border-[#1a2e5a] px-5 py-2.5 text-sm font-bold text-[#1a2e5a] hover:bg-[#1a2e5a] hover:text-white transition-colors"
+              >
+                Learn More About Trust &amp; Safety
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                  <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );
