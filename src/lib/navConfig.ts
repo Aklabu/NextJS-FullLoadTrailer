@@ -11,6 +11,7 @@ export const publicNavItems: NavItem[] = [
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'FTL Assist', href: '/ftl-assist' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Trust & Safety', href: '/trust-safety' },
 ];
 
 // Logged-in centre links
