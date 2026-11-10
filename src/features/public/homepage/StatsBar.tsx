@@ -38,7 +38,6 @@ const features = [
     description: 'Moving companies,\ncarriers and\nmoving brokers',
   },
 ];
-
 export default function StatsBar() {
   return (
     <div className="mx-auto max-w-[1100px] px-6 py-6 pt-12">

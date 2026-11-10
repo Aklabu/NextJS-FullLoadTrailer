@@ -2,90 +2,85 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-type Role = 'shipper' | 'broker' | 'carrier';
+type Role = 'shipper' | 'carrier' | 'broker';
 
-// Icon: building (moving company)
-function BuildingIcon({ className }: { className?: string }) {
+// House icon — Moving Company
+function HouseIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M6 42V14l18-8 18 8v28H30V28h-12v14H6zm6-6h6v-6h-6v6zm0-12h6v-6h-6v6zm12 0h6v-6h-6v6zm12 12h6v-6h-6v6zm0-12h6v-6h-6v6z" />
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56" aria-hidden="true">
+      <path d="M32 8L6 28h8v24h16V38h4v14h16V28h8L32 8z" fill="#1e40af" opacity="0.15" />
+      <path d="M32 8L6 28h8v24h16V38h4v14h16V28h8L32 8z" stroke="#1e40af" strokeWidth="2.5" strokeLinejoin="round" fill="none" />
+      <rect x="24" y="38" width="16" height="14" rx="1" stroke="#1e40af" strokeWidth="2" fill="none" />
+      <circle cx="32" cy="22" r="4" fill="#1e40af" opacity="0.4" />
     </svg>
   );
 }
 
-// Icon: truck (carrier)
-function TruckIcon({ className }: { className?: string }) {
+// Truck icon — Carrier
+function TruckIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M4 34v-4h2V14h24v16h2v4H4zm6-4h16V18H10v12zm22 4v-4h2V20l-5-6h-5v-2h6.5L36 19.5V30h2v4h-6zm-24 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm28 0a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56" aria-hidden="true">
+      <rect x="4" y="20" width="36" height="24" rx="2" fill="#fc3f07" opacity="0.15" stroke="#fc3f07" strokeWidth="2.5" />
+      <path d="M40 28h10l8 8v8H40V28z" fill="#fc3f07" opacity="0.15" stroke="#fc3f07" strokeWidth="2.5" strokeLinejoin="round" />
+      <circle cx="14" cy="46" r="5" fill="white" stroke="#fc3f07" strokeWidth="2.5" />
+      <circle cx="50" cy="46" r="5" fill="white" stroke="#fc3f07" strokeWidth="2.5" />
+      <line x1="4" y1="38" x2="58" y2="38" stroke="#fc3f07" strokeWidth="1.5" strokeDasharray="4 2" />
     </svg>
   );
 }
 
-// Icon: handshake (broker)
-function HandshakeIcon({ className }: { className?: string }) {
+// Handshake icon — Broker
+function HandshakeIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M27.9 40 16 28.1l2.15-2.15 9.75 9.7 14-14L44 23.7 27.9 40zM4 26.25 14.05 16.2l4.2 4.2-9.8 9.8L4 26.25zm10.4 1.5-2.15-2.15 9.8-9.8L27.2 8H44v16.55l-7.25 7.25-2.15-2.1 6.4-6.4V11h-12.5l-4.1 7.75-10 8.8v.2z" />
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56" aria-hidden="true">
+      <path d="M4 36l12-12 8 4 8-4 12 12" stroke="#1e40af" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M4 36l8 8 20-16 20 8 8-8" stroke="#1e40af" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M24 28l8 8 8-8" stroke="#1e40af" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5" />
+      <circle cx="32" cy="20" r="6" fill="#1e40af" opacity="0.12" stroke="#1e40af" strokeWidth="2" />
     </svg>
   );
 }
 
-interface RoleCard {
-  role: Role;
-  preLabel: string | null;
-  title: string;
-  subtitle: string;
-  badge: string;
-  bg: string;
-  iconColor: string;
-  textColor: string;
-  badgeBg: string;
-  badgeText: string;
-  Icon: React.ComponentType<{ className?: string }>;
-}
-
-const roles: RoleCard[] = [
+const roles = [
   {
-    role: 'shipper',
-    preLabel: "I'm a",
+    role: 'shipper' as Role,
+    Icon: HouseIcon,
     title: 'Moving Company',
-    subtitle: 'Post a move or\nfind a carrier',
-    badge: 'DEMAND',
-    bg: '#1a3a8f',
-    iconColor: 'text-white',
-    textColor: 'text-white',
-    badgeBg: 'rgba(255,255,255,0.15)',
-    badgeText: '#fff',
-    Icon: BuildingIcon,
+    subtitle: '(Post Loads)',
+    description: 'Find reliable carriers, manage shipments, and complete moves.',
+    btnLabel: 'Register as a Mover',
+    btnBg: '#1e40af',
+    btnHover: '#1a3a9f',
   },
   {
-    role: 'carrier',
-    preLabel: null,
-    title: "I'm a Carrier",
-    subtitle: 'Find loads or post\nempty space',
-    badge: 'SUPPLY',
-    bg: '#fc3f07',
-    iconColor: 'text-white',
-    textColor: 'text-white',
-    badgeBg: 'rgba(255,255,255,0.15)',
-    badgeText: '#fff',
+    role: 'carrier' as Role,
     Icon: TruckIcon,
+    title: 'Carrier',
+    subtitle: '(Find Loads)',
+    description: 'Search and book household moving loads, (full or partial).',
+    btnLabel: 'Register as a Carrier',
+    btnBg: '#fc3f07',
+    btnHover: '#d93506',
   },
   {
-    role: 'broker',
-    preLabel: "I'm a",
-    title: 'Moving Broker',
-    subtitle: 'Find moves\nto cover.',
-    badge: 'INTERMEDIARY',
-    bg: '#ffffff',
-    iconColor: 'text-[#1a2e5a]',
-    textColor: 'text-[#1a2e5a]',
-    badgeBg: 'rgba(26,46,90,0.10)',
-    badgeText: '#1a2e5a',
+    role: 'broker' as Role,
     Icon: HandshakeIcon,
+    title: 'Household Goods Broker',
+    subtitle: '(Post Loads)',
+    description: 'Post loads and find qualified carriers and moving companies.',
+    btnLabel: 'Register as a Broker',
+    btnBg: '#1e40af',
+    btnHover: '#1a3a9f',
   },
+];
+
+const benefits = [
+  'Create your company profile',
+  'Access to the load board',
+  'Use industry tools (closing sheets, tracking, etc.)',
+  'Grow your network in the moving industry.',
 ];
 
 export default function RoleSelectionPage() {
@@ -97,144 +92,244 @@ export default function RoleSelectionPage() {
 
   return (
     <div
-      className="min-h-screen"
       style={{
-        background:
-          'radial-gradient(circle at 20% 10%, #fbe3c4, transparent 55%), radial-gradient(circle at 80% 20%, #f6d9d3, transparent 55%), #fdf6ee',
+        minHeight: '100vh',
+        background: '#f8fafc',
+        fontFamily: 'system-ui, -apple-system, sans-serif',
       }}
     >
-      {/* Top bar — minimal, just logo + login link */}
-      <div className="mx-auto flex max-w-[1100px] items-center justify-between px-6 py-5">
-        <Link href="/" className="flex items-center gap-2" aria-label="FullTrailerLoad home">
-          <span
-            className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-bold"
-            style={{ background: '#ff3d03', color: '#1A1953' }}
-            aria-hidden="true"
-          >
-            FL
-          </span>
-          <span className="text-base font-semibold tracking-tight text-neutral-900">
-            FullTrailer<span style={{ color: '#fc3f07' }}>Load</span>
-          </span>
-        </Link>
-
-        <span className="text-sm text-neutral-500">
-          Already have an account?{' '}
-          <Link
-            href="/auth/login"
-            className="font-semibold text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
-          >
-            Log in
-          </Link>
-        </span>
+      {/* ── Hero banner ── */}
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #0f2d55 0%, #1e3a6e 60%, #c43206 100%)',
+          padding: '40px 24px 36px',
+          textAlign: 'center',
+        }}
+      >
+        <h1
+          style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 'clamp(28px, 4vw, 44px)',
+            fontWeight: 700,
+            color: '#ffffff',
+            margin: '0 0 10px',
+            letterSpacing: -0.5,
+          }}
+        >
+          Create Your Account
+        </h1>
+        <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+          Join the #1 Marketplace for Household Moving.
+        </p>
       </div>
 
-      {/* Main content */}
-      <main className="mx-auto max-w-[1100px] px-6 pb-20 pt-10">
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: '48px 24px 64px' }}>
 
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#e8c99a] bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />
-            CREATE YOUR ACCOUNT
-          </span>
-
-          <h1
-            className="mt-4 text-[clamp(30px,4.5vw,46px)] font-normal leading-[1.15] text-neutral-900"
-            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-          >
-            How will you use
-            <br />
-            <span className="italic" style={{ color: '#fc3f07' }}>
-              FullTrailerLoad?
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-neutral-500">
-            Choose your account type to get started. You can always upgrade your tier later.
-          </p>
-        </div>
+        {/* ── Choose account type ── */}
+        <h2
+          style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 28,
+            fontWeight: 700,
+            color: '#0f2d55',
+            textAlign: 'center',
+            marginBottom: 32,
+          }}
+        >
+          Choose Your Account Type
+        </h2>
 
         {/* Role cards */}
-        <div className="mx-auto grid w-full max-w-[820px] grid-cols-1 gap-4 md:grid-cols-3">
-          {roles.map((card) => (
-            <button
-              key={card.role}
-              type="button"
-              onClick={() => handleSelect(card.role)}
-              className="group flex aspect-square flex-col rounded-2xl p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fc3f07]"
-              style={{ background: card.bg, cursor: 'pointer' }}
-              aria-label={`Sign up as ${card.title}`}
+        <div
+          className="signup-cards"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 20,
+            marginBottom: 56,
+          }}
+        >
+          {roles.map((r) => (
+            <div
+              key={r.role}
+              style={{
+                background: '#ffffff',
+                border: '1.5px solid #e2e8f0',
+                borderRadius: 16,
+                padding: '32px 24px 28px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                gap: 0,
+                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+              }}
             >
-              {/* Badge row */}
-              <div className="mb-auto flex justify-end">
-                <span
-                  className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px]"
-                  style={{ background: card.badgeBg, color: card.badgeText }}
-                >
-                  {card.badge}
-                </span>
-              </div>
-
               {/* Icon */}
-              <div className={`mb-4 ${card.iconColor}`}>
-                <card.Icon className="h-12 w-12 opacity-90" />
+              <div style={{ marginBottom: 16 }}>
+                <r.Icon />
               </div>
-
-              {/* Pre-label */}
-              {card.preLabel && (
-                <p className={`text-xs font-bold leading-tight opacity-75 ${card.textColor}`}>
-                  {card.preLabel}
-                </p>
-              )}
 
               {/* Title */}
-              <h2
-                className={`text-xl font-bold leading-tight ${card.textColor}`}
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              <h3
+                style={{
+                  fontFamily: 'Georgia, serif',
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: '#0f2d55',
+                  margin: '0 0 2px',
+                  lineHeight: 1.2,
+                }}
               >
-                {card.title}
-              </h2>
-
-              {/* Subtitle */}
-              <p className={`mt-2 text-sm leading-snug opacity-80 ${card.textColor}`}>
-                {card.subtitle.split('\n').map((line, i) => (
-                  <span key={i}>
-                    {line}
-                    {i < card.subtitle.split('\n').length - 1 && <br />}
-                  </span>
-                ))}
+                {r.title}
+              </h3>
+              <p style={{ fontSize: 14, color: '#64748b', margin: '0 0 14px', fontWeight: 500 }}>
+                {r.subtitle}
               </p>
 
-              {/* CTA arrow */}
-              <div className="mt-6 flex items-center">
-                <div
-                  className={`flex h-8 w-8 items-center justify-center rounded-full border-2 transition-transform group-hover:translate-x-1 ${card.role === 'broker' ? 'border-[#1a2e5a]/40 text-[#1a2e5a]' : 'border-white/50 text-white'}`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className={`ml-2.5 text-sm font-semibold opacity-90 ${card.textColor}`}>
-                  Select &amp; Continue
-                </span>
-              </div>
-            </button>
+              {/* Description */}
+              <p
+                style={{
+                  fontSize: 14,
+                  color: '#475569',
+                  lineHeight: 1.65,
+                  margin: '0 0 24px',
+                  flex: 1,
+                }}
+              >
+                {r.description}
+              </p>
+
+              {/* CTA button */}
+              <button
+                type="button"
+                onClick={() => handleSelect(r.role)}
+                style={{
+                  width: '100%',
+                  padding: '12px 20px',
+                  background: r.btnBg,
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: 15,
+                  border: 'none',
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  transition: 'background 0.15s, transform 0.1s',
+                }}
+                onMouseOver={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = r.btnHover;
+                  (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+                }}
+                onMouseOut={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = r.btnBg;
+                  (e.currentTarget as HTMLButtonElement).style.transform = 'none';
+                }}
+                aria-label={r.btnLabel}
+              >
+                {r.btnLabel}
+              </button>
+            </div>
           ))}
         </div>
 
-        {/* Footer note */}
-        <p className="mt-10 text-center text-[13px] text-neutral-400">
-          Not sure which to pick?{' '}
-          <Link
-            href="/how-it-works"
-            className="text-[#fc3f07] underline underline-offset-2 hover:text-[#d93506]"
+        {/* ── Account Benefits ── */}
+        {/* Single row: image bleeds from right, text floats on left over gradient */}
+        <div
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            borderRadius: 16,
+            background: '#f8fafc',
+            minHeight: 280,
+            display: 'flex',
+            alignItems: 'stretch',
+          }}
+        >
+          {/* Image — covers right 55%, bleeds 80px left into the text zone */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: 'calc(55% + 80px)',
+              overflow: 'hidden',
+            }}
           >
-            Read how the platform works →
+            <Image
+              src="/images/signup/fulltrailerload.jpg"
+              alt="FullTrailerLoad.com on a laptop"
+              fill
+              style={{ objectFit: 'cover', objectPosition: 'center center' }}
+              sizes="55vw"
+            />
+            {/* Left-edge fade dissolving into #f8fafc — no visible seam */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'linear-gradient(to right, rgb(248,250,252) 0%, rgba(248,250,252,0.7) 18%, rgba(248,250,252,0) 38%)',
+              }}
+            />
+          </div>
+
+          {/* Text content — left 50%, sits above the image layer */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              width: '50%',
+              padding: '48px 40px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+            className="signup-benefits-text"
+          >
+            <h2
+              style={{
+                fontFamily: 'Georgia, serif',
+                fontSize: 26,
+                fontWeight: 700,
+                color: '#0f2d55',
+                marginBottom: 24,
+              }}
+            >
+              Account Benefits
+            </h2>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {benefits.map((b) => (
+                <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 1 }}>
+                    <path d="M20 6L9 17l-5-5" stroke="#fc3f07" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span style={{ fontSize: 15, color: '#1e293b', lineHeight: 1.5 }}>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Login link */}
+        <p style={{ textAlign: 'center', marginTop: 40, fontSize: 14, color: '#64748b' }}>
+          Already have an account?{' '}
+          <Link
+            href="/auth/login"
+            style={{ color: '#fc3f07', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 2 }}
+          >
+            Log In
           </Link>
         </p>
+      </div>
 
-      </main>
+      <style>{`
+        @media (max-width: 768px) {
+          .signup-cards { grid-template-columns: 1fr !important; }
+          .signup-benefits-text { width: 100% !important; padding: 36px 24px !important; }
+        }
+      `}</style>
     </div>
   );
 }
