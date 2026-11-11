@@ -35,7 +35,7 @@ function HandshakeIcon() {
 // Arrow circle icon for card CTA
 function ArrowCircle({ dark }: { dark?: boolean }) {
   return (
-    <div className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${dark ? 'border-[#1a2e5a] text-[#1a2e5a]' : 'border-white/70 text-white'}`}>
+    <div className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${dark ? 'border-gray-900 text-gray-900' : 'border-white/60 text-white'}`}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
         <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
       </svg>
@@ -150,11 +150,11 @@ export default function HeroSection() {
         {/* Role cards row */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
 
-          {/* Card 1 — Moving Company (blue) */}
+          {/* Card 1 — Moving Company */}
           <Link
             href="/auth/register?role=shipper"
             className="group flex items-center gap-3 rounded-xl p-3.5 transition-opacity hover:opacity-90"
-            style={{ background: '#1a3a8f' }}
+            style={{ background: '#1C2434' }}
           >
             <div className="shrink-0 text-white">
               <BuildingIcon />
@@ -187,18 +187,18 @@ export default function HeroSection() {
             </div>
           </Link>
 
-          {/* Card 3 — Moving Broker (white) */}
+          {/* Card 3 — Moving Broker */}
           <Link
             href="/auth/register?role=broker"
             className="group flex items-center gap-3 rounded-xl bg-white p-3.5 transition-opacity hover:opacity-90"
           >
-            <div className="shrink-0 text-[#1a2e5a]">
+            <div className="shrink-0 text-gray-900">
               <HandshakeIcon />
             </div>
-            <div className="flex-1 text-[#1a2e5a]">
+            <div className="flex-1 text-gray-900">
               <p className="text-xs font-bold leading-tight opacity-70">I&apos;m a</p>
               <p className="text-sm font-bold leading-tight">Moving Broker</p>
-              <p className="mt-1 text-xs leading-snug opacity-60">Find moves<br />to cover.</p>
+              <p className="mt-1 text-xs leading-snug opacity-50">Find moves<br />to cover.</p>
             </div>
             <div className="shrink-0">
               <ArrowCircle dark />

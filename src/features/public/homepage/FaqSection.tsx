@@ -46,7 +46,7 @@ function FaqItem({ icon, q, a }: { icon: React.ReactNode; q: string; a: string }
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rounded-2xl border border-[#ece1d3] bg-white">
+    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -54,10 +54,10 @@ function FaqItem({ icon, q, a }: { icon: React.ReactNode; q: string; a: string }
         className="flex w-full items-start gap-3 px-6 py-5 text-left"
       >
         <span className="mt-0.5 shrink-0 text-[#fc3f07]">{icon}</span>
-        <span className="flex-1 text-sm font-semibold text-neutral-800">{q}</span>
+        <span className="flex-1 text-sm font-semibold text-gray-900">{q}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`ml-2 mt-0.5 h-4 w-4 shrink-0 text-neutral-400 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`ml-2 mt-0.5 h-4 w-4 shrink-0 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
@@ -67,8 +67,8 @@ function FaqItem({ icon, q, a }: { icon: React.ReactNode; q: string; a: string }
       </button>
 
       {open && (
-        <div className="px-6 pb-5 pl-[52px]">
-          <p className="text-sm leading-relaxed text-[#fc3f07]">{a}</p>
+        <div className="border-t border-gray-100 px-6 pb-5 pl-[52px] pt-4">
+          <p className="text-sm leading-relaxed text-gray-500">{a}</p>
         </div>
       )}
     </div>
@@ -77,28 +77,24 @@ function FaqItem({ icon, q, a }: { icon: React.ReactNode; q: string; a: string }
 
 export default function FaqSection() {
   return (
-    <section className="bg-[#fdf6ee] px-6 pb-20 pt-4">
+    <section className="border-b border-gray-200 bg-[#F9FAFB] px-6 py-16">
       <div className="mx-auto max-w-[1100px]">
 
-        {/* Header */}
-        <div className="mb-10 text-center">
-          <span className="mb-4 inline-flex items-center rounded-full border border-[#e8c99a] bg-[#fff0e0] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-[#d93506]">
-            PLATFORM CLARITY
+        <div className="mb-12 text-center">
+          <span className="mb-3 inline-block rounded-full bg-orange-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[#fc3f07]">
+            Platform Clarity
           </span>
           <h2
-            className="mt-4 text-[clamp(26px,4vw,38px)] font-normal text-neutral-900"
+            className="mt-3 text-[clamp(24px,3.5vw,36px)] font-bold text-gray-900"
             style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
           >
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-neutral-500">
-            Everything you need to{' '}
-            <span className="text-[#fc3f07]">know</span> about our graduated moving marketplace tiers, vetting, and{' '}
-            <span className="text-[#fc3f07]">binding</span> move confirmations.
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-gray-500">
+            Everything you need to know about our graduated moving marketplace tiers, vetting, and binding move confirmations.
           </p>
         </div>
 
-        {/* FAQ items */}
         <div className="space-y-3">
           {faqs.map((f, i) => (
             <FaqItem key={i} icon={f.icon} q={f.q} a={f.a} />
