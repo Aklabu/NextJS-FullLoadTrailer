@@ -1,69 +1,55 @@
-// Contact / support form API — POST /api/support/contact/
-// Public endpoint, no auth required, multipart/form-data.
+// Contact form API — POST /api/contact/
+// Public endpoint, no auth required, application/json.
 
 import { API_BASE } from '@/lib/api/client';
 
-export type Urgency = 'normal' | 'urgent';
-export type Category =
-  | 'account_verification'
-  | 'rate_dispute'
-  | 'billing_escrow'
-  | 'technical_issue';
-
 export interface ContactPayload {
-  name: string;
+  full_name: string;
+  phone: string;
   email: string;
-  company?: string;
-  urgency: Urgency;
-  category: Category;
   message: string;
-  attachments?: File[];
+  company_name?: string;
+  fleet_size?: string;
 }
 
 export interface ContactResponse {
-  status: 'success';
+  success: true;
+  statusCode: 201;
   message: string;
+  timestamp: string;
   data: null;
+  errors: null;
 }
 
 export interface ContactErrorResponse {
-  status: 'error';
+  success: false;
+  statusCode: 400 | 500;
   message: string;
-  errors: Record<string, string[]>;
+  timestamp: string;
+  data: null;
+  errors: Record<string, string[]> | null;
 }
 
-// Submits the contact form. Throws a ContactErrorResponse on 400, re-throws
-// unknown errors for the caller to handle as network failures.
 export async function submitContactForm(payload: ContactPayload): Promise<ContactResponse> {
-  const body = new FormData();
-  body.append('name', payload.name);
-  body.append('email', payload.email);
-  if (payload.company) body.append('company', payload.company);
-  body.append('urgency', payload.urgency);
-  body.append('category', payload.category);
-  body.append('message', payload.message);
-  payload.attachments?.forEach((file) => body.append('attachments', file));
-
-  const res = await fetch(`${API_BASE}/api/support/contact/`, {
+  const res = await fetch(`${API_BASE}/api/contact/`, {
     method: 'POST',
-    // No Content-Type header — browser sets multipart boundary automatically
-    body,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
   });
 
   const data = await res.json().catch(() => ({}));
 
-  if (res.status === 201 && data.status === 'success') {
+  if (res.status === 201 && data.success === true) {
     return data as ContactResponse;
   }
 
-  if (res.status === 400) {
-    throw data as ContactErrorResponse;
-  }
-
-  // Unexpected error — surface the message if available
+  // 400 validation error or 500 server error — both have the same envelope shape
   throw {
-    status: 'error',
+    success: false,
+    statusCode: res.status,
     message: data?.message || 'Something went wrong. Please try again.',
-    errors: {},
+    timestamp: data?.timestamp ?? null,
+    data: null,
+    errors: data?.errors ?? null,
   } as ContactErrorResponse;
 }

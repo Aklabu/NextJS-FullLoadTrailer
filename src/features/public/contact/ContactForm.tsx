@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { submitContactForm, type ContactErrorResponse } from '@/features/public/api/contactApi';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -12,6 +13,8 @@ interface FormState {
   fleetSize: string;
   message: string;
 }
+
+type FieldErrors = Partial<Record<keyof FormState, string>>;
 
 const FLEET_SIZES = [
   'Fleet Size (Number of Trucks)',
@@ -33,39 +36,80 @@ export default function ContactForm() {
     message: '',
   });
   const [status, setStatus] = useState<FormStatus>('idle');
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [generalError, setGeneralError] = useState('');
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormState]) {
-      setErrors((prev) => { const n = { ...prev }; delete n[name as keyof FormState]; return n; });
+    if (fieldErrors[name as keyof FormState]) {
+      setFieldErrors((prev) => { const n = { ...prev }; delete n[name as keyof FormState]; return n; });
     }
   }
 
   function validate(): boolean {
-    const next: Partial<Record<keyof FormState, string>> = {};
+    const next: FieldErrors = {};
     if (!form.fullName.trim()) next.fullName = 'Full name is required.';
     if (!form.phone.trim()) next.phone = 'Phone number is required.';
     if (!form.email.trim()) next.email = 'Email address is required.';
     if (!form.message.trim()) next.message = 'Please describe how we can help.';
-    setErrors(next);
+    setFieldErrors(next);
     return Object.keys(next).length === 0;
+  }
+
+  // Maps API error keys (snake_case) back to form state keys (camelCase)
+  function mapApiErrors(errors: Record<string, string[]>): FieldErrors {
+    const map: Record<string, keyof FormState> = {
+      full_name: 'fullName',
+      company_name: 'companyName',
+      phone: 'phone',
+      email: 'email',
+      fleet_size: 'fleetSize',
+      message: 'message',
+    };
+    const result: FieldErrors = {};
+    for (const [key, messages] of Object.entries(errors)) {
+      const formKey = map[key];
+      if (formKey) result[formKey] = messages[0];
+    }
+    return result;
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
+
     setStatus('submitting');
-    // TODO: wire to real API when endpoint details are provided
-    await new Promise((r) => setTimeout(r, 1000));
-    setStatus('success');
+    setFieldErrors({});
+    setGeneralError('');
+
+    try {
+      await submitContactForm({
+        full_name: form.fullName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        message: form.message.trim(),
+        ...(form.companyName.trim() && { company_name: form.companyName.trim() }),
+        ...(form.fleetSize && { fleet_size: form.fleetSize }),
+      });
+      setStatus('success');
+    } catch (err) {
+      const apiErr = err as ContactErrorResponse;
+      if (apiErr.statusCode === 400 && apiErr.errors && Object.keys(apiErr.errors).length) {
+        setFieldErrors(mapApiErrors(apiErr.errors));
+        setStatus('error');
+      } else {
+        setGeneralError(apiErr?.message || 'Something went wrong. Please try again.');
+        setStatus('error');
+      }
+    }
   }
 
   const isSubmitting = status === 'submitting';
 
+  // ── Success screen ──────────────────────────────────────────────────────────
   if (status === 'success') {
     return (
       <div className="rounded-2xl border p-10 text-center" style={{ background: '#fff', borderColor: '#e5e7eb' }}>
@@ -85,9 +129,20 @@ export default function ContactForm() {
     );
   }
 
+  // ── Form ───────────────────────────────────────────────────────────────────
   return (
     <div className="rounded-2xl border p-6 sm:p-8" style={{ background: '#fff', borderColor: '#e5e7eb' }}>
       <h2 className="text-xl font-bold mb-5" style={{ color: '#1a1a1a' }}>Send Us a Message</h2>
+
+      {/* General error banner */}
+      {status === 'error' && generalError && (
+        <div className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+          <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <p className="text-sm text-red-700">{generalError}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
 
@@ -104,9 +159,9 @@ export default function ContactForm() {
               disabled={isSubmitting}
               placeholder="Full Name *"
               className="w-full rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
-              style={{ borderColor: errors.fullName ? '#ef4444' : '#d1d5db' }}
+              style={{ borderColor: fieldErrors.fullName ? '#ef4444' : '#d1d5db' }}
             />
-            {errors.fullName && <p className="mt-1 text-xs text-red-500" role="alert">{errors.fullName}</p>}
+            {fieldErrors.fullName && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.fullName}</p>}
           </div>
           <div>
             <input
@@ -135,9 +190,9 @@ export default function ContactForm() {
               disabled={isSubmitting}
               placeholder="Phone Number *"
               className="w-full rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
-              style={{ borderColor: errors.phone ? '#ef4444' : '#d1d5db' }}
+              style={{ borderColor: fieldErrors.phone ? '#ef4444' : '#d1d5db' }}
             />
-            {errors.phone && <p className="mt-1 text-xs text-red-500" role="alert">{errors.phone}</p>}
+            {fieldErrors.phone && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.phone}</p>}
           </div>
           <div>
             <input
@@ -150,9 +205,9 @@ export default function ContactForm() {
               disabled={isSubmitting}
               placeholder="Email Address *"
               className="w-full rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
-              style={{ borderColor: errors.email ? '#ef4444' : '#d1d5db' }}
+              style={{ borderColor: fieldErrors.email ? '#ef4444' : '#d1d5db' }}
             />
-            {errors.email && <p className="mt-1 text-xs text-red-500" role="alert">{errors.email}</p>}
+            {fieldErrors.email && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.email}</p>}
           </div>
         </div>
 
@@ -187,9 +242,9 @@ export default function ContactForm() {
             rows={5}
             placeholder="How can we help you? *"
             className="w-full resize-y rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
-            style={{ borderColor: errors.message ? '#ef4444' : '#d1d5db' }}
+            style={{ borderColor: fieldErrors.message ? '#ef4444' : '#d1d5db' }}
           />
-          {errors.message && <p className="mt-1 text-xs text-red-500" role="alert">{errors.message}</p>}
+          {fieldErrors.message && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.message}</p>}
         </div>
 
         {/* Submit */}
@@ -209,7 +264,6 @@ export default function ContactForm() {
             </>
           ) : (
             <>
-              {/* Paper-plane icon */}
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
               </svg>
