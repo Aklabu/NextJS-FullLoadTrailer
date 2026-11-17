@@ -9,18 +9,18 @@ export default function HeroSection() {
 
   return (
     <header
-      className="text-center px-6"
+      className="text-center px-4 sm:px-6"
       style={{
-        padding: '90px 24px 60px',
+        padding: '60px 16px 48px',
         background:
           'radial-gradient(circle at 30% 20%, #fbe3c4, transparent 60%), radial-gradient(circle at 70% 30%, #f6d9d3, transparent 60%), #fdf6ee',
       }}
     >
       {/* Headline */}
       <h1
+        className="text-[clamp(28px,6vw,52px)]"
         style={{
           fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 52,
           fontWeight: 400,
           lineHeight: 1.15,
           color: '#2b2420',
@@ -56,7 +56,7 @@ export default function HeroSection() {
 
       {/* Role pills */}
       <div
-        className="inline-flex gap-3"
+        className="inline-flex flex-col sm:flex-row gap-2 sm:gap-3"
         style={{
           background: '#fff',
           border: '1px solid #ece1d3',
@@ -72,26 +72,16 @@ export default function HeroSection() {
           type="button"
           onClick={() => setActiveRole('shipper')}
           aria-pressed={activeRole === 'shipper'}
-          className="flex items-center gap-2"
+          className="flex items-center justify-center gap-1.5 px-3 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold border-none cursor-pointer transition-all"
           style={{
-            padding: '10px 20px',
-            borderRadius: 999,
-            fontSize: 14,
-            fontWeight: 600,
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'background 0.2s, color 0.2s',
             background: activeRole === 'shipper' ? '#fc3f07' : 'transparent',
             color: activeRole === 'shipper' ? '#fff' : '#7a7168',
           }}
         >
-          🏠 Moving Companies &amp; Brokers
+          🏠 <span>Moving Companies &amp; Brokers</span>
           <span
+            className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
             style={{
-              fontSize: 10,
-              fontWeight: 700,
-              padding: '2px 6px',
-              borderRadius: 999,
               background: activeRole === 'shipper' ? 'rgba(255,255,255,0.25)' : '#fbeee0',
               color: activeRole === 'shipper' ? '#fff' : '#7a7168',
             }}
@@ -104,26 +94,16 @@ export default function HeroSection() {
           type="button"
           onClick={() => setActiveRole('carrier')}
           aria-pressed={activeRole === 'carrier'}
-          className="flex items-center gap-2"
+          className="flex items-center justify-center gap-1.5 px-3 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold border-none cursor-pointer transition-all"
           style={{
-            padding: '10px 20px',
-            borderRadius: 999,
-            fontSize: 14,
-            fontWeight: 600,
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'background 0.2s, color 0.2s',
             background: activeRole === 'carrier' ? '#fc3f07' : 'transparent',
             color: activeRole === 'carrier' ? '#fff' : '#7a7168',
           }}
         >
-          🚚 HHG Carriers &amp; Owner-Operators
+          🚚 <span>HHG Carriers &amp; Owner-Operators</span>
           <span
+            className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
             style={{
-              fontSize: 10,
-              fontWeight: 700,
-              padding: '2px 6px',
-              borderRadius: 999,
               background: activeRole === 'carrier' ? 'rgba(255,255,255,0.25)' : '#fbeee0',
               color: activeRole === 'carrier' ? '#fff' : '#7a7168',
             }}
