@@ -56,8 +56,13 @@ function Logo({ isLoggedIn }: { isLoggedIn: boolean }) {
         className="rounded-lg"
         aria-hidden="true"
       />
-      <span className="text-[15px] font-extrabold tracking-tight" style={{ fontFamily: 'system-ui, sans-serif' }}>
-        <span style={{ color: '#ffffff' }}>FullTrailerLoad</span><span style={{ color: '#ff3d03' }}>.com</span>
+      <span className="flex flex-col leading-none">
+        <span className="text-[15px] font-extrabold tracking-tight" style={{ fontFamily: 'system-ui, sans-serif' }}>
+          <span style={{ color: '#ffffff' }}>FullTrailerLoad</span><span style={{ color: '#ff3d03' }}>.com</span>
+        </span>
+        <span className="text-[7px] sm:text-[9px] font-semibold tracking-widest mt-0.5" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em' }}>
+          LOADS • BIDS • MOVING • TRANSPORTATION
+        </span>
       </span>
     </Link>
   );
@@ -279,7 +284,7 @@ export default function NavbarClient({ user, notificationCount }: NavbarClientPr
               </Link>
               <Link
                 href="/auth/signup"
-                className="inline-flex items-center px-4 py-1.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
+                className="hidden sm:inline-flex items-center px-4 py-1.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
                 style={{ background: '#ff3d03', color: '#1A1953' }}
               >
                 Sign Up

@@ -8,6 +8,7 @@ export interface NavItem {
 
 // Logged-out centre links
 export const publicNavItems: NavItem[] = [
+  { label: 'Home', href: '/' },
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'FTL Assist', href: '/ftl-assist' },
   { label: 'Pricing', href: '/pricing' },
