@@ -12,12 +12,12 @@ const methods = [
     label: 'OPERATIONAL LOGISTICS',
     value: 'support@fulltrailerload.com',
     description:
-      'Guaranteed ticketing response within 2 business hours. Routing directly to freight resolution specialists.',
+      'Guaranteed ticketing response within 2 business hours. Routing directly to our moving operations specialists.',
     badge: '‹ 2h SLA',
   },
   {
     icon: '🔗',
-    label: 'CENTRAL FREIGHT CORRIDOR',
+    label: 'CENTRAL MOVING CORRIDOR',
     value: 'Chicago, IL (Midwest Hub)',
     description:
       'Physical operations control room & compliance hub. Carrier vetting and regional escort coordination center.',

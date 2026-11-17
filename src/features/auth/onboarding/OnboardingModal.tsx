@@ -164,7 +164,7 @@ function buildSlides(role: UserRole): Slide[] {
       step: 1,
       badge: 'TIER 1 · FREE',
       headline: 'The Bulletin Board',
-      body: 'Start by posting or browsing informal freight listings. No pricing, no contracts — just verified peers connecting on available loads and capacity. Perfect for getting familiar with the network.',
+      body: 'Start by posting or browsing informal move listings. No pricing, no contracts — just verified peers connecting on available loads and capacity. Perfect for getting familiar with the network.',
       visual: <BulletinVisual />,
       tip: 'Basic verification gets you here. No commitment needed.',
     },

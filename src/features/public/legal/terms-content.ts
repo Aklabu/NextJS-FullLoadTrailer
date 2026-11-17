@@ -9,7 +9,7 @@ export const termsContent = {
   sections: [
     {
       heading: 'Who We Are',
-      body: 'FullTrailerLoad is a freight exchange platform connecting verified shippers, moving companies, freight brokers, and commercial carriers in the United States. The Platform operates two service tiers: a Tier 1 Bulletin Board for informal community load and capacity listings, and a Tier 2 Marketplace for structured bidding, counteroffers, booking confirmations, and job-linked in-platform messaging.',
+      body: 'FullTrailerLoad is a household moving marketplace connecting verified shippers, moving companies, moving brokers, and commercial carriers in the United States. The Platform operates two service tiers: a Tier 1 Bulletin Board for informal community load and capacity listings, and a Tier 2 Marketplace for structured bidding, counteroffers, booking confirmations, and job-linked in-platform messaging.',
     },
     {
       heading: 'Eligibility and Account Registration',
@@ -29,7 +29,7 @@ export const termsContent = {
     },
     {
       heading: 'Anti-Disintermediation',
-      body: 'A core principle of FullTrailerLoad is that deals stay on-platform. You agree not to share personal contact details with counterparties before the Platform authorises disclosure, not to solicit or accept freight business from counterparties discovered through FullTrailerLoad outside of the Platform, and not to direct counterparties to use competing platforms or off-platform channels for transactions that originated on FullTrailerLoad. Violations may result in immediate account suspension.',
+      body: 'A core principle of FullTrailerLoad is that deals stay on-platform. You agree not to share personal contact details with counterparties before the Platform authorises disclosure, not to solicit or accept moving business from counterparties discovered through FullTrailerLoad outside of the Platform, and not to direct counterparties to use competing platforms or off-platform channels for transactions that originated on FullTrailerLoad. Violations may result in immediate account suspension.',
     },
     {
       heading: 'Reviews and Ratings',
@@ -49,7 +49,7 @@ export const termsContent = {
     },
     {
       heading: 'Disclaimers and Limitation of Liability',
-      body: 'The Platform is provided "as is" without warranties of any kind. FullTrailerLoad does not guarantee the accuracy of carrier insurance or authority data, the reliability of any user, or the successful completion of any freight transaction. To the maximum extent permitted by law, FullTrailerLoad\'s aggregate liability to you for any claim arising out of your use of the Platform shall not exceed the total fees you paid to FullTrailerLoad in the 12 months preceding the claim. FullTrailerLoad shall not be liable for indirect, incidental, consequential, or punitive damages.',
+      body: 'The Platform is provided "as is" without warranties of any kind. FullTrailerLoad does not guarantee the accuracy of carrier insurance or authority data, the reliability of any user, or the successful completion of any moving transaction. To the maximum extent permitted by law, FullTrailerLoad\'s aggregate liability to you for any claim arising out of your use of the Platform shall not exceed the total fees you paid to FullTrailerLoad in the 12 months preceding the claim. FullTrailerLoad shall not be liable for indirect, incidental, consequential, or punitive damages.',
     },
     {
       heading: 'Termination',

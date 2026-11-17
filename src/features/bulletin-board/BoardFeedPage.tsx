@@ -13,7 +13,7 @@ const MOCK_POSTS: BoardPost[] = [
     equipmentType: 'moving_trailer', cubicFeet: 1200, pickupDate: '2026-09-25',
     description: 'Full trailer of household goods. Need reliable carrier with experience in residential moves.',
     postedAt: '2026-09-19T08:30:00Z',
-    poster: { id: 'p1', companyName: 'Acme Freight LLC', verificationStatus: 'verified' },
+    poster: { id: 'p1', companyName: 'Acme Moving LLC', verificationStatus: 'verified' },
   },
   {
     id: '2', postType: 'truck_trailer_available', origin: 'Atlanta, GA', destination: 'Nashville, TN',
@@ -41,7 +41,7 @@ const MOCK_POSTS: BoardPost[] = [
     equipmentType: 'box_truck', cubicFeet: 350, pickupDate: '2026-09-23',
     description: 'Small business inventory shipment. Time-sensitive.',
     postedAt: '2026-09-17T09:00:00Z',
-    poster: { id: 'p5', companyName: 'Pacific Freight Co.', verificationStatus: 'basic' },
+    poster: { id: 'p5', companyName: 'Pacific Moving Co.', verificationStatus: 'basic' },
   },
   {
     id: '6', postType: 'load_available', origin: 'Miami, FL', destination: 'Orlando, FL',

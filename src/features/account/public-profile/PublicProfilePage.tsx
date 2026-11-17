@@ -38,7 +38,7 @@ function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'lg
 
 const ROLE_LABELS: Record<UserRole, string> = {
   shipper: 'Shipper / Moving Co.',
-  broker: 'Freight Broker',
+  broker: 'Moving Broker',
   carrier: 'Carrier / Owner-Op',
 };
 

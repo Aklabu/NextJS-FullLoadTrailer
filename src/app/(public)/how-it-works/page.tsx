@@ -11,7 +11,7 @@ import {
 export const metadata: Metadata = {
   title: 'How It Works — FullTrailerLoad',
   description:
-    'Discover how FullTrailerLoad powers seamless freight execution — from community bulletin board spot dispatching to legally binding digital rate confirmations.',
+    'Discover how FullTrailerLoad powers seamless household moving — from community bulletin board spot dispatching to legally binding digital rate confirmations.',
 };
 
 export default function HowItWorksPage() {

@@ -86,7 +86,7 @@ function Skeleton() {
 
 const ROLE_LABELS: Record<UserRole, string> = {
   shipper: 'Shipper / Moving Company',
-  broker: 'Freight Broker',
+  broker: 'Moving Broker',
   carrier: 'Carrier / Owner-Operator',
 };
 
@@ -249,7 +249,7 @@ export default function ProfilePage() {
 
           <Field id="name" label="Company / Business name"
             value={fields.name} onChange={(v) => setField('name', v)}
-            placeholder="Acme Freight LLC" />
+            placeholder="Acme Moving LLC" />
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Email is locked — not editable per API spec */}

@@ -27,7 +27,7 @@ export default function PricingCta() {
             marginBottom: 24,
           }}
         >
-          🚀 CHOOSE YOUR PATH TO DIRECT FREIGHT
+          🚀 CHOOSE YOUR PATH TO DIRECT MOVING
         </div>
 
         <h2
@@ -41,11 +41,11 @@ export default function PricingCta() {
           }}
         >
           Ready to streamline your{' '}
-          <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>freight execution?</span>
+          <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>moving operations?</span>
         </h2>
 
         <p style={{ color: '#4b5563', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.6, fontSize: 15 }}>
-          Join thousands of verified shippers, brokers, and motor carriers moving freight daily.
+          Join thousands of verified shippers, brokers, and motor carriers moving households daily.
         </p>
 
         <div

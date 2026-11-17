@@ -56,7 +56,7 @@ export default function ContactHero() {
           lineHeight: 1.7,
         }}
       >
-        Whether you need onboarding assistance, transaction verification help, or custom fleet solutions, our freight operations team is standing by across all key transit corridors.
+        Whether you need onboarding assistance, transaction verification help, or custom fleet solutions, our moving operations team is standing by across all key transit corridors.
       </p>
 
       {/* Status pills */}

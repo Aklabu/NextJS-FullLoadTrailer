@@ -49,7 +49,7 @@ export default function PricingHero() {
           marginBottom: 24,
         }}
       >
-        Simple, Scalable Freight Tiers.
+        Simple, Scalable Moving Tiers.
         <br />
         <span
           style={{

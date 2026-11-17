@@ -5,7 +5,7 @@ export const privacyContent = {
   title: 'Privacy Policy',
   effectiveDate: 'September 19, 2026',
   intro:
-    'FullTrailerLoad ("we", "us", or "our") is committed to protecting the privacy of the businesses and individuals who use our freight exchange platform. This Privacy Policy explains what information we collect, how we use and protect it, and the choices you have regarding your data. By using the Platform you agree to the practices described here.',
+    'FullTrailerLoad ("we", "us", or "our") is committed to protecting the privacy of the businesses and individuals who use our household moving marketplace. This Privacy Policy explains what information we collect, how we use and protect it, and the choices you have regarding your data. By using the Platform you agree to the practices described here.',
   sections: [
     {
       heading: 'Information We Collect',

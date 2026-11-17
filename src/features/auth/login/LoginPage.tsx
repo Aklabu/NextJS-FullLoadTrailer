@@ -166,7 +166,7 @@ export default function LoginPage() {
       </Link>
       <div>
         <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-white/75">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />FREIGHT EXCHANGE PLATFORM
+          <span className="h-1.5 w-1.5 rounded-full bg-[#fc3f07]" />HOUSEHOLD MOVING PLATFORM
         </span>
         <h2 className="mt-5 text-[clamp(28px,3vw,38px)] font-normal leading-[1.2] text-white" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
           Full Trailer Loads.<br />Real Carriers.<br /><span className="italic text-[#fc3f07]">Zero Friction.</span>

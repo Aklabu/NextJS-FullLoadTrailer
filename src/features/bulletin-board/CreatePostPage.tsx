@@ -184,7 +184,7 @@ export default function CreatePostPage() {
                     {type === 'load_available' ? 'Load Available' : 'Capacity Available'}
                   </span>
                   <span className="mt-0.5 text-xs text-neutral-400">
-                    {type === 'load_available' ? 'I have freight to move' : 'I have trailer space'}
+                    {type === 'load_available' ? 'I have a move to cover' : 'I have trailer space'}
                   </span>
                 </button>
               ))}

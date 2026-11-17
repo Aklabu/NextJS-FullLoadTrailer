@@ -117,7 +117,7 @@ export default function ContactForm() {
       });
       setSuccessMessage(
         res.message ||
-        'Our freight operations team will respond within 2 business hours. Check your email for a ticket confirmation.',
+        'Our moving operations team will respond within 2 business hours. Check your email for a ticket confirmation.',
       );
       setStatus('success');
     } catch (err) {

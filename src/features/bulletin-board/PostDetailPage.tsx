@@ -19,7 +19,7 @@ const MOCK_POST: BoardPost = {
   postedAt: '2026-09-19T08:30:00Z',
   poster: {
     id: 'p1',
-    companyName: 'Acme Freight LLC',
+    companyName: 'Acme Moving LLC',
     verificationStatus: 'verified',
   },
 };

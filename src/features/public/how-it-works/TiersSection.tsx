@@ -185,7 +185,7 @@ export default function TiersSection() {
                 color: '#7a7168',
               }}
             >
-              <span>Ideal for: Dedicated Freight Lanes &amp; Enterprise Fleets</span>
+              <span>Ideal for: Dedicated Moving Lanes &amp; Enterprise Fleets</span>
               <span
                 style={{
                   background: '#fc3f07',

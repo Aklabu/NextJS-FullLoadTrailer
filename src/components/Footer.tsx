@@ -37,7 +37,7 @@ export default function Footer({ isLoggedIn = false }: FooterProps) {
           </Link>
 
           <p className="text-sm sm:text-right max-w-xs sm:max-w-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            The freight community that keeps deals on-platform — from bulletin board to booked load.
+            The moving industry community that keeps deals on-platform — from bulletin board to booked load.
           </p>
         </div>
 

@@ -59,7 +59,7 @@ export default function StepCompanyInfo({ company, errors, onChange }: Props) {
       <Field
         id="companyName" label="Company / Business name"
         value={company.companyName} onChange={(v) => onChange('companyName', v)}
-        error={errors.companyName} placeholder="Acme Freight LLC"
+        error={errors.companyName} placeholder="Acme Moving LLC"
         autoComplete="organization"
       />
 

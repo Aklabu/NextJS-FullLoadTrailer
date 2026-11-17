@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FullTrailerLoad — Freight Marketplace",
+  title: "FullTrailerLoad — Household Moving Marketplace",
   description:
-    "The freight community that keeps deals on-platform — from bulletin board to booked load.",
+    "The moving industry community that keeps deals on-platform — from bulletin board to booked load.",
 };
 
 // Root layout is the HTML shell only.

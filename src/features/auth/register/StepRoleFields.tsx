@@ -39,7 +39,7 @@ function Field({
 
 const ROLE_LABELS: Record<Role, string> = {
   shipper: 'Shipper / Moving Company',
-  broker: 'Freight Broker',
+  broker: 'Moving Broker',
   carrier: 'Carrier / Owner-Operator',
 };
 

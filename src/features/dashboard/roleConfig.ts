@@ -38,7 +38,7 @@ export const roleConfigs: Record<UserRole, RoleConfig> = {
   },
   broker: {
     role: 'broker',
-    greeting: 'Manage your freight operations',
+    greeting: 'Manage your moving operations',
     quickActions: [
       {
         label: 'Post a Load',

@@ -43,7 +43,7 @@ export default function CtaSection() {
           >
             Ready to accelerate your{' '}
             <span style={{ color: '#fc3f07' }}>
-              freight
+              moving
               <br />
               workflows
             </span>
@@ -61,7 +61,7 @@ export default function CtaSection() {
               lineHeight: 1.6,
             }}
           >
-            Join thousands of verified shippers, freight brokers, and commercial carriers moving high-density freight without phone tag.
+            Join thousands of verified shippers, moving brokers, and commercial carriers coordinating household moves without phone tag.
           </p>
 
           {/* Buttons */}

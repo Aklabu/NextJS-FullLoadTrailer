@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = {
   title: 'Pricing — FullTrailerLoad',
   description:
-    'Simple, scalable freight tiers. Start free on the community bulletin board or unlock the full binding digital marketplace with FMCSA compliance and escrow protection.',
+    'Simple, scalable moving tiers. Start free on the community bulletin board or unlock the full binding digital marketplace with FMCSA compliance and escrow protection.',
 };
 
 export default function PricingPage() {
