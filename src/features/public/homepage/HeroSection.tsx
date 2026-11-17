@@ -1,9 +1,5 @@
-'use client';
-
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 // Icon: building (moving company)
 function BuildingIcon() {
@@ -44,16 +40,6 @@ function ArrowCircle({ dark }: { dark?: boolean }) {
 }
 
 export default function HeroSection() {
-  const [jobId, setJobId] = useState('');
-  const router = useRouter();
-
-  function handleTrack(e: React.FormEvent) {
-    e.preventDefault();
-    if (jobId.trim()) {
-      router.push(`/tracking?job_id=${encodeURIComponent(jobId.trim())}`);
-    }
-  }
-
   return (
     <section className="relative mx-auto w-full max-w-[1100px] overflow-hidden rounded-[20px] sm:rounded-none md:rounded-[20px]" style={{ minHeight: 'calc(100vh - 120px)' }}>
 
@@ -88,10 +74,8 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Headline + body + track widget row */}
-        <div className="mb-8 flex flex-wrap items-start justify-between gap-8">
-
-          {/* Left — headline + body */}
+        {/* Headline + body */}
+        <div className="mb-8">
           <div className="max-w-[480px]">
             <h1
               className="mb-4 text-[clamp(28px,3.8vw,52px)] font-normal leading-[1.15] text-white"
@@ -109,39 +93,6 @@ export default function HeroSection() {
               moves in one place.
             </p>
           </div>
-
-          {/* Right — Track widget */}
-          <div
-            className="w-full shrink-0 rounded-[14px] border border-white/[0.12] p-5 backdrop-blur-md sm:w-auto sm:min-w-[260px] sm:max-w-[320px]"
-            style={{ background: 'rgba(20,12,8,0.72)' }}
-          >
-            <div className="mb-3.5 flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.8px] text-white/85">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 shrink-0" viewBox="0 0 20 20" fill="#fc3f07" aria-hidden="true">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-                Track a Move by Job ID
-              </span>
-              <span className="text-[11px] text-white/45">Public status lookup</span>
-            </div>
-
-            <form onSubmit={handleTrack} className="flex gap-2">
-              <input
-                type="text"
-                value={jobId}
-                onChange={(e) => setJobId(e.target.value)}
-                placeholder="Enter Job # e.g FTL-8492"
-                className="min-w-0 flex-1 rounded-[7px] bg-white/95 px-3.5 py-2.5 font-mono text-[13px] text-neutral-900 placeholder:text-neutral-400 outline-none"
-              />
-              <button
-                type="submit"
-                className="shrink-0 cursor-pointer rounded-[7px] border-none bg-[#fc3f07] px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#d93506]"
-              >
-                Track →
-              </button>
-            </form>
-          </div>
-
         </div>
 
         {/* Spacer to push cards to bottom */}
