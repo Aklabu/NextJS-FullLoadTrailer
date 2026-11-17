@@ -39,7 +39,7 @@ export default function PricingStrip() {
 
         {/* Right: Call for Pricing button */}
         <a
-          href="tel:18005550000"
+          href="tel:18009968658"
           className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90 shrink-0 w-full sm:w-auto justify-center"
           style={{ background: '#fc3f07' }}
         >
