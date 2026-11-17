@@ -27,7 +27,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section style={{ background: '#f8fafc', padding: '72px 24px' }}>
+    <section style={{ background: '#f8fafc', padding: '72px 24px' }} className="ftl-steps-section">
       <div style={{ maxWidth: 1100, margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
@@ -69,9 +69,10 @@ export default function HowItWorksSection() {
                 <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{step.body}</p>
               </div>
 
-              {/* Arrow connector (not after last) */}
+              {/* Arrow connector (not after last) — hidden on mobile where grid wraps */}
               {i < steps.length - 1 && (
                 <div
+                  className="ftl-step-arrow"
                   style={{
                     color: '#cbd5e1',
                     fontSize: 22,
@@ -93,6 +94,8 @@ export default function HowItWorksSection() {
       <style>{`
         @media (max-width: 768px) {
           .ftl-assist-steps-grid { grid-template-columns: 1fr 1fr !important; }
+          .ftl-step-arrow { display: none !important; }
+          .ftl-steps-section { padding: 48px 16px !important; }
         }
         @media (max-width: 480px) {
           .ftl-assist-steps-grid { grid-template-columns: 1fr !important; }

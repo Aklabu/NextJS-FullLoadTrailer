@@ -30,7 +30,7 @@ const services = [
 
 export default function WhatWeDoSection() {
   return (
-    <section style={{ background: '#ffffff', padding: '72px 24px' }}>
+    <section style={{ background: '#ffffff', padding: '72px 24px' }} className="ftl-what-section">
       <div style={{ maxWidth: 1100, margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
@@ -113,6 +113,10 @@ export default function WhatWeDoSection() {
         }
         @media (max-width: 640px) {
           .ftl-assist-services-grid { grid-template-columns: 1fr 1fr !important; }
+          .ftl-what-section { padding: 48px 16px !important; }
+        }
+        @media (max-width: 400px) {
+          .ftl-assist-services-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

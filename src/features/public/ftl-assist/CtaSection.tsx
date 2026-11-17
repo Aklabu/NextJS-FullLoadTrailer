@@ -30,6 +30,7 @@ export default function CtaSection() {
 
       {/* Content */}
       <div
+        className="ftl-cta-content"
         style={{
           position: 'relative',
           zIndex: 1,
@@ -40,7 +41,7 @@ export default function CtaSection() {
           textAlign: 'left',
         }}
       >
-        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 30, fontWeight: 700, color: '#ffffff', marginBottom: 10 }}>
+        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(22px, 4vw, 30px)', fontWeight: 700, color: '#ffffff', marginBottom: 10 }}>
           Ready to Let Us Handle the Work?
         </h2>
         <p style={{ color: '#c8d8dc', fontSize: 15, marginBottom: 28, maxWidth: 500 }}>
@@ -64,6 +65,12 @@ export default function CtaSection() {
           Request FTL Assist →
         </Link>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .ftl-cta-content { padding: 40px 20px !important; }
+        }
+      `}</style>
     </section>
   );
 }

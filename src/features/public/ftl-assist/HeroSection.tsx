@@ -27,7 +27,7 @@ export default function HeroSection() {
       }}
     >
       {/* ── Main two-column row ── */}
-      <div
+      <div className="ftl-hero-row"
         style={{
           display: 'flex',
           minHeight: '56vh',
@@ -36,13 +36,11 @@ export default function HeroSection() {
         }}
       >
         {/* ── LEFT: image, 60% wide, bleeds slightly past its own boundary ── */}
-        <div
+        <div className="ftl-hero-image-col"
           style={{
-            // 60% + extra 120px so the gradient has room to dissolve
             width: 'calc(60% + 120px)',
             flexShrink: 0,
             position: 'relative',
-            // Pull right edge back so it doesn't push content — overlap is handled by content z-index
             marginRight: '-120px',
             zIndex: 0,
           }}
@@ -53,11 +51,10 @@ export default function HeroSection() {
             fill
             priority
             style={{ objectFit: 'cover', objectPosition: 'center center' }}
-            sizes="65vw"
+            sizes="(max-width: 768px) 100vw, 65vw"
           />
 
-          {/* Gradient overlay: fully transparent on left, fully opaque BG on right edge.
-              The opaque stop matches the section background exactly — zero seam. */}
+          {/* Gradient overlay */}
           <div
             aria-hidden="true"
             style={{
@@ -89,7 +86,7 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* ── RIGHT: content, 40% wide, sits above the bleed zone ── */}
+        {/* ── RIGHT: content ── */}
         <div
           style={{
             flex: 1,
@@ -282,7 +279,27 @@ export default function HeroSection() {
           0%, 100% { box-shadow: 0 0 0 3px rgba(252,63,7,0.25); }
           50%       { box-shadow: 0 0 0 7px rgba(252,63,7,0.06); }
         }
-        @media (max-width: 900px) {
+
+        /* ── Mobile: stack image above content ── */
+        @media (max-width: 768px) {
+          .ftl-hero-row {
+            flex-direction: column !important;
+            min-height: unset !important;
+          }
+          .ftl-hero-image-col {
+            width: 100% !important;
+            margin-right: 0 !important;
+            height: 240px;
+            flex-shrink: 0;
+            position: relative !important;
+          }
+          .ftl-hero-content {
+            padding: 32px 20px 40px !important;
+            gap: 20px !important;
+          }
+        }
+
+        @media (max-width: 900px) and (min-width: 769px) {
           .ftl-hero-content { padding: 48px 24px 40px !important; }
         }
       `}</style>

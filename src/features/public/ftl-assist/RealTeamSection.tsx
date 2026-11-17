@@ -12,7 +12,7 @@ export default function RealTeamSection() {
         fontFamily: 'system-ui, -apple-system, sans-serif',
       }}
     >
-      <div
+      <div className="ftl-team-row"
         style={{
           display: 'flex',
           minHeight: 420,
@@ -20,7 +20,7 @@ export default function RealTeamSection() {
         }}
       >
         {/* ── LEFT: image bleeds 40px past container into the content zone ── */}
-        <div
+        <div className="ftl-team-image-col"
           style={{
             width: 'calc(42% + 100px)',
             flexShrink: 0,
@@ -122,7 +122,23 @@ export default function RealTeamSection() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
+          .ftl-team-row {
+            flex-direction: column !important;
+            min-height: unset !important;
+          }
+          .ftl-team-image-col {
+            width: 100% !important;
+            margin-right: 0 !important;
+            height: 220px;
+            flex-shrink: 0;
+            position: relative !important;
+          }
+          .ftl-team-content {
+            padding: 32px 20px 40px !important;
+          }
+        }
+        @media (max-width: 900px) and (min-width: 769px) {
           .ftl-team-content { padding: 40px 24px !important; }
         }
       `}</style>

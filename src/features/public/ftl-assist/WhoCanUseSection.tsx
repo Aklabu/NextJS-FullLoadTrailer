@@ -41,7 +41,7 @@ const roles = [
 
 export default function WhoCanUseSection() {
   return (
-    <section style={{ background: '#f8fafc', padding: '72px 24px' }}>
+    <section style={{ background: '#f8fafc', padding: '72px 24px' }} className="ftl-roles-section">
       <div style={{ maxWidth: 1100, margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: 12 }}>
@@ -131,6 +131,7 @@ export default function WhoCanUseSection() {
       <style>{`
         @media (max-width: 768px) {
           .ftl-assist-roles-grid { grid-template-columns: 1fr !important; }
+          .ftl-roles-section { padding: 48px 16px !important; }
         }
       `}</style>
     </section>
