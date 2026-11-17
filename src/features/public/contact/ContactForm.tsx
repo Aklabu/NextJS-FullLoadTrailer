@@ -1,392 +1,221 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import {
-  submitContactForm,
-  type Urgency,
-  type Category,
-  type ContactErrorResponse,
-} from '@/features/public/api/contactApi';
+import { useState } from 'react';
+
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 interface FormState {
-  name: string;
+  fullName: string;
+  companyName: string;
+  phone: string;
   email: string;
-  company: string;
-  urgency: Urgency;
-  category: Category;
+  fleetSize: string;
   message: string;
 }
 
-interface FieldErrors {
-  [key: string]: string;
-}
-
-const CATEGORIES: { value: Category; label: string }[] = [
-  { value: 'account_verification', label: 'Account & SAFER / COI Verification' },
-  { value: 'rate_dispute', label: 'Rate Confirmation Dispute' },
-  { value: 'billing_escrow', label: 'Billing & Escrow' },
-  { value: 'technical_issue', label: 'Technical Issue' },
+const FLEET_SIZES = [
+  'Fleet Size (Number of Trucks)',
+  '1–2 Trucks',
+  '3–5 Trucks',
+  '6–10 Trucks',
+  '11–25 Trucks',
+  '26–50 Trucks',
+  '50+ Trucks',
 ];
-
-const MAX_FILES = 5;
-const MAX_FILE_SIZE_MB = 25;
-const ACCEPTED_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
 
 export default function ContactForm() {
   const [form, setForm] = useState<FormState>({
-    name: '',
+    fullName: '',
+    companyName: '',
+    phone: '',
     email: '',
-    company: '',
-    urgency: 'normal',
-    category: 'account_verification',
+    fleetSize: '',
     message: '',
   });
-  const [files, setFiles] = useState<File[]>([]);
   const [status, setStatus] = useState<FormStatus>('idle');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [generalError, setGeneralError] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Clear the field error on change
-    if (fieldErrors[name]) {
-      setFieldErrors((prev) => { const n = { ...prev }; delete n[name]; return n; });
+    if (errors[name as keyof FormState]) {
+      setErrors((prev) => { const n = { ...prev }; delete n[name as keyof FormState]; return n; });
     }
   }
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const selected = Array.from(e.target.files ?? []);
-    addFiles(selected);
-    // Reset input so same file can be re-added after removal
-    e.target.value = '';
-  }
-
-  function addFiles(selected: File[]) {
-    setFieldErrors((prev) => { const n = { ...prev }; delete n.attachments; return n; });
-    const combined = [...files, ...selected];
-
-    // Client-side guards — mirror API validation
-    if (combined.length > MAX_FILES) {
-      setFieldErrors((prev) => ({ ...prev, attachments: `You may upload at most ${MAX_FILES} files.` }));
-      return;
-    }
-    for (const file of selected) {
-      if (!ACCEPTED_TYPES.includes(file.type)) {
-        setFieldErrors((prev) => ({ ...prev, attachments: 'Only PDF, PNG, and JPG files are accepted.' }));
-        return;
-      }
-      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-        setFieldErrors((prev) => ({ ...prev, attachments: `File size must not exceed ${MAX_FILE_SIZE_MB}MB.` }));
-        return;
-      }
-    }
-    setFiles(combined);
-  }
-
-  function removeFile(index: number) {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-    setFieldErrors((prev) => { const n = { ...prev }; delete n.attachments; return n; });
-  }
-
-  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    addFiles(Array.from(e.dataTransfer.files));
+  function validate(): boolean {
+    const next: Partial<Record<keyof FormState, string>> = {};
+    if (!form.fullName.trim()) next.fullName = 'Full name is required.';
+    if (!form.phone.trim()) next.phone = 'Phone number is required.';
+    if (!form.email.trim()) next.email = 'Email address is required.';
+    if (!form.message.trim()) next.message = 'Please describe how we can help.';
+    setErrors(next);
+    return Object.keys(next).length === 0;
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!validate()) return;
     setStatus('submitting');
-    setFieldErrors({});
-    setGeneralError('');
-
-    try {
-      const res = await submitContactForm({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        company: form.company.trim() || undefined,
-        urgency: form.urgency,
-        category: form.category,
-        message: form.message.trim(),
-        attachments: files.length ? files : undefined,
-      });
-      setSuccessMessage(
-        res.message ||
-        'Our moving operations team will respond within 2 business hours. Check your email for a ticket confirmation.',
-      );
-      setStatus('success');
-    } catch (err) {
-      const apiErr = err as ContactErrorResponse;
-      if (apiErr?.status === 'error' && apiErr.errors && Object.keys(apiErr.errors).length) {
-        const mapped: FieldErrors = {};
-        for (const [key, val] of Object.entries(apiErr.errors)) {
-          mapped[key] = Array.isArray(val) ? val[0] : String(val);
-        }
-        setFieldErrors(mapped);
-      } else {
-        setGeneralError(apiErr?.message || 'Unable to connect. Check your internet and try again.');
-      }
-      setStatus('error');
-    }
+    // TODO: wire to real API when endpoint details are provided
+    await new Promise((r) => setTimeout(r, 1000));
+    setStatus('success');
   }
 
   const isSubmitting = status === 'submitting';
-  const charCount = form.message.length;
 
-  // ── Success screen ──────────────────────────────────────────────────────────
   if (status === 'success') {
     return (
-      <div className="rounded-3xl p-12 text-center" style={{ background: '#f7ece0' }}>
+      <div className="rounded-2xl border p-10 text-center" style={{ background: '#fff', borderColor: '#e5e7eb' }}>
         <div
-          className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full"
+          className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full"
           style={{ background: '#d1fae5' }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3
-          className="mb-2 text-2xl font-normal text-neutral-900"
-          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-        >
-          Message Received
-        </h3>
-        <p className="mx-auto max-w-sm text-sm leading-relaxed text-neutral-500">
-          {successMessage}
+        <h3 className="mb-2 text-xl font-bold text-neutral-900">Message Sent!</h3>
+        <p className="text-sm text-neutral-500">
+          Our team will respond within 2 business hours. Check your email for a confirmation.
         </p>
       </div>
     );
   }
 
-  // ── Form ────────────────────────────────────────────────────────────────────
   return (
-    <div className="rounded-3xl p-8" style={{ background: '#f7ece0', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <div className="mb-1 text-[11px] font-bold uppercase tracking-[1.5px]" style={{ color: '#d93506' }}>
-        INQUIRY DISPATCH
-      </div>
-      <h2
-        className="mb-6 text-2xl font-normal text-neutral-900"
-        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-      >
-        Send a Support Request
-      </h2>
+    <div className="rounded-2xl border p-6 sm:p-8" style={{ background: '#fff', borderColor: '#e5e7eb' }}>
+      <h2 className="text-xl font-bold mb-5" style={{ color: '#1a1a1a' }}>Send Us a Message</h2>
 
-      {/* General error banner */}
-      {status === 'error' && generalError && (
-        <div className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5">
-          <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-4 w-4 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-          </svg>
-          <p className="text-sm text-red-700">{generalError}</p>
-        </div>
-      )}
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-5">
-
-        {/* Name + Email */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {/* Row 1: Full Name + Company Name */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="cf-name" className="mb-1.5 block text-sm font-medium text-neutral-700">
-              Full Name <span className="text-[#fc3f07]">*</span>
-            </label>
             <input
-              id="cf-name" name="name" type="text" required
-              value={form.name} onChange={handleChange} disabled={isSubmitting}
-              placeholder="Marcus Vance"
-              className="w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
-              style={{ borderColor: fieldErrors.name ? '#ef4444' : '#e5e7eb' }}
-              aria-invalid={!!fieldErrors.name}
+              id="cf-fullName"
+              name="fullName"
+              type="text"
+              required
+              value={form.fullName}
+              onChange={handleChange}
+              disabled={isSubmitting}
+              placeholder="Full Name *"
+              className="w-full rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
+              style={{ borderColor: errors.fullName ? '#ef4444' : '#d1d5db' }}
             />
-            {fieldErrors.name && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.name}</p>}
+            {errors.fullName && <p className="mt-1 text-xs text-red-500" role="alert">{errors.fullName}</p>}
           </div>
           <div>
-            <label htmlFor="cf-email" className="mb-1.5 block text-sm font-medium text-neutral-700">
-              Work Email <span className="text-[#fc3f07]">*</span>
-            </label>
             <input
-              id="cf-email" name="email" type="email" required
-              value={form.email} onChange={handleChange} disabled={isSubmitting}
-              placeholder="you@company.com"
-              className="w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
-              style={{ borderColor: fieldErrors.email ? '#ef4444' : '#e5e7eb' }}
-              aria-invalid={!!fieldErrors.email}
+              id="cf-companyName"
+              name="companyName"
+              type="text"
+              value={form.companyName}
+              onChange={handleChange}
+              disabled={isSubmitting}
+              placeholder="Company Name"
+              className="w-full rounded-lg border border-[#d1d5db] px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
             />
-            {fieldErrors.email && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.email}</p>}
           </div>
         </div>
 
-        {/* Company + Urgency */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {/* Row 2: Phone + Email */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="cf-company" className="mb-1.5 block text-sm font-medium text-neutral-700">
-              Company Name &amp; Role{' '}
-              <span className="font-normal text-neutral-400">(Optional)</span>
-            </label>
             <input
-              id="cf-company" name="company" type="text"
-              value={form.company} onChange={handleChange} disabled={isSubmitting}
-              placeholder="Apex Logistics Inc (Carrier)"
-              className="w-full rounded-xl border border-[#e5e7eb] bg-white px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
+              id="cf-phone"
+              name="phone"
+              type="tel"
+              required
+              value={form.phone}
+              onChange={handleChange}
+              disabled={isSubmitting}
+              placeholder="Phone Number *"
+              className="w-full rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
+              style={{ borderColor: errors.phone ? '#ef4444' : '#d1d5db' }}
             />
+            {errors.phone && <p className="mt-1 text-xs text-red-500" role="alert">{errors.phone}</p>}
           </div>
           <div>
-            <p className="mb-1.5 text-sm font-medium text-neutral-700">Urgency Level <span className="text-[#fc3f07]">*</span></p>
-            <div className="flex gap-2">
-              {(['normal', 'urgent'] as Urgency[]).map((u) => (
-                <button
-                  key={u}
-                  type="button"
-                  onClick={() => setForm((p) => ({ ...p, urgency: u }))}
-                  disabled={isSubmitting}
-                  className="flex-1 rounded-xl border-2 py-2.5 text-sm font-semibold transition-colors disabled:opacity-60"
-                  style={{
-                    borderColor: form.urgency === u ? '#fc3f07' : '#e5e7eb',
-                    color: form.urgency === u ? '#d93506' : '#6b7280',
-                    background: form.urgency === u ? '#fff7ed' : '#fff',
-                  }}
-                  aria-pressed={form.urgency === u}
-                >
-                  {u === 'normal' ? 'Normal' : 'Urgent Spot Issue'}
-                </button>
-              ))}
-            </div>
-            {fieldErrors.urgency && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.urgency}</p>}
+            <input
+              id="cf-email"
+              name="email"
+              type="email"
+              required
+              value={form.email}
+              onChange={handleChange}
+              disabled={isSubmitting}
+              placeholder="Email Address *"
+              className="w-full rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
+              style={{ borderColor: errors.email ? '#ef4444' : '#d1d5db' }}
+            />
+            {errors.email && <p className="mt-1 text-xs text-red-500" role="alert">{errors.email}</p>}
           </div>
         </div>
 
-        {/* Category */}
+        {/* Row 3: Fleet size dropdown */}
         <div>
-          <label htmlFor="cf-category" className="mb-1.5 block text-sm font-medium text-neutral-700">
-            Inquiry Category <span className="text-[#fc3f07]">*</span>
-          </label>
           <select
-            id="cf-category" name="category" required
-            value={form.category}
-            onChange={(e) => setForm((p) => ({ ...p, category: e.target.value as Category }))}
+            id="cf-fleetSize"
+            name="fleetSize"
+            value={form.fleetSize}
+            onChange={handleChange}
             disabled={isSubmitting}
-            className="w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-neutral-900 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
-            style={{ borderColor: fieldErrors.category ? '#ef4444' : '#e5e7eb' }}
-            aria-invalid={!!fieldErrors.category}
+            className="w-full rounded-lg border border-[#d1d5db] px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
+            style={{ color: form.fleetSize ? '#1a1a1a' : '#9ca3af' }}
           >
-            {CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
+            {FLEET_SIZES.map((s, i) => (
+              <option key={s} value={i === 0 ? '' : s} disabled={i === 0}>
+                {s}
+              </option>
             ))}
           </select>
-          {fieldErrors.category && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.category}</p>}
         </div>
 
-        {/* Message */}
+        {/* Row 4: Message */}
         <div>
-          <div className="mb-1.5 flex items-center justify-between">
-            <label htmlFor="cf-message" className="text-sm font-medium text-neutral-700">
-              Message Description <span className="text-[#fc3f07]">*</span>
-            </label>
-            <span className={`text-xs ${charCount > 1400 ? 'text-amber-500' : 'text-neutral-400'}`}>
-              {charCount} / 1,500
-            </span>
-          </div>
           <textarea
-            id="cf-message" name="message" required
-            value={form.message} onChange={handleChange} disabled={isSubmitting}
-            rows={5} maxLength={1500}
-            placeholder="Describe your inquiry in detail…"
-            className="w-full resize-y rounded-xl border bg-white px-4 py-2.5 text-sm leading-relaxed text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:ring-2 focus:ring-[#fc3f07]/20"
-            style={{ borderColor: fieldErrors.message ? '#ef4444' : '#e5e7eb' }}
-            aria-invalid={!!fieldErrors.message}
+            id="cf-message"
+            name="message"
+            required
+            value={form.message}
+            onChange={handleChange}
+            disabled={isSubmitting}
+            rows={5}
+            placeholder="How can we help you? *"
+            className="w-full resize-y rounded-lg border px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-[#fc3f07]/20"
+            style={{ borderColor: errors.message ? '#ef4444' : '#d1d5db' }}
           />
-          {fieldErrors.message && <p className="mt-1 text-xs text-red-500" role="alert">{fieldErrors.message}</p>}
-        </div>
-
-        {/* File upload */}
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-neutral-700">
-            Supporting Documentation{' '}
-            <span className="font-normal text-neutral-400">(PDF / PNG / JPG, max 25MB each, up to 5 files)</span>
-          </label>
-
-          {/* Drop zone */}
-          <div
-            role="button"
-            tabIndex={0}
-            aria-label="Attach files"
-            onClick={() => fileInputRef.current?.click()}
-            onKeyDown={(e) => e.key === 'Enter' && fileInputRef.current?.click()}
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
-            className="cursor-pointer rounded-xl border-2 border-dashed bg-white/60 px-6 py-8 text-center transition-colors hover:border-[#fc3f07]/50"
-            style={{ borderColor: fieldErrors.attachments ? '#ef4444' : '#d1d5db' }}
-          >
-            <div className="mb-2 text-2xl" aria-hidden="true">📄</div>
-            <p className="text-sm font-medium text-neutral-600">Click to attach or drag &amp; drop here</p>
-            <p className="mt-1 text-xs text-neutral-400">PDF, PNG, JPG up to 25MB each</p>
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            multiple
-            accept=".pdf,.png,.jpg,.jpeg"
-            onChange={handleFileChange}
-            className="sr-only"
-            aria-hidden="true"
-          />
-          {fieldErrors.attachments && (
-            <p className="mt-1.5 text-xs text-red-500" role="alert">{fieldErrors.attachments}</p>
-          )}
-
-          {/* Staged file chips */}
-          {files.length > 0 && (
-            <ul className="mt-3 space-y-2">
-              {files.map((file, i) => (
-                <li
-                  key={i}
-                  className="flex items-center justify-between gap-3 rounded-xl border border-[#e5e7eb] bg-white px-4 py-2.5"
-                >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0 text-neutral-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="truncate text-sm text-neutral-700">{file.name}</span>
-                    <span className="shrink-0 text-xs text-neutral-400">
-                      {(file.size / 1024 / 1024).toFixed(1)}MB
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => removeFile(i)}
-                    className="shrink-0 rounded-md p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600"
-                    aria-label={`Remove ${file.name}`}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
+          {errors.message && <p className="mt-1 text-xs text-red-500" role="alert">{errors.message}</p>}
         </div>
 
         {/* Submit */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold text-white transition-all disabled:cursor-not-allowed disabled:opacity-60 hover:enabled:bg-[#d93506]"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-lg py-3 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           style={{ background: '#fc3f07' }}
         >
           {isSubmitting ? (
             <>
-              <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
               Sending…
             </>
-          ) : 'Send Support Message →'}
+          ) : (
+            <>
+              {/* Paper-plane icon */}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              </svg>
+              Send Message
+            </>
+          )}
         </button>
 
       </form>

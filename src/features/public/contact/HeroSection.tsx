@@ -1,95 +1,88 @@
+import Image from 'next/image';
+
 export default function ContactHero() {
   return (
-    <header
-      style={{
-        textAlign: 'center',
-        padding: '64px 24px 40px',
-        maxWidth: 800,
-        margin: '0 auto',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-      }}
+    <div
+      className="relative w-full overflow-hidden"
+      style={{ background: '#0F2535', minHeight: 260 }}
     >
-      {/* Badge */}
+      {/* Subtle grid texture overlay */}
       <div
+        className="absolute inset-0 opacity-[0.04]"
         style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          background: '#fff',
-          border: '1px solid #fed7aa',
-          borderRadius: 999,
-          padding: '6px 16px',
-          fontSize: 12,
-          fontWeight: 600,
-          color: '#d93506',
-          marginBottom: 24,
+          backgroundImage:
+            'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
         }}
-      >
-        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#d93506', display: 'inline-block' }} />
-        DIRECT SUPPORT &amp; INQUIRIES
+      />
+
+      {/* Orange accent line — top */}
+      <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: '#fc3f07' }} />
+
+      {/* Truck image — covers most of the banner, bleeds to edge */}
+      <div className="absolute inset-y-0 right-0 w-[72%] sm:w-[68%]">
+        <Image
+          src="/images/contact/contact-truck.png"
+          alt="Household goods moving truck"
+          fill
+          className="object-cover object-left"
+          priority
+        />
+        {/* Left fade — shorter so the truck is more visible */}
+        <div
+          className="absolute inset-y-0 left-0 w-[35%]"
+          style={{
+            background:
+              'linear-gradient(to right, #0F2535 0%, rgba(15,37,53,0.6) 60%, transparent 100%)',
+          }}
+        />
+        {/* Soft right vignette */}
+        <div
+          className="absolute inset-y-0 right-0 w-[20%]"
+          style={{ background: 'linear-gradient(to left, rgba(15,37,53,0.3), transparent)' }}
+        />
       </div>
 
-      {/* Headline */}
-      <h1
-        style={{
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 'clamp(32px, 5vw, 48px)',
-          fontWeight: 400,
-          lineHeight: 1.2,
-          color: '#1a1a1a',
-          marginBottom: 24,
-        }}
-      >
-        Get in Touch with FullTrailerLoad.
-        <br />
-        <span style={{ fontStyle: 'italic', color: '#fc3f07' }}>
-          Direct Support &amp; Rapid Answers
-        </span>
-      </h1>
+      {/* Content */}
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-14 md:py-20">
 
-      <p
-        style={{
-          maxWidth: 560,
-          margin: '0 auto 32px',
-          color: '#6b7280',
-          fontSize: 15,
-          lineHeight: 1.7,
-        }}
-      >
-        Whether you need onboarding assistance, transaction verification help, or custom fleet solutions, our moving operations team is standing by across all key transit corridors.
-      </p>
+        {/* Eyebrow pill */}
+        <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-5 text-[11px] font-bold uppercase tracking-widest"
+          style={{ background: 'rgba(252,63,7,0.15)', color: '#fc3f07', border: '1px solid rgba(252,63,7,0.3)' }}>
+          <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#fc3f07' }} />
+          FTL Assist
+        </div>
 
-      {/* Status pills */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, fontSize: 12, fontWeight: 500 }}>
-        <span
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: '#fff', border: '1px solid #e5e7eb',
-            borderRadius: 999, padding: '8px 16px',
-          }}
+        {/* Headline */}
+        <h1
+          className="text-5xl sm:text-6xl font-black leading-none mb-4 tracking-tight"
+          style={{ fontFamily: 'system-ui, sans-serif' }}
         >
-          ⚡ Average Response: <strong style={{ color: '#d93506' }}>14 Mins</strong>
-        </span>
-        <span
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: '#fff', border: '1px solid #e5e7eb',
-            borderRadius: 999, padding: '8px 16px',
-          }}
+          <span className="text-white">FTL </span>
+          <span
+            className="italic"
+            style={{
+              color: '#fc3f07',
+              textShadow: '0 0 40px rgba(252,63,7,0.35)',
+            }}
+          >
+            Assist
+          </span>
+        </h1>
+
+        {/* Subheading */}
+        <p
+          className="text-base sm:text-lg font-medium leading-relaxed max-w-xs sm:max-w-sm"
+          style={{ color: 'rgba(255,255,255,0.75)' }}
         >
-          <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block', flexShrink: 0 }} />
-          FMCSA Tier 2 Dispute Desk: Online
-        </span>
-        <span
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: '#fff', border: '1px solid #e5e7eb',
-            borderRadius: 999, padding: '8px 16px',
-          }}
-        >
-          🛡 Instant SAFER &amp; COI Sync
-        </span>
+          Operational Support for<br />
+          <span className="font-semibold text-white">Household Goods Movers</span>
+        </p>
+
+        {/* Divider line */}
+        <div className="mt-6 w-12 h-[3px] rounded-full" style={{ background: '#fc3f07' }} />
+
       </div>
-    </header>
+    </div>
   );
 }

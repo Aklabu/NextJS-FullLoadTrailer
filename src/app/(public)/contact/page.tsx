@@ -1,37 +1,51 @@
 import type { Metadata } from 'next';
-import '@/features/public/contact/contact.css';
 import {
   ContactHero,
-  ContactMethods,
+  ServicesStrip,
+  PricingStrip,
   ContactForm,
-  MapSidebar,
-  ContactFaq,
+  GetInTouchSidebar,
 } from '@/features/public/contact';
 
 export const metadata: Metadata = {
-  title: 'Contact & Support — FullTrailerLoad',
+  title: 'Contact Us — FTL Assist | FullTrailerLoad',
   description:
-    'Get in touch with the FullTrailerLoad operations team for onboarding help, SAFER verification, rate confirmation disputes, or emergency dispatch support.',
+    'Have questions or want to get started with FTL Assist? Send us a message or contact us directly.',
 };
 
 export default function ContactPage() {
   return (
-    <div style={{ background: '#fdf6ee', minHeight: '100vh' }}>
-      <ContactHero />
-      <ContactMethods />
+    <div style={{ background: '#fff', minHeight: '100vh' }}>
 
-      {/* Form + Sidebar layout */}
-      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 64px' }}>
-        <div
-          style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 24, alignItems: 'start' }}
-          className="contact-form-layout"
-        >
+      {/* Hero banner with truck image */}
+      <ContactHero />
+
+      {/* 5-column services icon strip */}
+      <ServicesStrip />
+
+      {/* Flat-percentage pricing strip */}
+      <PricingStrip />
+
+      {/* Page heading */}
+      <div className="text-center py-10 px-4">
+        <h2 className="text-3xl font-black mb-2" style={{ color: '#1a1a1a' }}>
+          Contact Us – FTL Assist
+        </h2>
+        <p className="text-sm" style={{ color: '#6b7280' }}>
+          Have questions or want to get started with FTL Assist?
+          <br />
+          Send us a message or contact us directly.
+        </p>
+      </div>
+
+      {/* Form + Sidebar */}
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start">
           <ContactForm />
-          <MapSidebar />
+          <GetInTouchSidebar />
         </div>
       </section>
 
-      <ContactFaq />
     </div>
   );
 }
